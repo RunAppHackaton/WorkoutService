@@ -14,7 +14,7 @@ public class RouteModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @Column(name = "start_location")
     private String startLocation;
@@ -26,6 +26,6 @@ public class RouteModel {
     private String routeMapUrl;
 
     @ManyToOne
-    @JoinColumn(name = "terraintype_id")
+    @JoinColumn(name = "terrain_type_Id", referencedColumnName = "Id")
     private TerrainTypeModel terrainType;
 }

@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.sql.Time;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -19,31 +20,24 @@ public class RunPlanModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id")
+    private int id;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "day_of_the_week")
-    private DayOfTheWeeksEnum dayOfTheWeek;
-
-    @ManyToOne
-    @JoinColumn(name = "runtype_id")
-    private RunTypeModel runTypeModel;
+    private int dayOfTheWeek;
 
     @Column(name = "distance")
     private int distance;
 
     @Column(name = "duration")
-    private LocalDateTime duration;
+    private Time duration;
 
     @Column(name = "pace")
-    private BigDecimal pace;
+    private double pace;
 
     @Column(name = "note")
-    private String note;
+    private int note;
 
     @Column(name = "user_id")
-    private int user;
-
-    @OneToMany(mappedBy = "runPlan")
-    private List<IntervalsModel> intervalsModelList;
+    private int userId;
 }

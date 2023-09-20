@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.sql.Date;
+import java.sql.Time;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
@@ -18,19 +20,20 @@ public class RunSessionModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id")
+    private int id;
 
     @Column(name = "date")
-    private LocalDateTime date;
+    private Date date;
 
     @Column(name = "distance")
-    private BigDecimal distance;
+    private int distance;
 
     @Column(name = "time")
-    private Duration time;
+    private Time time;
 
     @Column(name = "pace")
-    private BigDecimal pace;
+    private int pace;
 
     @Column(name = "calories_burned")
     private int caloriesBurned;
@@ -44,23 +47,23 @@ public class RunSessionModel {
     @Column(name = "photos_url")
     private String photosUrl;
 
-    @OneToOne()
+    @ManyToOne
     @JoinColumn(name = "route_id", referencedColumnName = "id")
     private RouteModel route;
 
     @ManyToOne
-    @JoinColumn(name = "runtype_id")
-    private RunTypeModel runType;
-
-    @Column(name = "achievement_id")
-    private int achievementId;
-
-    @Column(name = "shoes_id")
-    private int shoesId;
+    @JoinColumn(name = "Training_id", referencedColumnName = "id")
+    private TrainingModel training;
 
     @Column(name = "user_id")
     private int userId;
 
     @Column(name = "team_id")
     private int teamId;
+
+    @Column(name = "achievement_id")
+    private int achievementId;
+
+    @Column(name = "shoes_id")
+    private int shoesId;
 }

@@ -1,7 +1,7 @@
 package com.runapp.workoutservice.service.Impl;
 
 import com.runapp.workoutservice.exception.NoEntityFoundException;
-import com.runapp.workoutservice.model.IntervalsModel;
+import com.runapp.workoutservice.model.IntervalModel;
 import com.runapp.workoutservice.repository.IntervalsRepository;
 import com.runapp.workoutservice.service.IntervalsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,17 +20,17 @@ public class IntervalsServiceImpl implements IntervalsService {
     }
 
     @Override
-    public IntervalsModel add(IntervalsModel entity) {
+    public IntervalModel add(IntervalModel entity) {
         return intervalsRepository.save(entity);
     }
 
     @Override
-    public IntervalsModel getById(Long id) {
+    public IntervalModel getById(Long id) {
         return intervalsRepository.findById(id).orElseThrow(() -> new NoEntityFoundException("Intervals with id: " + id + " doesn't exist"));
     }
 
     @Override
-    public List<IntervalsModel> getAll() {
+    public List<IntervalModel> getAll() {
         return intervalsRepository.findAll();
     }
 
@@ -43,10 +43,11 @@ public class IntervalsServiceImpl implements IntervalsService {
     }
 
     @Override
-    public IntervalsModel update(IntervalsModel entity) {
-        if (!intervalsRepository.existsById(entity.getId())) {
-            throw new NoEntityFoundException("Intervals with id: " + entity.getId() + " doesn't exist");
-        }
-        return intervalsRepository.save(entity);
+    public IntervalModel update(IntervalModel entity) {
+//        if (!intervalsRepository.existsById(entity.getId())) {
+//            throw new NoEntityFoundException("Intervals with id: " + entity.getId() + " doesn't exist");
+//        }
+//        return intervalsRepository.save(entity);
+        return null;
     }
 }

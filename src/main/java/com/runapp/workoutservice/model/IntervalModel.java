@@ -5,24 +5,25 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "Intervals")
-public class IntervalsModel {
+public class IntervalModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id")
+    private int id;
+
+    @Column(name = "interval")
+    private int interval;
 
     @Column(name = "time_for_a_break")
-    private Duration timeForBreak;
+    private int timeForABreak;
 
     @ManyToOne
-    @JoinColumn(name = "runplan_id")
-    private RunPlanModel runPlan;
+    @JoinColumn(name = "Training_id", referencedColumnName = "id")
+    private TrainingModel training;
 }

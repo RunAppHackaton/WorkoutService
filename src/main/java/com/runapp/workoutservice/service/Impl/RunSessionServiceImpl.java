@@ -44,9 +44,10 @@ public class RunSessionServiceImpl implements RunSessionService {
 
     @Override
     public RunSessionModel update(RunSessionModel entity) {
-        if (!runSessionRepository.existsById(entity.getId())) {
-            throw new NoEntityFoundException("RunSession with id: " + entity.getId() + " doesn't exist");
-        }
-        return runSessionRepository.save(entity);
+//        if (!runSessionRepository.existsById(entity.getId())) {
+//            throw new NoEntityFoundException("RunSession with id: " + entity.getId() + " doesn't exist");
+//        }
+//        return runSessionRepository.save(entity);
+        return null;
     }
 }

@@ -44,9 +44,10 @@ public class RunPlanServiceImpl implements RunPlanService {
 
     @Override
     public RunPlanModel update(RunPlanModel entity) {
-        if (!runPlanRepository.existsById(entity.getId())) {
-            throw new NoEntityFoundException("RunPlan with id: " + entity.getId() + " doesn't exist");
-        }
-        return runPlanRepository.save(entity);
+//        if (!runPlanRepository.existsById(entity.getId())) {
+//            throw new NoEntityFoundException("RunPlan with id: " + entity.getId() + " doesn't exist");
+//        }
+//        return runPlanRepository.save(entity);
+        return null;
     }
 }

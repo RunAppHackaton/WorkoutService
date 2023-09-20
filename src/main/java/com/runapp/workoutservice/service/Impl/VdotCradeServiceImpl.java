@@ -53,14 +53,16 @@ public class VdotCradeServiceImpl implements VdotGradeService {
     }
 
     public VdotGradeModel findClosestTimeByDistanceAndTime(DistanceTypeEnum distanceTypeEnum, String time) {
-        Duration duration = toDuration(time);
+         Duration duration = toDuration(time);
         VdotGradeModel vdotGradeModel = null;
         long timeInMintutes = toDuration(time).toMinutes();
         long min = Long.MAX_VALUE;
-        try {
+//        try {
             List<VdotGradeModel> vdotGradeModels = vdotGradeRepository.findAll();
+            int count = 0;
 
             for (VdotGradeModel model : vdotGradeModels) {
+                count++;
                 long currentValue = getTimeInMinutes(distanceTypeEnum, model);
                 if (Math.abs(currentValue - timeInMintutes) < min) {
                     min = currentValue - timeInMintutes;
@@ -69,12 +71,12 @@ public class VdotCradeServiceImpl implements VdotGradeService {
             }
             return vdotGradeModel;
 
-        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-            // Если время в неправильном формате, возвращаем null
-            return null; //todo throw Exception
-        } catch (IllegalArgumentException e) {
-            return null; //todo throw Exception
-        }
+//        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+//            // Если время в неправильном формате, возвращаем null
+//            return null; //todo throw Exception
+//        } catch (IllegalArgumentException e) {
+//            return null; //todo throw Exception
+//        }
     }
 
     private long getTimeInMinutes(DistanceTypeEnum distanceType, VdotGradeModel vdotGradeModel) {
@@ -106,10 +108,11 @@ public class VdotCradeServiceImpl implements VdotGradeService {
             case MARATHON -> {
                 return toDuration(vdotGradeModel.getMarathon()).toMinutes();
             }
-            default -> {
-                throw new IllegalArgumentException(distanceType.name() + " does not exist");
-            }
+//            default -> {
+//                throw new IllegalArgumentException(distanceType.name() + " does not exist");
+//            }
         }
+        return 0;
     }
 
     private Duration toDuration(String time) {

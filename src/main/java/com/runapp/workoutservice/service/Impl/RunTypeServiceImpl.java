@@ -44,9 +44,10 @@ public class RunTypeServiceImpl implements RunTypeService {
 
     @Override
     public RunTypeModel update(RunTypeModel entity) {
-        if (!runTypeRepository.existsById(entity.getId())) {
-            throw new NoEntityFoundException("RunType with id: " + entity.getId() + " doesn't exist");
-        }
-        return runTypeRepository.save(entity);
+//        if (!runTypeRepository.existsById(entity.getId())) {
+//            throw new NoEntityFoundException("RunType with id: " + entity.getId() + " doesn't exist");
+//        }
+//        return runTypeRepository.save(entity);
+        return null;
     }
 }

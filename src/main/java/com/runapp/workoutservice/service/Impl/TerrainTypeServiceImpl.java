@@ -44,9 +44,10 @@ public class TerrainTypeServiceImpl implements TerrainTypeService {
 
     @Override
     public TerrainTypeModel update(TerrainTypeModel entity) {
-        if (!terrainTypeRepository.existsById(entity.getId())) {
-            throw new NoEntityFoundException("TerrainType with id: " + entity.getId() + " doesn't exist");
-        }
-        return terrainTypeRepository.save(entity);
+//        if (!terrainTypeRepository.existsById(entity.getId())) {
+//            throw new NoEntityFoundException("TerrainType with id: " + entity.getId() + " doesn't exist");
+//        }
+//        return terrainTypeRepository.save(entity);
+        return null;
     }
 }
