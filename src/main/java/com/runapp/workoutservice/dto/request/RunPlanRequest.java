@@ -1,6 +1,5 @@
 package com.runapp.workoutservice.dto.request;
 
-import com.runapp.workoutservice.utill.DayOfTheWeeksEnum;
 import com.runapp.workoutservice.utill.DistanceTypeEnum;
 import com.runapp.workoutservice.utill.RunPlanEnum;
 import lombok.AllArgsConstructor;
@@ -13,7 +12,8 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class RunPlanRuquest {
+public class RunPlanRequest {
+    private int user_id;
     private RunPlanEnum runPlanEnum;
     private LocalDate goal_date;
     private String target_time;

@@ -14,7 +14,7 @@ public class RouteModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     @Column(name = "start_location")
     private String startLocation;

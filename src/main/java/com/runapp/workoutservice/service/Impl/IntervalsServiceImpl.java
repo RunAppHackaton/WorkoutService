@@ -44,10 +44,9 @@ public class IntervalsServiceImpl implements IntervalsService {
 
     @Override
     public IntervalModel update(IntervalModel entity) {
-//        if (!intervalsRepository.existsById(entity.getId())) {
-//            throw new NoEntityFoundException("Intervals with id: " + entity.getId() + " doesn't exist");
-//        }
-//        return intervalsRepository.save(entity);
-        return null;
+        if (!intervalsRepository.existsById(entity.getId())) {
+            throw new NoEntityFoundException("Intervals with id: " + entity.getId() + " doesn't exist");
+        }
+        return intervalsRepository.save(entity);
     }
 }

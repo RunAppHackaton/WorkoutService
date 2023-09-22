@@ -27,10 +27,8 @@ public class VdotGradeController {
     }
 
 
-    @PostMapping()
+    @PostMapping("my-personal-indicators")
     public ResponseEntity<VdotWorkoutModel> getPersonalityVDOT(@RequestBody @Valid VdotGradeRequest vdotGradeRequest) {
-        System.out.println(vdotGradeRequest.getDistance());
-        System.out.println(vdotGradeRequest.getTime());
         VdotGradeModel vdotGradeModel = vdotGradeService.findClosestTimeByDistanceAndTime(vdotGradeRequest.getDistance(), vdotGradeRequest.getTime());
         return ResponseEntity.ok().body(vdotWorkoutRepository.findById(vdotGradeModel.getVdot()).orElse(null));
     }

@@ -17,7 +17,7 @@ public class VdotWorkoutModel {
 
     @Id
     @Column(name = "VDOT")
-    private Long vdot;
+    private long vdot;
 
     @Column(name = "easy_mi")
     private String easyMi;

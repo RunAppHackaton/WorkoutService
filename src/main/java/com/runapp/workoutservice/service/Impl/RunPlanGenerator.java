@@ -1,5 +1,6 @@
 package com.runapp.workoutservice.service.Impl;
 
+import com.runapp.workoutservice.dto.request.RunPlanRequest;
 import com.runapp.workoutservice.model.VdotGradeModel;
 import com.runapp.workoutservice.model.VdotWorkoutModel;
 import com.runapp.workoutservice.repository.VdotWorkoutRepository;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Data
@@ -22,7 +24,7 @@ import java.util.List;
 @Service
 public class RunPlanGenerator {
     private VdotCradeServiceImpl vdotGradeServiceImpl;
-    private VdotWorkoutRepository vdotWorkoutRepository;
+    private VdotWorkoutServiceImpl vdotWorkoutServiceImpl;
     private VdotGradeModel indicatorsVdot;
     private LocalDate goal_date;
     private String target_time;
@@ -32,121 +34,245 @@ public class RunPlanGenerator {
     private DayOfWeek[] training_days;
     private VdotWorkoutModel vdotWorkoutModel;
 
-    public RunPlanGenerator(VdotWorkoutRepository vdotWorkoutRepository, VdotCradeServiceImpl vdotGradeServiceImpl, DistanceTypeEnum type_were_you_running, String time_at_which_you_ran, LocalDate goal_date, String target_time, int kilometers_per_week, DayOfWeek[] training_days) {
-        this.vdotWorkoutRepository = vdotWorkoutRepository;
+    public RunPlanGenerator(VdotWorkoutServiceImpl vdotWorkoutServiceImpl, VdotCradeServiceImpl vdotGradeServiceImpl, RunPlanRequest runPlanRequest) {
+        this.vdotWorkoutServiceImpl = vdotWorkoutServiceImpl;
         this.vdotGradeServiceImpl = vdotGradeServiceImpl;
-        this.indicatorsVdot = vdotGradeServiceImpl.findClosestTimeByDistanceAndTime(type_were_you_running, time_at_which_you_ran);
-        vdotWorkoutModel = vdotWorkoutRepository.findById(indicatorsVdot.getVdot()).orElse(null);
-        this.goal_date = goal_date;
-        this.target_time = target_time;
-        this.kilometers_per_week = kilometers_per_week;
-        this.training_days = training_days;
+        this.indicatorsVdot = vdotGradeServiceImpl.findClosestTimeByDistanceAndTime(runPlanRequest.getType_were_you_running(), runPlanRequest.getTime_at_which_you_ran());
+        vdotWorkoutModel = vdotWorkoutServiceImpl.getById(indicatorsVdot.getVdot());
     }
 
-    public List<RunTraining> generatePlan() {
-        LocalDate[] localDates = getDatesBeforeEndDate(goal_date, training_days);
-//        List<List<RunTraining>> runPlan = new ArrayList<>();
-        return fillingWithTwoWorkouts(localDates, kilometers_per_week, StageEnum.STAGE2);
+    public List<RunTraining> generatePlan(RunPlanRequest runPlanRequest) {
+        LocalDate[] localDates = getDatesBeforeEndDate(runPlanRequest.getGoal_date(), runPlanRequest.getTraining_days());
+        return fillingTheStageWithTraining(localDates, runPlanRequest.getKilometers_per_week(), runPlanRequest.getTraining_days());
     }
 
-//    private List<RunTraining> fillingTheStageWithTraining(LocalDate[] localDates, int kilometers_per_week, DayOfWeek[] training_days) {
-//        switch () {
-//            case 2:
-//                break;
-//            case 3:
-//                break;
-//            case 4:
-//                break;
-//            case 5:
-//                break;
-//        }
-//
-//    }
+    private List<RunTraining> fillingTheStageWithTraining(LocalDate[] localDates, int kilometers_per_week, DayOfWeek[] training_days) {
+        int trainingPerWeek = training_days.length;
+        List<RunTraining> runTrainings = new ArrayList<>();
+
+        int chunkSize = localDates.length / 4;
+        LocalDate[][] dateChunks = new LocalDate[4][];
+
+        for (int i = 0; i < 4; i++) {
+            int start = i * chunkSize;
+            int end = (i == 3) ? localDates.length : (i + 1) * chunkSize;
+            dateChunks[i] = Arrays.copyOfRange(localDates, start, end);
+        }
+
+        switch (trainingPerWeek) {
+            case 2:
+                runTrainings.addAll(fillingWithTwoWorkouts(dateChunks[0], kilometers_per_week, StageEnum.STAGE1));
+                runTrainings.addAll(fillingWithTwoWorkouts(dateChunks[1], kilometers_per_week, StageEnum.STAGE2));
+                runTrainings.addAll(fillingWithTwoWorkouts(dateChunks[2], kilometers_per_week, StageEnum.STAGE3));
+                runTrainings.addAll(fillingWithTwoWorkouts(dateChunks[3], kilometers_per_week, StageEnum.STAGE4));
+                break;
+            case 3:
+                runTrainings.addAll(fillingWithThreeWorkouts(dateChunks[0], kilometers_per_week, StageEnum.STAGE1));
+                runTrainings.addAll(fillingWithThreeWorkouts(dateChunks[1], kilometers_per_week, StageEnum.STAGE2));
+                runTrainings.addAll(fillingWithThreeWorkouts(dateChunks[2], kilometers_per_week, StageEnum.STAGE3));
+                runTrainings.addAll(fillingWithThreeWorkouts(dateChunks[3], kilometers_per_week, StageEnum.STAGE4));
+                break;
+            case 4:
+                runTrainings.addAll(fillingWithFourWorkouts(dateChunks[0], kilometers_per_week, StageEnum.STAGE1));
+                runTrainings.addAll(fillingWithFourWorkouts(dateChunks[1], kilometers_per_week, StageEnum.STAGE2));
+                runTrainings.addAll(fillingWithFourWorkouts(dateChunks[2], kilometers_per_week, StageEnum.STAGE3));
+                runTrainings.addAll(fillingWithFourWorkouts(dateChunks[3], kilometers_per_week, StageEnum.STAGE4));
+                break;
+            case 5:
+                runTrainings.addAll(fillingWithFiveWorkouts(dateChunks[0], kilometers_per_week, StageEnum.STAGE1));
+                runTrainings.addAll(fillingWithFiveWorkouts(dateChunks[1], kilometers_per_week, StageEnum.STAGE2));
+                runTrainings.addAll(fillingWithFiveWorkouts(dateChunks[2], kilometers_per_week, StageEnum.STAGE3));
+                runTrainings.addAll(fillingWithFiveWorkouts(dateChunks[3], kilometers_per_week, StageEnum.STAGE4));
+                break;
+        }
+
+        return runTrainings;
+    }
+
 
     private List<RunTraining> fillingWithTwoWorkouts(LocalDate[] localDates, int kilometers_per_week, StageEnum stageEnum) {
         List<RunTraining> runTrainings = new ArrayList<>();
-        switch (stageEnum) {
-            case STAGE1:
-                for (int x = 0; x < localDates.length; x++) {
-                    if (x % 2 == 0) kilometers_per_week = increaseByPercentage(kilometers_per_week, 15.0);
-                    int warmUpAndHitchKilometers = calculatePercentage(kilometers_per_week, 30) / 2;
-                    int longRunKilometers = calculatePercentage(kilometers_per_week, 70);
-                    runTrainings.add(new SpeedSurgeRun(warmUpAndHitchKilometers, warmUpAndHitchKilometers, vdotWorkoutModel.getRepetition_400m(), vdotWorkoutModel.getEasyKm()));
-                    runTrainings.add(new LongRun(longRunKilometers, vdotWorkoutModel.getMarathonKm()));
+        for (int x = 0; x < localDates.length; x += 2) {
+            int warmUpAndHitchKilometers = calculatePercentage(kilometers_per_week, 20);
+            int longRunKilometers = calculatePercentage(kilometers_per_week, 40);
+            switch (stageEnum) {
+                case STAGE1 -> {
+                    kilometers_per_week += increaseByPercentage(kilometers_per_week, 15.0);
+                    runTrainings.add(new SpeedSurgeRun(warmUpAndHitchKilometers, warmUpAndHitchKilometers, vdotWorkoutModel.getRepetition_400m(), vdotWorkoutModel.getEasyKm(), localDates[x], stageEnum));
                 }
-                break;
-            case STAGE2:
-                for (int x = 0; x < localDates.length; x++) {
-                    if (x % 2 == 0) kilometers_per_week = increaseByPercentage(kilometers_per_week, 15.0);
-                    int warmUpAndHitchKilometers = calculatePercentage(kilometers_per_week, 30) / 2;
-                    int longRunKilometers = calculatePercentage(kilometers_per_week, 70);
-                    if (x % 2 == 0) runTrainings.add(new IntervalRun(warmUpAndHitchKilometers, warmUpAndHitchKilometers, vdotWorkoutModel.getInterval_1000m(), vdotWorkoutModel.getEasyKm()));
-                    else runTrainings.add(new LongRun(longRunKilometers, vdotWorkoutModel.getMarathonKm()));
+                case STAGE2 -> {
+                    kilometers_per_week += increaseByPercentage(kilometers_per_week, 15.0);
+                    runTrainings.add(new IntervalRun(warmUpAndHitchKilometers, warmUpAndHitchKilometers, vdotWorkoutModel.getInterval_400m(), vdotWorkoutModel.getEasyKm(), localDates[x], stageEnum));
                 }
-                break;
-            case STAGE3:
-                for (int x = 0; x < localDates.length; x++) {
-                    if (x % 2 == 0) kilometers_per_week = increaseByPercentage(kilometers_per_week, 15.0);
-                    int warmUpAndHitchKilometers = calculatePercentage(kilometers_per_week, 30);
-                    int longRunKilometers = calculatePercentage(kilometers_per_week, 70);
-                    runTrainings.add(new TempoRun(warmUpAndHitchKilometers, vdotWorkoutModel.getThreshold_mi()));
-                    runTrainings.add(new LongRun(longRunKilometers, vdotWorkoutModel.getMarathonKm()));
+                case STAGE3 -> {
+                    kilometers_per_week += increaseByPercentage(kilometers_per_week, 15.0);
+                    runTrainings.add(new TempoRun(warmUpAndHitchKilometers, vdotWorkoutModel.getThreshold_mi(), localDates[x], stageEnum));
                 }
-                break;
-            case STAGE4:
-                for (int x = 0; x < localDates.length; x++) {
-                    if (x % 2 == 0) kilometers_per_week -= calculatePercentage(kilometers_per_week, 15);
-                    int warmUpAndHitchKilometers = calculatePercentage(kilometers_per_week, 30);
-                    int longRunKilometers = calculatePercentage(kilometers_per_week, 70);
-                    runTrainings.add(new TempoRun(warmUpAndHitchKilometers, vdotWorkoutModel.getThreshold_mi()));
-                    runTrainings.add(new LongRun(longRunKilometers, vdotWorkoutModel.getMarathonKm()));
+                case STAGE4 -> {
+                    kilometers_per_week -= calculatePercentage(kilometers_per_week, 15);
+                    runTrainings.add(new TempoRun(warmUpAndHitchKilometers, vdotWorkoutModel.getThreshold_mi(), localDates[x], stageEnum));
                 }
-                break;
+            }
+            if (localDates.length - x != 1)
+                runTrainings.add(new LongRun(longRunKilometers, vdotWorkoutModel.getMarathonKm(), localDates[x + 1], stageEnum));
         }
         return runTrainings;
     }
 
     private List<RunTraining> fillingWithThreeWorkouts(LocalDate[] localDates, int kilometers_per_week, StageEnum stageEnum) {
-        switch (stageEnum) {
-            case STAGE1:
-                break;
-            case STAGE2:
-                break;
-            case STAGE3:
-                break;
-            case STAGE4:
-                break;
+        List<RunTraining> runTrainings = new ArrayList<>();
+
+        for (int x = 0; x < localDates.length; x += 3) {
+
+            int warmUpAndHitchKilometers = calculatePercentage(kilometers_per_week, 20);
+            int longRunKilometers = calculatePercentage(kilometers_per_week, 50);
+            int easyRunKilometers = calculatePercentage(kilometers_per_week, 30);
+
+            if (localDates.length - x == 1) {
+                runTrainings.add(new EasyRun(easyRunKilometers, vdotWorkoutModel.getEasyKm(), localDates[x], stageEnum));
+                return runTrainings;
+            }
+
+            if (localDates.length - x == 2) {
+                runTrainings.add(new EasyRun(easyRunKilometers, vdotWorkoutModel.getEasyKm(), localDates[x], stageEnum));
+                runTrainings.add(new LongRun(longRunKilometers, vdotWorkoutModel.getMarathonKm(), localDates[x + 1], stageEnum));
+                return runTrainings;
+            }
+
+            switch (stageEnum) {
+                case STAGE1 -> {
+                    kilometers_per_week += increaseByPercentage(kilometers_per_week, 15.0);
+                    runTrainings.add(new SpeedSurgeRun(warmUpAndHitchKilometers, warmUpAndHitchKilometers, vdotWorkoutModel.getRepetition_400m(), vdotWorkoutModel.getEasyKm(), localDates[x], stageEnum));
+                }
+                case STAGE2 -> {
+                    kilometers_per_week += increaseByPercentage(kilometers_per_week, 15.0);
+                    runTrainings.add(new IntervalRun(warmUpAndHitchKilometers, warmUpAndHitchKilometers, vdotWorkoutModel.getInterval_400m(), vdotWorkoutModel.getEasyKm(), localDates[x], stageEnum));
+                }
+                case STAGE3 -> {
+                    kilometers_per_week += increaseByPercentage(kilometers_per_week, 15.0);
+                    runTrainings.add(new TempoRun(warmUpAndHitchKilometers, vdotWorkoutModel.getThreshold_mi(), localDates[x], stageEnum));
+                }
+                case STAGE4 -> {
+                    kilometers_per_week -= calculatePercentage(kilometers_per_week, 15);
+                    runTrainings.add(new TempoRun(warmUpAndHitchKilometers, vdotWorkoutModel.getThreshold_mi(), localDates[x], stageEnum));
+                }
+            }
+            runTrainings.add(new EasyRun(easyRunKilometers, vdotWorkoutModel.getEasyKm(), localDates[x + 1], stageEnum));
+            runTrainings.add(new LongRun(longRunKilometers, vdotWorkoutModel.getMarathonKm(), localDates[x + 2], stageEnum));
         }
-        return null;
+        return runTrainings;
     }
 
     private List<RunTraining> fillingWithFourWorkouts(LocalDate[] localDates, int kilometers_per_week, StageEnum stageEnum) {
-        switch (stageEnum) {
-            case STAGE1:
-                break;
-            case STAGE2:
-                break;
-            case STAGE3:
-                break;
-            case STAGE4:
-                break;
+        List<RunTraining> runTrainings = new ArrayList<>();
+        int warmUpAndHitchKilometers = calculatePercentage(kilometers_per_week, 20);
+        int longRunKilometers = calculatePercentage(kilometers_per_week, 50);
+        int easyRunKilometers = calculatePercentage(kilometers_per_week, 30);
+        for (int x = 0; x < localDates.length; x += 4) {
+
+            if (localDates.length - x == 1) {
+                runTrainings.add(new EasyRun(easyRunKilometers, vdotWorkoutModel.getEasyKm(), localDates[x], stageEnum));
+                return runTrainings;
+            }
+
+            if (localDates.length - x == 2) {
+                runTrainings.add(new EasyRun(easyRunKilometers, vdotWorkoutModel.getEasyKm(), localDates[x], stageEnum));
+                runTrainings.add(new LongRun(longRunKilometers, vdotWorkoutModel.getMarathonKm(), localDates[x + 1], stageEnum));
+                return runTrainings;
+            }
+
+            if (localDates.length - x == 3) {
+                runTrainings.add(new EasyRun(easyRunKilometers, vdotWorkoutModel.getEasyKm(), localDates[x], stageEnum));
+                runTrainings.add(new LongRun(longRunKilometers, vdotWorkoutModel.getMarathonKm(), localDates[x + 1], stageEnum));
+                runTrainings.add(new EasyRun(easyRunKilometers, vdotWorkoutModel.getEasyKm(), localDates[x + 2], stageEnum));
+                return runTrainings;
+            }
+
+
+            switch (stageEnum) {
+                case STAGE1 -> {
+                    kilometers_per_week += increaseByPercentage(kilometers_per_week, 15.0);
+                    runTrainings.add(new SpeedSurgeRun(warmUpAndHitchKilometers, warmUpAndHitchKilometers, vdotWorkoutModel.getRepetition_400m(), vdotWorkoutModel.getEasyKm(), localDates[x], stageEnum));
+                }
+                case STAGE2 -> {
+                    kilometers_per_week += increaseByPercentage(kilometers_per_week, 15.0);
+                    runTrainings.add(new IntervalRun(warmUpAndHitchKilometers, warmUpAndHitchKilometers, vdotWorkoutModel.getInterval_400m(), vdotWorkoutModel.getEasyKm(), localDates[x], stageEnum));
+                }
+                case STAGE3 -> {
+                    kilometers_per_week += increaseByPercentage(kilometers_per_week, 15.0);
+                    runTrainings.add(new TempoRun(warmUpAndHitchKilometers, vdotWorkoutModel.getThreshold_mi(), localDates[x], stageEnum));
+                }
+                case STAGE4 -> {
+                    kilometers_per_week -= calculatePercentage(kilometers_per_week, 15);
+                    runTrainings.add(new TempoRun(warmUpAndHitchKilometers, vdotWorkoutModel.getThreshold_mi(), localDates[x], stageEnum));
+                }
+            }
+            runTrainings.add(new EasyRun(easyRunKilometers, vdotWorkoutModel.getEasyKm(), localDates[x + 1], stageEnum));
+            runTrainings.add(new LongRun(longRunKilometers, vdotWorkoutModel.getMarathonKm(), localDates[x + 2], stageEnum));
+            runTrainings.add(new EasyRun(easyRunKilometers, vdotWorkoutModel.getEasyKm(), localDates[x + 3], stageEnum));
         }
-        return null;
+        return runTrainings;
     }
 
     private List<RunTraining> fillingWithFiveWorkouts(LocalDate[] localDates, int kilometers_per_week, StageEnum stageEnum) {
-        switch (stageEnum) {
-            case STAGE1:
-                break;
-            case STAGE2:
-                break;
-            case STAGE3:
-                break;
-            case STAGE4:
-                break;
+        List<RunTraining> runTrainings = new ArrayList<>();
+        int warmUpAndHitchKilometers = calculatePercentage(kilometers_per_week, 20);
+        int longRunKilometers = calculatePercentage(kilometers_per_week, 50);
+        int easyRunKilometers = calculatePercentage(kilometers_per_week, 30);
+        for (int x = 0; x < localDates.length; x += 5) {
+
+            if (localDates.length - x == 1) {
+                runTrainings.add(new EasyRun(easyRunKilometers, vdotWorkoutModel.getEasyKm(), localDates[x], stageEnum));
+                return runTrainings;
+            }
+
+            if (localDates.length - x == 2) {
+                runTrainings.add(new EasyRun(easyRunKilometers, vdotWorkoutModel.getEasyKm(), localDates[x], stageEnum));
+                runTrainings.add(new LongRun(longRunKilometers, vdotWorkoutModel.getMarathonKm(), localDates[x + 1], stageEnum));
+                return runTrainings;
+            }
+
+            if (localDates.length - x == 3) {
+                runTrainings.add(new EasyRun(easyRunKilometers, vdotWorkoutModel.getEasyKm(), localDates[x], stageEnum));
+                runTrainings.add(new LongRun(longRunKilometers, vdotWorkoutModel.getMarathonKm(), localDates[x + 1], stageEnum));
+                runTrainings.add(new EasyRun(easyRunKilometers, vdotWorkoutModel.getEasyKm(), localDates[x + 2], stageEnum));
+                return runTrainings;
+            }
+
+            if (localDates.length - x == 4) {
+                runTrainings.add(new SpeedSurgeRun(warmUpAndHitchKilometers, warmUpAndHitchKilometers, vdotWorkoutModel.getRepetition_400m(), vdotWorkoutModel.getEasyKm(), localDates[x], stageEnum));
+                runTrainings.add(new EasyRun(easyRunKilometers, vdotWorkoutModel.getEasyKm(), localDates[x], stageEnum));
+                runTrainings.add(new LongRun(longRunKilometers, vdotWorkoutModel.getMarathonKm(), localDates[x + 1], stageEnum));
+                runTrainings.add(new EasyRun(easyRunKilometers, vdotWorkoutModel.getEasyKm(), localDates[x + 2], stageEnum));
+                return runTrainings;
+            }
+
+            switch (stageEnum) {
+                case STAGE1 -> {
+                    kilometers_per_week += increaseByPercentage(kilometers_per_week, 15.0);
+                    runTrainings.add(new SpeedSurgeRun(warmUpAndHitchKilometers, warmUpAndHitchKilometers, vdotWorkoutModel.getRepetition_400m(), vdotWorkoutModel.getEasyKm(), localDates[x], stageEnum));
+                }
+                case STAGE2 -> {
+                    kilometers_per_week += increaseByPercentage(kilometers_per_week, 15.0);
+                    runTrainings.add(new IntervalRun(warmUpAndHitchKilometers, warmUpAndHitchKilometers, vdotWorkoutModel.getInterval_400m(), vdotWorkoutModel.getEasyKm(), localDates[x], stageEnum));
+                }
+                case STAGE3 -> {
+                    kilometers_per_week += increaseByPercentage(kilometers_per_week, 15.0);
+                    runTrainings.add(new TempoRun(warmUpAndHitchKilometers, vdotWorkoutModel.getThreshold_mi(), localDates[x], stageEnum));
+                }
+                case STAGE4 -> {
+                    kilometers_per_week -= calculatePercentage(kilometers_per_week, 15);
+                    runTrainings.add(new TempoRun(warmUpAndHitchKilometers, vdotWorkoutModel.getThreshold_mi(), localDates[x], stageEnum));
+                }
+            }
+            runTrainings.add(new EasyRun(easyRunKilometers, vdotWorkoutModel.getEasyKm(), localDates[x + 1], stageEnum));
+            runTrainings.add(new LongRun(longRunKilometers, vdotWorkoutModel.getMarathonKm(), localDates[x + 2], stageEnum));
+            runTrainings.add(new EasyRun(easyRunKilometers, vdotWorkoutModel.getEasyKm(), localDates[x + 3], stageEnum));
+            runTrainings.add(new EasyRun(easyRunKilometers, vdotWorkoutModel.getEasyKm(), localDates[x + 4], stageEnum));
         }
-        return null;
+        return runTrainings;
     }
+
 
     public static LocalDate[] getDatesBeforeEndDate(LocalDate endDate, DayOfWeek[] daysOfWeek) {
         List<LocalDate> validDates = new ArrayList<>();
@@ -157,7 +283,7 @@ public class RunPlanGenerator {
                 LocalDate dateTime = LocalDate.from(currentDate.atStartOfDay());
                 validDates.add(dateTime);
             }
-            currentDate = currentDate.plusDays(1); // Переход к следующей дате
+            currentDate = currentDate.plusDays(1);
         }
 
         return validDates.toArray(new LocalDate[0]);

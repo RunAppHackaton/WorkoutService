@@ -57,9 +57,10 @@ values (30, '8:30', '9:11', '17:56', '19:19', '30:40', '63:46', '98:14', '2:21:0
        (84, '3:25:05', '3:41:08', '7:18:05', '7:53:06', '12:45:02', '26:34', '40:42', '0:58:25', '2:02:24'),
        (85, '3:23:05', '3:39:06', '7:14:00', '7:48:08', '12:37:04', '26:19', '40:17', '0:57:50', '2:01:10');
 
-insert into vdot_workout (vdot, easy_mi, easy_km, marathon_mi, marathon_km, threshold_400m, threshold_1000m, threshold_mi,
-                  interval_400m, interval_1000m, interval_1200m, interval_mi, repetition_200m, repetition_400m,
-                  repetition_800m)
+insert into vdot_workout (vdot, easy_mi, easy_km, marathon_mi, marathon_km, threshold_400m, threshold_1000m,
+                          threshold_mi,
+                          interval_400m, interval_1000m, interval_1200m, interval_mi, repetition_200m, repetition_400m,
+                          repetition_800m)
 values (30, '12:40', '7:52', '11:01', '6:51', '2:33', '6:24', '10:18', '2:22', NULL, NULL, NULL, 67, '2:16', NULL),
        (31, '12:22', '7:41', '10:45', '6:41', '2:30', '6:14', '10:02', '2:18', NULL, NULL, NULL, 65, '2:12', NULL),
        (32, '12:04', '7:30', '10:29', '6:31', '2:26', '6:05', '9:47', '2:14', NULL, NULL, NULL, 63, '2:08', NULL),
@@ -116,6 +117,34 @@ values (30, '12:40', '7:52', '11:01', '6:51', '2:33', '6:24', '10:18', '2:22', N
        (83, '5:40', '3:31', '4:43', '2:56', '68', '2:49', '4:32', '62', '2:36', '3:07', '4:10', 27, '56', '1:53'),
        (84, '5:36', '3:29', '4:40', '2:54', '67', '2:48', '4:30', '61', '2:35', '3:05', '4:08', 27, '55', '1:52'),
        (85, '5:33', '3:27', '4:37', '2:52', '66', '2:46', '4:27', '61', '2:33', '3:03', '4:05', 27, '55', '1:51');
+
+insert into stage (name_enum, name, description)
+values ('STAGE1',
+        'Preparation',
+        'At the first stage, your weekly running distance will gradually increase and your speed will increase. This will prepare you for longer and harder workouts in the following stages. From time to time, leisurely runs will be replaced by intense and high-speed workouts'),
+       ('STAGE2',
+        'Acceleration',
+        'In the second stage, you will increase the duration of your run and your maximum oxygen consumption (VO2) - the maximum amount of oxygen your lungs can receive while running. The higher the MIC value, the more resilient you are! At this stage, you will mainly be doing interval training and long speed runs, as well as tempo runs.'),
+       ('STAGE3',
+        'Time to break records',
+        'In the third stage, the distances will increase significantly. Tempo workouts await you, designed to increase your anaerobic threshold (the higher it is, the longer you can maintain a fast pace). Interval training will not disappear anywhere, but there will be more tempo training at this stage. Long runs at a fast pace will also continue (where would we be without them).'),
+       ('STAGE4',
+        'Fine tuning',
+        'The fourth (and final) stage of this regime is designed to prepare you directly for the race. Combined speed and tempo training will keep your aerobic and anaerobic systems in good shape. Weekly running distances will become shorter because you need to be well rested before race day.');
+
+insert into run_type (type_name, description)
+values ('SPEED_SURGE',
+        'Short bursts of speed running designed to acclimate you to the fast pace and prepare you for more intense, longer workouts. Bursts of speed are not a sprint in the full sense of the word, but you need to run fast. Soon after the acceleration began, did you find it hard to breathe, and you simply couldn’t say more than two words at a time? So you''re doing everything right.'),
+       ('EASY_RUN',
+        'Calm runs warm up your muscles and joints and prepare them for faster, longer, more intense workouts. On these runs, it is important to maintain a comfortable pace that allows you to talk while running. Control your breathing; it should be calm and allow you to carry on a conversation while running. Since a comfortable pace is a relative concept, it can be different for different people. Choose for a run the pace that seems right for you.'),
+       ('LONG_RUN',
+        'Long runs will allow you to run longer and harder. Control your breathing; it should be calm and allow you to carry on a conversation while running. Since a comfortable pace is a relative concept, it can be different for different people. Choose for a run the pace that seems right for you.'),
+       ('INTERVAL_RUN',
+        'This type of interval is distance based and is designed to improve your ability to take in oxygen (also known as VO2 max). Imagine that you are participating in a 5K race and maintain that pace. If two minutes after you start you feel like it’s becoming difficult to breathe, then you’re doing everything right! While running like this, you can, in principle, speak in whole sentences, but you are unlikely to want to do this.'),
+       ('TEMPO_RUN',
+        'Tempo training will help raise your anaerobic threshold, allowing you to run longer and faster. Due to the short rest period, tempo training is physically and mentally challenging. But they are ideal for strengthening willpower! With every minute of interval it becomes more and more difficult to breathe calmly. While running like this, it is possible to maintain a conversation by exchanging a couple of sentences at a time. But it’s unlikely to have a full conversation.');
+
+
 
 
 

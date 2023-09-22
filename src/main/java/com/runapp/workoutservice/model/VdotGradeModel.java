@@ -17,7 +17,7 @@ public class VdotGradeModel {
 
     @Id
     @Column(name = "vdot")
-    private Long vdot;
+    private long vdot;
 
     @Column(name = "easy_1500m")
     private String easy1500m;

@@ -15,17 +15,14 @@ public class RunTypeModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     @Column(name = "type_name")
     @Enumerated(EnumType.STRING)
     private TrainingTypeEnum typeName;
 
-    @Column(name = "description")
+    @Column(name = "description", length = 1000)
     private String description;
-
-    @Column(name = "intervals")
-    private int intervals;
 
     @Column(name = "runtype_image_url")
     private String runtypeImageUrl;

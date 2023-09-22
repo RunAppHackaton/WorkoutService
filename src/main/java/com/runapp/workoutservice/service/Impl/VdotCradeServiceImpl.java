@@ -53,11 +53,11 @@ public class VdotCradeServiceImpl implements VdotGradeService {
     }
 
     public VdotGradeModel findClosestTimeByDistanceAndTime(DistanceTypeEnum distanceTypeEnum, String time) {
-         Duration duration = toDuration(time);
+        Duration duration = toDuration(time);
         VdotGradeModel vdotGradeModel = null;
         long timeInMintutes = toDuration(time).toMinutes();
         long min = Long.MAX_VALUE;
-//        try {
+        try {
             List<VdotGradeModel> vdotGradeModels = vdotGradeRepository.findAll();
             int count = 0;
 
@@ -70,13 +70,12 @@ public class VdotCradeServiceImpl implements VdotGradeService {
                 }
             }
             return vdotGradeModel;
-
-//        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-//            // Если время в неправильном формате, возвращаем null
-//            return null; //todo throw Exception
-//        } catch (IllegalArgumentException e) {
-//            return null; //todo throw Exception
-//        }
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+            System.err.println("Error occurred while processing numbers or array indices: " + e.getMessage());
+        } catch (IllegalArgumentException e) {
+            System.err.println("Error occurred while passing an invalid argument: " + e.getMessage());
+        }
+        return null;
     }
 
     private long getTimeInMinutes(DistanceTypeEnum distanceType, VdotGradeModel vdotGradeModel) {
@@ -108,11 +107,17 @@ public class VdotCradeServiceImpl implements VdotGradeService {
             case MARATHON -> {
                 return toDuration(vdotGradeModel.getMarathon()).toMinutes();
             }
-//            default -> {
-//                throw new IllegalArgumentException(distanceType.name() + " does not exist");
-//            }
         }
-        return 0;
+        throw new RuntimeException(distanceType + ": this type of training does not exist(types of training: " +
+                "\n 1.EASY_1500M " +
+                "\n 2.EASY_MILE " +
+                "\n 3.EASY_3000M " +
+                "\n 4.EASY_2MILE " +
+                "\n 5.EASY_5000M " +
+                "\n 6.EASY_10000M " +
+                "\n 7.EASY_15000M " +
+                "\n 8.HALF_MARATHON " +
+                "\n 9.MARATHON)");
     }
 
     private Duration toDuration(String time) {
@@ -130,6 +135,6 @@ public class VdotCradeServiceImpl implements VdotGradeService {
             int seconds = Integer.parseInt(timeParts[2]);
             return Duration.ofHours(hours).plusMinutes(minutes).plusSeconds(seconds);
         }
-        return null;
+        throw new RuntimeException(time + ": incorrect time format(the format should be in the form HH:MM:SS)");
     }
 }

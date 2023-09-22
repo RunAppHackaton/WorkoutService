@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,7 +17,7 @@ public class TrainingModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private long id;
 
     @Column(name = "kilometers")
     private double kilometers;
@@ -37,4 +39,7 @@ public class TrainingModel {
     @ManyToOne
     @JoinColumn(name = "RunPlan_id", referencedColumnName = "id")
     private RunPlanModel runPlan;
+
+    @OneToMany(mappedBy = "training", cascade = CascadeType.REMOVE)
+    private List<IntervalModel> intervalModelList;
 }

@@ -14,4 +14,6 @@ public class Interval {
     private IntervalRestTypeEnum intervalRestType;
     private int rest_metres;
     private String rest_pace;
+    private String timeBreak;
+    private String timeRunIntervals;
 }

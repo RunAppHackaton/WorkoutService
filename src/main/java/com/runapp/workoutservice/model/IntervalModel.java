@@ -1,5 +1,6 @@
 package com.runapp.workoutservice.model;
 
+import com.runapp.workoutservice.utill.IntervalRestTypeEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,15 +16,31 @@ public class IntervalModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private long id;
 
-    @Column(name = "interval")
-    private int interval;
+    @Column(name = "run_metres")
+    private int runMetres;
 
-    @Column(name = "time_for_a_break")
-    private int timeForABreak;
+    @Column(name = "run_pace")
+    private String runPace;
+
+    @Column(name = "rest_type")
+    @Enumerated(EnumType.STRING)
+    private IntervalRestTypeEnum intervalRestType;
+
+    @Column(name = "rest_metres")
+    private int restMetres;
+
+    @Column(name = "rest_pace")
+    private String restPace;
+
+    @Column(name = "time_break")
+    private String timeBreak;
+
+    @Column(name = "time_run_intervals")
+    private String timeRunIntervals;
 
     @ManyToOne
-    @JoinColumn(name = "Training_id", referencedColumnName = "id")
+    @JoinColumn(name = "training_id", referencedColumnName = "id")
     private TrainingModel training;
 }

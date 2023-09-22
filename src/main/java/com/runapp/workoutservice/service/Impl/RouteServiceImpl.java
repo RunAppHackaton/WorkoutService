@@ -44,10 +44,9 @@ public class RouteServiceImpl implements RouteService {
 
     @Override
     public RouteModel update(RouteModel entity) {
-//        if (!routeRepository.existsById(entity.getId())) {
-//            throw new NoEntityFoundException("Route with id: " + entity.getId() + " doesn't exist");
-//        }
-//        return routeRepository.save(entity);
-        return null;
+        if (!routeRepository.existsById(entity.getId())) {
+            throw new NoEntityFoundException("Route with id: " + entity.getId() + " doesn't exist");
+        }
+        return routeRepository.save(entity);
     }
 }
