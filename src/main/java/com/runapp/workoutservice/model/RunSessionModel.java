@@ -48,10 +48,6 @@ public class RunSessionModel {
     private String photosUrl;
 
     @ManyToOne
-    @JoinColumn(name = "route_id", referencedColumnName = "id")
-    private RouteModel route;
-
-    @ManyToOne
     @JoinColumn(name = "Training_id", referencedColumnName = "id")
     private TrainingModel training;
 
@@ -65,5 +61,8 @@ public class RunSessionModel {
     private int achievementId;
 
     @Column(name = "shoes_id")
-    private int shoesId;
+    private Long shoesId;
+
+    @OneToOne(mappedBy = "runSession", cascade = CascadeType.REMOVE)
+    private RouteModel route;
 }

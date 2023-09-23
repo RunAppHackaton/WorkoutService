@@ -1,5 +1,6 @@
 package com.runapp.workoutservice.dto.request;
 
+import com.runapp.workoutservice.model.RouteModel;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Positive;
@@ -21,7 +22,7 @@ public class RunSessionRequest {
     private LocalDateTime date;
 
     @Positive(message = "The 'distance' should be a positive number.")
-    private BigDecimal distance;
+    private BigDecimal distance_km;
 
     @NotNull(message = "The 'time' field is required.")
     private Duration time;
@@ -37,9 +38,6 @@ public class RunSessionRequest {
     @Size(max = 1000, message = "The 'notes' field cannot exceed 1000 characters.")
     private String notes;
 
-    @Positive(message = "The 'routeId' should be a positive number.")
-    private int routeId;
-
     @Positive(message = "The 'runTypeId' should be a positive number.")
     private int runTypeId;
 
@@ -54,4 +52,6 @@ public class RunSessionRequest {
 
     @Positive(message = "The 'teamId' should be a positive number.")
     private int teamId;
+
+    private RouteModel route;
 }

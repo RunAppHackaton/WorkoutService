@@ -1,5 +1,8 @@
 package com.runapp.workoutservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.runapp.workoutservice.utill.DayOfTheWeeksEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -38,5 +41,4 @@ public class RunPlanModel {
 
     @OneToMany(mappedBy = "runPlan", cascade = CascadeType.REMOVE)
     private List<TrainingModel> trainingModels;
-
 }

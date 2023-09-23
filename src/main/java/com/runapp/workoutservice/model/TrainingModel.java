@@ -1,5 +1,8 @@
 package com.runapp.workoutservice.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -36,9 +39,11 @@ public class TrainingModel {
     @JoinColumn(name = "RunType_id", referencedColumnName = "id")
     private RunTypeModel runType;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "RunPlan_id", referencedColumnName = "id")
     private RunPlanModel runPlan;
+
 
     @OneToMany(mappedBy = "training", cascade = CascadeType.REMOVE)
     private List<IntervalModel> intervalModelList;

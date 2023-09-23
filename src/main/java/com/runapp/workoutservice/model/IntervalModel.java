@@ -1,5 +1,6 @@
 package com.runapp.workoutservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.runapp.workoutservice.utill.IntervalRestTypeEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -40,6 +41,7 @@ public class IntervalModel {
     @Column(name = "time_run_intervals")
     private String timeRunIntervals;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "training_id", referencedColumnName = "id")
     private TrainingModel training;

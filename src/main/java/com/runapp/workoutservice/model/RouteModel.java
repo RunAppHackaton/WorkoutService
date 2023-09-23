@@ -25,7 +25,7 @@ public class RouteModel {
     @Column(name = "route_map_url")
     private String routeMapUrl;
 
-    @ManyToOne
-    @JoinColumn(name = "terrain_type_Id", referencedColumnName = "Id")
-    private TerrainTypeModel terrainType;
+    @OneToOne
+    @JoinColumn(name = "run_session_id", referencedColumnName = "id")
+    private RunSessionModel runSession;
 }
