@@ -1,5 +1,7 @@
 package com.runapp.workoutservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,13 +26,14 @@ public class RunSessionModel {
     private long id;
 
     @Column(name = "date")
-    private Date date;
+    private LocalDateTime date;
 
     @Column(name = "distance")
-    private int distance;
+    private BigDecimal distance_km;
+
 
     @Column(name = "time")
-    private Time time;
+    private Duration time;
 
     @Column(name = "pace")
     private int pace;
@@ -48,7 +51,7 @@ public class RunSessionModel {
     private String photosUrl;
 
     @ManyToOne
-    @JoinColumn(name = "Training_id", referencedColumnName = "id")
+    @JoinColumn(name = "training_id", referencedColumnName = "id")
     private TrainingModel training;
 
     @Column(name = "user_id")
@@ -61,7 +64,7 @@ public class RunSessionModel {
     private int achievementId;
 
     @Column(name = "shoes_id")
-    private Long shoesId;
+    private int shoesId;
 
     @OneToOne(mappedBy = "runSession", cascade = CascadeType.REMOVE)
     private RouteModel route;

@@ -5,8 +5,11 @@ import com.runapp.workoutservice.dto.request.RunSessionImageDeleteRequest;
 import com.runapp.workoutservice.dto.response.DeleteResponse;
 import com.runapp.workoutservice.exception.NoEntityFoundException;
 import com.runapp.workoutservice.feignClient.*;
+import com.runapp.workoutservice.model.RouteModel;
 import com.runapp.workoutservice.model.RunSessionModel;
+import com.runapp.workoutservice.repository.RouteRepository;
 import com.runapp.workoutservice.repository.RunSessionRepository;
+import com.runapp.workoutservice.repository.TrainingRepository;
 import com.runapp.workoutservice.service.RunSessionService;
 import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,31 +30,49 @@ public class RunSessionServiceImpl implements RunSessionService {
     private final ShoesServiceClient shoesServiceClient;
     private final ProfileServiceClient profileServiceClient;
     private final GuildServiceClient guildServiceClient;
+    private final TrainingRepository trainingRepository;
+    private final RouteRepository routeRepository;
 
     @Value("${storage-directory}")
     private String storageDirectory;
 
     @Autowired
-    public RunSessionServiceImpl(RunSessionRepository runSessionRepository, StorageServiceClient storageServiceClient, AchievementServiceClient achievementServiceClient, ShoesServiceClient shoesServiceClient, ProfileServiceClient profileServiceClient, GuildServiceClient guildServiceClient) {
+    public RunSessionServiceImpl(RunSessionRepository runSessionRepository, StorageServiceClient storageServiceClient, AchievementServiceClient achievementServiceClient, ShoesServiceClient shoesServiceClient, ProfileServiceClient profileServiceClient, GuildServiceClient guildServiceClient, TrainingRepository trainingRepository, RouteRepository routeRepository) {
         this.runSessionRepository = runSessionRepository;
         this.storageServiceClient = storageServiceClient;
         this.achievementServiceClient = achievementServiceClient;
         this.shoesServiceClient = shoesServiceClient;
         this.profileServiceClient = profileServiceClient;
         this.guildServiceClient = guildServiceClient;
+        this.trainingRepository = trainingRepository;
+        this.routeRepository = routeRepository;
     }
 
     @Override
     public RunSessionModel add(RunSessionModel entity) {
+        if (!trainingRepository.existsById(entity.getTraining().getId()))
+            throw new NoEntityFoundException("Training with id: " + entity.getTraining().getId() + " doesn't exist");
         try {
             profileServiceClient.getUserById(entity.getUserId()).getBody();
-            guildServiceClient.getTeamById(entity.getTeamId());
-            shoesServiceClient.getShoesById(entity.getShoesId());
-            //todo обдумать момент с ачивками
-//            achievementServiceClient.getAchievementsByStoryId(entity.);
         } catch (FeignException e) {
-            throw new NoEntityFoundException("Exception");
+            throw new NoEntityFoundException("Profile with id: " + entity.getUserId() + " doesn't exist");
         }
+        try {
+            guildServiceClient.getTeamById(entity.getTeamId());
+        } catch (FeignException e) {
+            throw new NoEntityFoundException("Team with id: " + entity.getTeamId() + " doesn't exist");
+        }
+        try {
+            shoesServiceClient.getShoesById((long) entity.getShoesId());
+        } catch (FeignException e) {
+            throw new NoEntityFoundException("Shoes with id: " + entity.getShoesId() + " doesn't exist");
+        }
+        RouteModel routeModel = new RouteModel();
+        routeModel.setRunSession(entity);
+        routeModel.setRouteMapUrl("DEFAULT");
+        routeModel.setStartLocation(entity.getRoute().getStartLocation());
+        routeModel.setEndLocation(entity.getRoute().getEndLocation());
+        routeRepository.save(entity.getRoute());
         return runSessionRepository.save(entity);
     }
 
@@ -80,12 +101,18 @@ public class RunSessionServiceImpl implements RunSessionService {
         }
         try {
             profileServiceClient.getUserById(entity.getUserId()).getBody();
-            guildServiceClient.getTeamById(entity.getTeamId());
-            shoesServiceClient.getShoesById(entity.getShoesId());
-            //todo обдумать момент с ачивками
-//            achievementServiceClient.getAchievementsByStoryId(entity.);
         } catch (FeignException e) {
-            throw new NoEntityFoundException("Exception");
+            throw new NoEntityFoundException("Profile with id: " + entity.getUserId() + " doesn't exist");
+        }
+        try {
+            guildServiceClient.getTeamById(entity.getTeamId());
+        } catch (FeignException e) {
+            throw new NoEntityFoundException("Team with id: " + entity.getTeamId() + " doesn't exist");
+        }
+        try {
+            shoesServiceClient.getShoesById((long) entity.getShoesId());
+        } catch (FeignException e) {
+            throw new NoEntityFoundException("Shoes with id: " + entity.getShoesId() + " doesn't exist");
         }
         return runSessionRepository.save(entity);
     }

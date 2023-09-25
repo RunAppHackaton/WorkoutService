@@ -1,13 +1,13 @@
 package com.runapp.workoutservice.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.runapp.workoutservice.model.RouteModel;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PastOrPresent;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
+import com.runapp.workoutservice.model.TrainingModel;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.time.Duration;
@@ -17,8 +17,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RunSessionRequest {
+
     @NotNull(message = "The 'date' field is required.")
-    @PastOrPresent(message = "The 'date' should be in the past or present.")
+    @Past(message = "The 'date' should be in the past.")
     private LocalDateTime date;
 
     @Positive(message = "The 'distance' should be a positive number.")
@@ -38,9 +39,6 @@ public class RunSessionRequest {
     @Size(max = 1000, message = "The 'notes' field cannot exceed 1000 characters.")
     private String notes;
 
-    @Positive(message = "The 'runTypeId' should be a positive number.")
-    private int runTypeId;
-
     @Positive(message = "The 'achievementId' should be a positive number.")
     private int achievementId;
 
@@ -54,4 +52,6 @@ public class RunSessionRequest {
     private int teamId;
 
     private RouteModel route;
+
+    private long training_id;
 }

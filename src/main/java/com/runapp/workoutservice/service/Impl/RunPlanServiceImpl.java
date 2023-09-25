@@ -14,6 +14,7 @@ import jakarta.persistence.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -71,6 +72,7 @@ public class RunPlanServiceImpl implements RunPlanService {
         runPlanModel.setStartingWeeklyVolume(runPlanRequest.getKilometers_per_week());
         runPlanModel.setFinalDate(runPlanRequest.getGoal_date());
         runPlanModel.setUserId(runPlanRequest.getUser_id());
+        List<TrainingModel> trainingModels = new ArrayList<>();
         runPlanRepository.save(runPlanModel);
         for (RunTraining runTraining : runTrainings) {
             TrainingModel trainingModel = new TrainingModel();
@@ -80,9 +82,11 @@ public class RunPlanServiceImpl implements RunPlanService {
             trainingModel.setStage(stageRepository.findByStageEnum(runTraining.getStageEnum()));
             trainingModel.setRunType(runTypeRepository.findByTypeName(runTraining.getTrainingType()));
             trainingModel.setRunPlan(runPlanModel);
+            trainingModels.add(trainingModel);
             trainingRepository.save(trainingModel);
             if (runTraining.getIntervals() != null) fillingDatabaseIntervals(runTraining.getIntervals(), trainingModel);
         }
+        runPlanModel.setTrainingModels(trainingModels);
         return runPlanModel;
     }
 

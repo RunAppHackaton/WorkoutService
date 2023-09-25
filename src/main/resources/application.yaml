@@ -16,7 +16,7 @@ management:
     health:
       show-details: always
 springdoc:
-  packagesToScan: com.runapp.achievementservice
+  packagesToScan: com.runapp.workoutservice
 
 eureka:
   client:
@@ -29,7 +29,7 @@ spring:
     init:
       mode: always
   datasource:
-    url: jdbc:postgresql://localhost:5432/AchievementService
+    url: jdbc:postgresql://localhost:5432/Run_App
     username: postgres
     password: 25032001
     driver-class-name: org.postgresql.Driver

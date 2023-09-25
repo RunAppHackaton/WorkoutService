@@ -10,6 +10,12 @@ import com.runapp.workoutservice.service.Impl.VdotCradeServiceImpl;
 import com.runapp.workoutservice.service.Impl.VdotWorkoutServiceImpl;
 import com.runapp.workoutservice.service.dtoMapper.RunPlanDtoMapper;
 import com.runapp.workoutservice.service.runPlanService.RunTraining;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +24,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/run-plan")
+@Tag(name = "Run Plan Management", description = "Operations related to run plans")
 public class RunPlanController {
     private final VdotWorkoutServiceImpl vdotWorkoutService;
     private final VdotCradeServiceImpl vdotCradeService;
@@ -33,6 +40,11 @@ public class RunPlanController {
     }
 
     @PostMapping
+    @Operation(summary = "Create a new run plan", description = "Create a new run plan with the provided data")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Run plan created"),
+            @ApiResponse(responseCode = "400", description = "Invalid input"),
+    })
     public ResponseEntity<Object> createPlan(@RequestBody RunPlanRequest runPlanRequest) {
         // todo изменить ответ
         RunPlanGenerator runPlanGenerator = new RunPlanGenerator(vdotWorkoutService, vdotCradeService, runPlanRequest);
@@ -41,12 +53,18 @@ public class RunPlanController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RunPlanLongResponse> getRunPlanById(@PathVariable Long id) {
+    @Operation(summary = "Get a run plan by ID", description = "Retrieve a run plan by its ID")
+    @ApiResponse(responseCode = "200", description = "Run plan found")
+    @ApiResponse(responseCode = "404", description = "Run plan not found")
+    public ResponseEntity<RunPlanLongResponse> getRunPlanById(@Parameter(description = "Run plan ID", required = true)
+                                                              @PathVariable Long id) {
         RunPlanModel runPlan = runPlanService.getById(id);
         return ResponseEntity.ok().body(runPlanDtoMapper.toLongDto(runPlan));
     }
 
     @GetMapping("/short")
+    @Operation(summary = "Get all short run plans", description = "Retrieve a list of all short run plans")
+    @ApiResponse(responseCode = "200", description = "Short run plans")
     public ResponseEntity<List<RunPlanShortResponse>> getAllShortRunPlans() {
         List<RunPlanModel> runPlans = runPlanService.getAll();
         List<RunPlanShortResponse> runPlanLongResponses = runPlanDtoMapper.toShortDto(runPlans);
@@ -54,6 +72,8 @@ public class RunPlanController {
     }
 
     @GetMapping("/full")
+    @Operation(summary = "Get all long run plans", description = "Retrieve a list of all long run plans")
+    @ApiResponse(responseCode = "200", description = "Long run plans found")
     public ResponseEntity<List<RunPlanLongResponse>> getAllLongRunPlans() {
         List<RunPlanModel> runPlans = runPlanService.getAll();
         List<RunPlanLongResponse> runPlanLongResponses = runPlanDtoMapper.toLongDto(runPlans);
@@ -61,6 +81,9 @@ public class RunPlanController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Delete a run plan by ID", description = "Delete a run plan by its ID")
+    @ApiResponse(responseCode = "204", description = "Run plan deleted")
+    @ApiResponse(responseCode = "404", description = "Run plan not found")
     public ResponseEntity<Void> deleteRunPlan(@PathVariable Long id) {
         runPlanService.deleteById(id);
         return ResponseEntity.noContent().build();

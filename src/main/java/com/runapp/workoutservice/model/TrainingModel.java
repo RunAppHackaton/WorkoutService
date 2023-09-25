@@ -47,4 +47,8 @@ public class TrainingModel {
 
     @OneToMany(mappedBy = "training", cascade = CascadeType.REMOVE)
     private List<IntervalModel> intervalModelList;
+
+    public TrainingModel(long id) {
+        this.id = id;
+    }
 }

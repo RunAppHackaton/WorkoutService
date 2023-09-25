@@ -11,6 +11,6 @@ import java.util.List;
 @FeignClient(name = "guild-service")
 public interface GuildServiceClient {
 
-    @GetMapping("/users/{id}")
+    @GetMapping("/teams/{id}")
     ResponseEntity<TeamResponse> getTeamById(@PathVariable int id);
 }
