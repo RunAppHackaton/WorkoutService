@@ -1,9 +1,9 @@
-package com.runapp.workoutservice.service.Impl;
+package com.runapp.workoutservice.service.serviceImpl;
 
 import com.runapp.workoutservice.exception.NoEntityFoundException;
 import com.runapp.workoutservice.model.RunSessionModel;
 import com.runapp.workoutservice.repository.RunSessionRepository;
-import com.runapp.workoutservice.service.RunSessionService;
+import com.runapp.workoutservice.service.serviceTemplate.RunSessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +26,8 @@ public class RunSessionServiceImpl implements RunSessionService {
 
     @Override
     public RunSessionModel getById(Long id) {
-        return runSessionRepository.findById(id).orElseThrow(() -> new NoEntityFoundException("RunSession with id: " + id + " doesn't exist"));
+        return runSessionRepository.findById(id)
+                .orElseThrow(() -> new NoEntityFoundException("RunSession with id: " + id + " doesn't exist"));
     }
 
     @Override

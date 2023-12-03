@@ -1,16 +1,16 @@
-package com.runapp.workoutservice.service.Impl;
+package com.runapp.workoutservice.service.serviceImpl;
 
 import com.runapp.workoutservice.exception.NoEntityFoundException;
 import com.runapp.workoutservice.model.IntervalModel;
 import com.runapp.workoutservice.repository.IntervalsRepository;
-import com.runapp.workoutservice.service.IntervalsService;
+import com.runapp.workoutservice.service.serviceTemplate.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class IntervalsServiceImpl implements IntervalsService {
+public class IntervalsServiceImpl implements GenericService<IntervalModel> {
 
     private final IntervalsRepository intervalsRepository;
 

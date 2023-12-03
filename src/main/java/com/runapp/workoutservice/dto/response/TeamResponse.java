@@ -12,22 +12,13 @@ import java.util.List;
 public class TeamResponse {
 
     private int id;
-
     private String teamName;
-
     private String descriptionTeam;
-
     private LocalDateTime createDate;
-
     private String teamImageUrl;
-
     private Long ranking;
-
     private int storyId;
-
     private int maximumPlayers;
-
     private int adminId;
-
     private List<UserTeamResponse> users_in_team;
 }

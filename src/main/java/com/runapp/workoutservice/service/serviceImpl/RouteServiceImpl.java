@@ -1,16 +1,16 @@
-package com.runapp.workoutservice.service.Impl;
+package com.runapp.workoutservice.service.serviceImpl;
 
 import com.runapp.workoutservice.exception.NoEntityFoundException;
 import com.runapp.workoutservice.model.RouteModel;
 import com.runapp.workoutservice.repository.RouteRepository;
-import com.runapp.workoutservice.service.RouteService;
+import com.runapp.workoutservice.service.serviceTemplate.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class RouteServiceImpl implements RouteService {
+public class RouteServiceImpl implements GenericService<RouteModel> {
 
     private final RouteRepository routeRepository;
 

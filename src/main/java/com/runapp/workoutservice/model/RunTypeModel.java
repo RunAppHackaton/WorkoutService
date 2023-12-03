@@ -26,4 +26,8 @@ public class RunTypeModel {
 
     @Column(name = "runtype_image_url")
     private String runtypeImageUrl;
+
+    public RunTypeModel(long id) {
+        this.id = id;
+    }
 }

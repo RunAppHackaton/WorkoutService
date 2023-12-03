@@ -1,5 +1,6 @@
 package com.runapp.workoutservice.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.runapp.workoutservice.utill.DayOfTheWeeksEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -36,7 +37,6 @@ public class RunPlanModel {
     @Column(name = "user_id")
     private int userId;
 
-    @OneToMany(mappedBy = "runPlan", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "runPlan", cascade = CascadeType.ALL)
     private List<TrainingModel> trainingModels;
-
 }

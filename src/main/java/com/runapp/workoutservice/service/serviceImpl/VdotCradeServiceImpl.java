@@ -1,9 +1,9 @@
-package com.runapp.workoutservice.service.Impl;
+package com.runapp.workoutservice.service.serviceImpl;
 
 import com.runapp.workoutservice.exception.NoEntityFoundException;
 import com.runapp.workoutservice.model.VdotGradeModel;
 import com.runapp.workoutservice.repository.VdotGradeRepository;
-import com.runapp.workoutservice.service.VdotGradeService;
+import com.runapp.workoutservice.service.serviceTemplate.GenericService;
 import com.runapp.workoutservice.utill.DistanceTypeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,7 @@ import java.time.Duration;
 import java.util.List;
 
 @Service
-public class VdotCradeServiceImpl implements VdotGradeService {
+public class VdotCradeServiceImpl implements GenericService<VdotGradeModel> {
 
     private final VdotGradeRepository vdotGradeRepository;
 

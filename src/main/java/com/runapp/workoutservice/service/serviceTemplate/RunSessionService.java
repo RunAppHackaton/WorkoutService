@@ -1,4 +1,4 @@
-package com.runapp.workoutservice.service;
+package com.runapp.workoutservice.service.serviceTemplate;
 
 import com.runapp.workoutservice.model.RunSessionModel;
 

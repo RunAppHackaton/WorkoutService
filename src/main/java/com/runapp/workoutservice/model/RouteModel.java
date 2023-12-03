@@ -2,30 +2,24 @@ package com.runapp.workoutservice.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "Route")
 public class RouteModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private long id;
 
-    @Column(name = "start_location")
-    private String startLocation;
+    @OneToMany(mappedBy = "route", cascade = CascadeType.ALL)
+    private List<RoutePointModel> routePoints;
 
-    @Column(name = "end_location")
-    private String endLocation;
-
-    @Column(name = "route_map_url")
-    private String routeMapUrl;
-
-    @ManyToOne
-    @JoinColumn(name = "terrain_type_Id", referencedColumnName = "Id")
-    private TerrainTypeModel terrainType;
 }
