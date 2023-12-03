@@ -27,4 +27,8 @@ public class StageModel {
 
     @Column(name = "description", length = 1000)
     private String description;
+
+    public StageModel(long id) {
+        this.id = id;
+    }
 }

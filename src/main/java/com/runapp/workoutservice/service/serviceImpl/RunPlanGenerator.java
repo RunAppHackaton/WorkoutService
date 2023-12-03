@@ -1,9 +1,8 @@
-package com.runapp.workoutservice.service.Impl;
+package com.runapp.workoutservice.service.serviceImpl;
 
 import com.runapp.workoutservice.dto.request.RunPlanRequest;
 import com.runapp.workoutservice.model.VdotGradeModel;
 import com.runapp.workoutservice.model.VdotWorkoutModel;
-import com.runapp.workoutservice.repository.VdotWorkoutRepository;
 import com.runapp.workoutservice.service.runPlanService.*;
 import com.runapp.workoutservice.utill.DistanceTypeEnum;
 import com.runapp.workoutservice.utill.StageEnum;

@@ -1,4 +1,4 @@
-package com.runapp.workoutservice.service.Impl;
+package com.runapp.workoutservice.service.serviceImpl;
 
 import com.runapp.workoutservice.dto.request.RunPlanRequest;
 import com.runapp.workoutservice.exception.NoEntityFoundException;
@@ -6,14 +6,15 @@ import com.runapp.workoutservice.model.IntervalModel;
 import com.runapp.workoutservice.model.RunPlanModel;
 import com.runapp.workoutservice.model.TrainingModel;
 import com.runapp.workoutservice.repository.*;
-import com.runapp.workoutservice.service.RunPlanService;
+import com.runapp.workoutservice.service.serviceTemplate.RunPlanService;
 import com.runapp.workoutservice.service.runPlanService.Interval;
 import com.runapp.workoutservice.service.runPlanService.RunTraining;
-import com.runapp.workoutservice.utill.IntervalRestTypeEnum;
-import jakarta.persistence.*;
+import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -71,7 +72,15 @@ public class RunPlanServiceImpl implements RunPlanService {
         runPlanModel.setStartingWeeklyVolume(runPlanRequest.getKilometers_per_week());
         runPlanModel.setFinalDate(runPlanRequest.getGoal_date());
         runPlanModel.setUserId(runPlanRequest.getUser_id());
+        List<TrainingModel> trainingModels = fillAndSaveTraining(runTrainings, runPlanModel);
+        runPlanModel.setTrainingModels(trainingModels);
         runPlanRepository.save(runPlanModel);
+        return runPlanModel;
+    }
+
+    private List<TrainingModel> fillAndSaveTraining(List<RunTraining> runTrainings, RunPlanModel runPlanModel) {
+        List<TrainingModel> trainingModels = new ArrayList<>();
+
         for (RunTraining runTraining : runTrainings) {
             TrainingModel trainingModel = new TrainingModel();
             trainingModel.setKilometers(runTraining.getTotalDistanceKilometers());
@@ -80,13 +89,17 @@ public class RunPlanServiceImpl implements RunPlanService {
             trainingModel.setStage(stageRepository.findByStageEnum(runTraining.getStageEnum()));
             trainingModel.setRunType(runTypeRepository.findByTypeName(runTraining.getTrainingType()));
             trainingModel.setRunPlan(runPlanModel);
-            trainingRepository.save(trainingModel);
-            if (runTraining.getIntervals() != null) fillingDatabaseIntervals(runTraining.getIntervals(), trainingModel);
+            trainingModels.add(trainingModel);
+            if (runTraining.getIntervals() != null) {
+                trainingModel.setIntervalModelList(fillingDatabaseIntervals(runTraining.getIntervals(), trainingModel));
+            }
         }
-        return runPlanModel;
+        return trainingModels;
     }
 
-    private void fillingDatabaseIntervals(Interval[] intervals, TrainingModel trainingModel) {
+    private List<IntervalModel> fillingDatabaseIntervals(Interval[] intervals, TrainingModel trainingModel) {
+        List<IntervalModel> intervalModels = new ArrayList<>();
+
         for (Interval interval : intervals) {
             IntervalModel intervalModel = new IntervalModel();
             intervalModel.setRunMetres(interval.getRun_metres());
@@ -97,7 +110,9 @@ public class RunPlanServiceImpl implements RunPlanService {
             intervalModel.setTraining(trainingModel);
             intervalModel.setTimeBreak(interval.getTimeBreak());
             intervalModel.setTimeRunIntervals(interval.getTimeRunIntervals());
-            intervalsRepository.save(intervalModel);
+
+            intervalModels.add(intervalModel);
         }
+        return intervalModels;
     }
 }

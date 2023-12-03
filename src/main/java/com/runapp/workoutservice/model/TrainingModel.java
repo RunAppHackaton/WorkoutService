@@ -1,11 +1,14 @@
 package com.runapp.workoutservice.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Objects;
 
 @Data
 @NoArgsConstructor
@@ -29,17 +32,18 @@ public class TrainingModel {
     private double hitch;
 
     @ManyToOne
-    @JoinColumn(name = "Stage_id", referencedColumnName = "id")
+    @JoinColumn(name = "Stage_id")
     private StageModel stage;
 
     @ManyToOne
-    @JoinColumn(name = "RunType_id", referencedColumnName = "id")
+    @JoinColumn(name = "RunType_id")
     private RunTypeModel runType;
 
-    @ManyToOne
-    @JoinColumn(name = "RunPlan_id", referencedColumnName = "id")
+    @ManyToOne()
+    @JoinColumn(name = "RunPlan_id")
+    @JsonIgnore
     private RunPlanModel runPlan;
 
-    @OneToMany(mappedBy = "training", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "training", cascade = CascadeType.ALL)
     private List<IntervalModel> intervalModelList;
 }
