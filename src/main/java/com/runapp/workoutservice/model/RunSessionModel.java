@@ -4,11 +4,13 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.engine.internal.Cascade;
 
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Time;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -24,13 +26,13 @@ public class RunSessionModel {
     private long id;
 
     @Column(name = "date")
-    private Date date;
+    private LocalDate date;
 
     @Column(name = "distance")
     private int distance;
 
     @Column(name = "time")
-    private Time time;
+    private Duration time;
 
     @Column(name = "pace")
     private int pace;
@@ -47,7 +49,7 @@ public class RunSessionModel {
     @Column(name = "photos_url")
     private String photosUrl;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "route_id", referencedColumnName = "id")
     private RouteModel route;
 
@@ -57,12 +59,6 @@ public class RunSessionModel {
 
     @Column(name = "user_id")
     private int userId;
-
-    @Column(name = "team_id")
-    private int teamId;
-
-    @Column(name = "achievement_id")
-    private int achievementId;
 
     @Column(name = "shoes_id")
     private int shoesId;

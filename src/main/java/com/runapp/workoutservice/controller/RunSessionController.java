@@ -46,7 +46,6 @@ public class RunSessionController {
     @GetMapping("/{id}")
     @Operation(summary = "Get a run session by ID", description = "Retrieve a run session by its ID")
     @ApiResponse(responseCode = "200", description = "Run session found", content = @Content(schema = @Schema(implementation = RunSessionResponse.class)))
-    @ApiResponse(responseCode = "404", description = "Run session not found")
     public ResponseEntity<RunSessionResponse> getRunSessionById(
             @Parameter(description = "Run session ID", required = true)
             @PathVariable Long id) {
@@ -61,6 +60,7 @@ public class RunSessionController {
             @Parameter(description = "Run session data", required = true)
             @RequestBody RunSessionRequest runSessionRequest) {
         RunSessionModel runSession = runSessionDtoMapper.toModel(runSessionRequest);
+
         RunSessionModel savedRunSession = runSessionService.add(runSession);
         return new ResponseEntity<>(runSessionDtoMapper.toResponse(savedRunSession), HttpStatus.CREATED);
     }

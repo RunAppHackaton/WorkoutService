@@ -2,6 +2,7 @@ package com.runapp.workoutservice.service.serviceImpl;
 
 import com.runapp.workoutservice.dto.request.RunPlanRequest;
 import com.runapp.workoutservice.exception.NoEntityFoundException;
+import com.runapp.workoutservice.feignClient.ProfileServiceClient;
 import com.runapp.workoutservice.model.IntervalModel;
 import com.runapp.workoutservice.model.RunPlanModel;
 import com.runapp.workoutservice.model.TrainingModel;
@@ -9,35 +10,27 @@ import com.runapp.workoutservice.repository.*;
 import com.runapp.workoutservice.service.serviceTemplate.RunPlanService;
 import com.runapp.workoutservice.service.runPlanService.Interval;
 import com.runapp.workoutservice.service.runPlanService.RunTraining;
-import jakarta.persistence.EntityManager;
-import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.runapp.workoutservice.utill.existHandler.ExistEnum;
+import com.runapp.workoutservice.utill.existHandler.ExistHandlerRegistry;
+import feign.FeignException;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class RunPlanServiceImpl implements RunPlanService {
-
     private final RunPlanRepository runPlanRepository;
-    private final IntervalsRepository intervalsRepository;
     private final RunTypeRepository runTypeRepository;
     private final StageRepository stageRepository;
-    private final TrainingRepository trainingRepository;
-
-    @Autowired
-    public RunPlanServiceImpl(RunPlanRepository runPlanRepository, IntervalsRepository intervalsRepository, RunTypeRepository runTypeRepository, StageRepository stageRepository, TrainingRepository trainingRepository) {
-        this.runPlanRepository = runPlanRepository;
-        this.intervalsRepository = intervalsRepository;
-        this.runTypeRepository = runTypeRepository;
-        this.stageRepository = stageRepository;
-        this.trainingRepository = trainingRepository;
-    }
+    private final ExistHandlerRegistry existHandlerRegistry;
 
     @Override
     public RunPlanModel add(RunPlanModel entity) {
-        return runPlanRepository.save(entity);
+        existHandlerRegistry.handleRequest(ExistEnum.USER, entity.getUserId());
+        throw new NoEntityFoundException("User with id: " + entity.getUserId() + " doesn't exist"); // todo
     }
 
     @Override
@@ -60,6 +53,7 @@ public class RunPlanServiceImpl implements RunPlanService {
 
     @Override
     public RunPlanModel update(RunPlanModel entity) {
+        existHandlerRegistry.handleRequest(ExistEnum.USER, entity.getUserId());
         if (!runPlanRepository.existsById(entity.getId())) {
             throw new NoEntityFoundException("RunPlan with id: " + entity.getId() + " doesn't exist");
         }
@@ -67,6 +61,7 @@ public class RunPlanServiceImpl implements RunPlanService {
     }
 
     public RunPlanModel createPlan(List<RunTraining> runTrainings, RunPlanRequest runPlanRequest) {
+        existHandlerRegistry.handleRequest(ExistEnum.USER, runPlanRequest.getUser_id());
         RunPlanModel runPlanModel = new RunPlanModel();
         runPlanModel.setDayOfTheWeek(runPlanRequest.getTraining_days().length);
         runPlanModel.setStartingWeeklyVolume(runPlanRequest.getKilometers_per_week());

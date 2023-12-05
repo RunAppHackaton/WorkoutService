@@ -1,5 +1,6 @@
 package com.runapp.workoutservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,6 +20,7 @@ public class RoutePointModel {
 
     @ManyToOne
     @JoinColumn(name = "route_id", referencedColumnName = "id")
+    @JsonIgnore
     private RouteModel route;
 
     @Column(name = "latitude")

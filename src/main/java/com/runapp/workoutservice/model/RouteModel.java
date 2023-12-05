@@ -1,8 +1,7 @@
 package com.runapp.workoutservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -22,4 +21,7 @@ public class RouteModel {
     @OneToMany(mappedBy = "route", cascade = CascadeType.ALL)
     private List<RoutePointModel> routePoints;
 
+    public RouteModel(List<RoutePointModel> routePoints) {
+        this.routePoints = routePoints;
+    }
 }

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @FeignClient(name = "profile-service")
-public interface ProfileServiceImpl {
+public interface ProfileServiceClient {
 
     @GetMapping("/users/{userId}")
     ResponseEntity<UserResponse> getUserById(@PathVariable int userId);

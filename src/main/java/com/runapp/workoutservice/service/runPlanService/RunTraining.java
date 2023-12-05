@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
 @Data
-@Builder
+@AllArgsConstructor
 public abstract class RunTraining {
     private int warmUpKilometers;
     private int hitchKilometers;

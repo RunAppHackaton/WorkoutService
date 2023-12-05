@@ -2,7 +2,6 @@ package com.runapp.workoutservice.dto.request;
 
 import com.runapp.workoutservice.model.RoutePointModel;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -11,7 +10,6 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -20,10 +18,10 @@ import java.util.List;
 public class RunSessionRequest {
 
     @Positive(message = "The 'distance' should be a positive number.")
-    private BigDecimal distance;
+    private BigDecimal distance_km;
 
     @NotNull(message = "The 'time' field is required.")
-    private Duration time;
+    private Duration duration_time;
 
     @Positive(message = "The 'pace' should be a positive number.")
     private BigDecimal pace;
@@ -37,19 +35,13 @@ public class RunSessionRequest {
     @Positive(message = "The 'routeId' should be a positive number.")
     private int routeId;
 
-    @Positive(message = "The 'achievementId' should be a positive number.")
-    private int achievementId;
-
     @Positive(message = "The 'shoesId' should be a positive number.")
     private int shoesId;
 
     @Positive(message = "The 'userId' should be a positive number.")
     private int userId;
 
-    @Positive(message = "The 'teamId' should be a positive number.")
-    private int teamId;
-
-    private List<RoutePointModel> route_points;
+    private List<RoutePointRequest> route_points;
 
     private int training_id;
 

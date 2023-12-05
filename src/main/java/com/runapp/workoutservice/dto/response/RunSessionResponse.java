@@ -2,22 +2,20 @@ package com.runapp.workoutservice.dto.response;
 
 import com.runapp.workoutservice.model.RouteModel;
 import com.runapp.workoutservice.model.TrainingModel;
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.sql.Date;
-import java.sql.Time;
+import java.time.Duration;
+import java.time.LocalDate;
 
 @Data
 @Builder
 public class RunSessionResponse {
     private long id;
-    private Date date;
+    private LocalDate date;
     private int distance;
-    private Time time;
+    private Duration duration_time;
     private int pace;
     private int caloriesBurned;
     private String weatherConditions;
@@ -26,7 +24,5 @@ public class RunSessionResponse {
     private RouteModel route;
     private TrainingModel training;
     private int userId;
-    private int teamId;
-    private int achievementId;
     private int shoesId;
 }

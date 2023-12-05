@@ -52,7 +52,6 @@ public class RunPlanController {
     @GetMapping("/{id}")
     @Operation(summary = "Get a run plan by ID", description = "Retrieve a run plan by its ID")
     @ApiResponse(responseCode = "200", description = "Run plan found", content = @Content(schema = @Schema(implementation = RunPlanLongResponse.class)))
-    @ApiResponse(responseCode = "404", description = "Run plan not found")
     public ResponseEntity<RunPlanLongResponse> getRunPlanById(
             @Parameter(description = "Run plan ID", required = true)
             @PathVariable Long id) {
