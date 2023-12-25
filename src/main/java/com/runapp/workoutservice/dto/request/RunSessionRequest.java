@@ -1,6 +1,5 @@
 package com.runapp.workoutservice.dto.request;
 
-import com.runapp.workoutservice.model.RoutePointModel;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
@@ -23,9 +22,6 @@ public class RunSessionRequest {
     @NotNull(message = "The 'time' field is required.")
     private Duration duration_time;
 
-    @Positive(message = "The 'pace' should be a positive number.")
-    private BigDecimal pace;
-
     @Positive(message = "The 'caloriesBurned' should be a positive number.")
     private int caloriesBurned;
 
@@ -43,7 +39,9 @@ public class RunSessionRequest {
 
     private List<RoutePointRequest> route_points;
 
-    private int training_id;
+    private int training_id_from_run_plan;
 
     private String weatherConditions;
+
+    private Duration pace;
 }

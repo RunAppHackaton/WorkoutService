@@ -1,8 +1,6 @@
 package com.runapp.workoutservice.dto.response;
 
-import com.runapp.workoutservice.model.TrainingModel;
-import com.runapp.workoutservice.utill.IntervalRestTypeEnum;
-import jakarta.persistence.*;
+import com.runapp.workoutservice.utill.enums.IntervalRestTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

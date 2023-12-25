@@ -1,7 +1,7 @@
 package com.runapp.workoutservice.service.runPlanService;
 
-import com.runapp.workoutservice.utill.StageEnum;
-import com.runapp.workoutservice.utill.TrainingTypeEnum;
+import com.runapp.workoutservice.utill.enums.StageEnum;
+import com.runapp.workoutservice.utill.enums.TrainingTypeEnum;
 
 import java.time.LocalDate;
 

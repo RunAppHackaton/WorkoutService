@@ -1,6 +1,6 @@
 package com.runapp.workoutservice.model;
 
-import com.runapp.workoutservice.utill.TrainingTypeEnum;
+import com.runapp.workoutservice.utill.enums.TrainingTypeEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

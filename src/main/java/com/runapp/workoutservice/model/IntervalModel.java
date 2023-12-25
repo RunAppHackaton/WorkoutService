@@ -1,7 +1,7 @@
 package com.runapp.workoutservice.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.runapp.workoutservice.utill.IntervalRestTypeEnum;
+import com.runapp.workoutservice.utill.enums.IntervalRestTypeEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

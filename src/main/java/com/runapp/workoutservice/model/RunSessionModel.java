@@ -35,7 +35,7 @@ public class RunSessionModel {
     private Duration time;
 
     @Column(name = "pace")
-    private int pace;
+    private Duration pace;
 
     @Column(name = "calories_burned")
     private int caloriesBurned;

@@ -1,6 +1,6 @@
 package com.runapp.workoutservice.service.runPlanService;
 
-import com.runapp.workoutservice.utill.IntervalRestTypeEnum;
+import com.runapp.workoutservice.utill.enums.IntervalRestTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

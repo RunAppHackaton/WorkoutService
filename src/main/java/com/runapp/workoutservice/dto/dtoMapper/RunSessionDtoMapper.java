@@ -47,7 +47,7 @@ public class RunSessionDtoMapper implements DtoMapper<RunSessionModel, RunSessio
         model.setPhotosUrl("DEFAULT");
         model.setDistance(request.getDistance_km().intValue());
         model.setTime(request.getDuration_time());
-        model.setPace(request.getPace().intValue());
+        model.setPace(request.getPace());
         model.setCaloriesBurned(request.getCaloriesBurned());
         model.setWeatherConditions(request.getWeatherConditions());
         model.setNotes(request.getNotes());
@@ -56,7 +56,7 @@ public class RunSessionDtoMapper implements DtoMapper<RunSessionModel, RunSessio
         routeModel.setRoutePoints(convertToRoutePointModels(request.getRoute_points(), routeModel));
         model.setRoute(routeModel);
         if (request.getShoesId() != 0) model.setShoesId(request.getShoesId());
-        if (request.getTraining_id() != 0) model.setTraining(getTrainingEntityById(request.getTraining_id()));
+        if (request.getTraining_id_from_run_plan() != 0) model.setTraining(getTrainingEntityById(request.getTraining_id_from_run_plan()));
         return model;
     }
 

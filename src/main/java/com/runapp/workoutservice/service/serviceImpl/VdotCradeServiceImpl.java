@@ -4,7 +4,7 @@ import com.runapp.workoutservice.exception.NoEntityFoundException;
 import com.runapp.workoutservice.model.VdotGradeModel;
 import com.runapp.workoutservice.repository.VdotGradeRepository;
 import com.runapp.workoutservice.service.serviceTemplate.GenericService;
-import com.runapp.workoutservice.utill.DistanceTypeEnum;
+import com.runapp.workoutservice.utill.enums.DistanceTypeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

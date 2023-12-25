@@ -1,7 +1,7 @@
 package com.runapp.workoutservice.dto.request;
 
-import com.runapp.workoutservice.utill.DistanceTypeEnum;
-import com.runapp.workoutservice.utill.RunPlanEnum;
+import com.runapp.workoutservice.utill.enums.DistanceTypeEnum;
+import com.runapp.workoutservice.utill.enums.RunPlanEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

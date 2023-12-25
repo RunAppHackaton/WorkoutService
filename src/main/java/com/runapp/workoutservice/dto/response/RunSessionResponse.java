@@ -16,7 +16,7 @@ public class RunSessionResponse {
     private LocalDate date;
     private int distance;
     private Duration duration_time;
-    private int pace;
+    private Duration pace;
     private int caloriesBurned;
     private String weatherConditions;
     private String notes;

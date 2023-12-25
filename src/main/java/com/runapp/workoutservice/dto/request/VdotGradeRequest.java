@@ -1,6 +1,6 @@
 package com.runapp.workoutservice.dto.request;
 
-import com.runapp.workoutservice.utill.DistanceTypeEnum;
+import com.runapp.workoutservice.utill.enums.DistanceTypeEnum;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;

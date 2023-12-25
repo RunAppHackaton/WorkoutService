@@ -1,4 +1,4 @@
-package com.runapp.workoutservice.utill;
+package com.runapp.workoutservice.utill.enums;
 
 public enum DayOfTheWeeksEnum {
     MONDAY,

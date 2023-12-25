@@ -1,11 +1,10 @@
 package com.runapp.workoutservice.controller;
 
-import com.runapp.workoutservice.dto.request.VdotGradeRequest;
 import com.runapp.workoutservice.model.VdotGradeModel;
 import com.runapp.workoutservice.model.VdotWorkoutModel;
 import com.runapp.workoutservice.repository.VdotWorkoutRepository;
 import com.runapp.workoutservice.service.serviceImpl.VdotCradeServiceImpl;
-import com.runapp.workoutservice.utill.DistanceTypeEnum;
+import com.runapp.workoutservice.utill.enums.DistanceTypeEnum;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

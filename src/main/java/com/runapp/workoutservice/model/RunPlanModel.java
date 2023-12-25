@@ -1,17 +1,11 @@
 package com.runapp.workoutservice.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.runapp.workoutservice.utill.DayOfTheWeeksEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
-import java.sql.Time;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Data

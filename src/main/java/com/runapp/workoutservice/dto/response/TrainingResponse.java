@@ -1,8 +1,7 @@
 package com.runapp.workoutservice.dto.response;
 
-import com.runapp.workoutservice.model.IntervalModel;
-import com.runapp.workoutservice.utill.StageEnum;
-import com.runapp.workoutservice.utill.TrainingTypeEnum;
+import com.runapp.workoutservice.utill.enums.StageEnum;
+import com.runapp.workoutservice.utill.enums.TrainingTypeEnum;
 import lombok.Builder;
 import lombok.Data;
 

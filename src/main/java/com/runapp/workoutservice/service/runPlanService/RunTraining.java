@@ -1,11 +1,9 @@
 package com.runapp.workoutservice.service.runPlanService;
 
-import com.runapp.workoutservice.utill.StageEnum;
-import com.runapp.workoutservice.utill.TrainingTypeEnum;
+import com.runapp.workoutservice.utill.enums.StageEnum;
+import com.runapp.workoutservice.utill.enums.TrainingTypeEnum;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 

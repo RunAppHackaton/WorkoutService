@@ -44,7 +44,7 @@ public class RunSessionControllerTest {
         runSessionModel.setDate(LocalDate.now());
         runSessionModel.setDistance(10);
         runSessionModel.setTime(Duration.ofHours(1));
-        runSessionModel.setPace(6);
+        runSessionModel.setPace(Duration.ofHours(2));
         runSessionModel.setCaloriesBurned(600);
         runSessionModel.setWeatherConditions("Sunny");
         runSessionModel.setNotes("Good run");
@@ -56,7 +56,7 @@ public class RunSessionControllerTest {
                 .date(LocalDate.now())
                 .distance(10)
                 .duration_time(Duration.ofHours(1))
-                .pace(6)
+                .pace(Duration.ofHours(2))
                 .caloriesBurned(600)
                 .weatherConditions("Sunny")
                 .notes("Good run")
