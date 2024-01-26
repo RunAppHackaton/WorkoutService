@@ -56,7 +56,6 @@ public class RunPlanController {
             @Parameter(description = "Run plan ID", required = true)
             @PathVariable Long id) {
         RunPlanModel runPlan = runPlanService.getById(id);
-
         return ResponseEntity.ok().body(runPlanDtoMapper.toLongDto(runPlan));
     }
 

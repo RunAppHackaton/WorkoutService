@@ -9,6 +9,8 @@ import com.runapp.workoutservice.utill.enums.StageEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.DayOfWeek;
@@ -32,6 +34,7 @@ public class RunPlanGenerator {
     private int kilometers_per_week;
     private DayOfWeek[] training_days;
     private VdotWorkoutModel vdotWorkoutModel;
+    private final static Logger LOGGER = LoggerFactory.getLogger(RunPlanGenerator.class);
 
     public RunPlanGenerator(VdotWorkoutServiceImpl vdotWorkoutServiceImpl, VdotCradeServiceImpl vdotGradeServiceImpl, RunPlanRequest runPlanRequest) {
         this.vdotWorkoutServiceImpl = vdotWorkoutServiceImpl;
@@ -41,11 +44,13 @@ public class RunPlanGenerator {
     }
 
     public List<RunTraining> generatePlan(RunPlanRequest runPlanRequest) {
+        LOGGER.info("RunTraining Generate plan for request: {}", runPlanRequest);
         LocalDate[] localDates = getDatesBeforeEndDate(runPlanRequest.getGoal_date(), runPlanRequest.getTraining_days());
         return fillingTheStageWithTraining(localDates, runPlanRequest.getKilometers_per_week(), runPlanRequest.getTraining_days());
     }
 
     private List<RunTraining> fillingTheStageWithTraining(LocalDate[] localDates, int kilometers_per_week, DayOfWeek[] training_days) {
+        LOGGER.info("RunTraining Fill the stage with training: localDates={}, kilometers_per_week={}, training_days[]={}", Arrays.toString(localDates), kilometers_per_week, Arrays.toString(training_days));
         int trainingPerWeek = training_days.length;
         List<RunTraining> runTrainings = new ArrayList<>();
 
@@ -57,7 +62,6 @@ public class RunPlanGenerator {
             int end = (i == 3) ? localDates.length : (i + 1) * chunkSize;
             dateChunks[i] = Arrays.copyOfRange(localDates, start, end);
         }
-
         switch (trainingPerWeek) {
             case 2:
                 runTrainings.addAll(fillingWithTwoWorkouts(dateChunks[0], kilometers_per_week, StageEnum.STAGE1));
@@ -91,9 +95,11 @@ public class RunPlanGenerator {
 
     private List<RunTraining> fillingWithTwoWorkouts(LocalDate[] localDates, int kilometers_per_week, StageEnum stageEnum) {
         List<RunTraining> runTrainings = new ArrayList<>();
+        LOGGER.info("RunTraining Fill training with 2 workouts: localDates={}, kilometers_per_week={}, stageEnum={}", Arrays.toString(localDates), kilometers_per_week, stageEnum);
         for (int x = 0; x < localDates.length; x += 2) {
             int warmUpAndHitchKilometers = calculatePercentage(kilometers_per_week, 20);
             int longRunKilometers = calculatePercentage(kilometers_per_week, 40);
+
             switch (stageEnum) {
                 case STAGE1 -> {
                     kilometers_per_week += increaseByPercentage(kilometers_per_week, 15.0);
@@ -120,7 +126,7 @@ public class RunPlanGenerator {
 
     private List<RunTraining> fillingWithThreeWorkouts(LocalDate[] localDates, int kilometers_per_week, StageEnum stageEnum) {
         List<RunTraining> runTrainings = new ArrayList<>();
-
+        LOGGER.info("RunTraining Fill training with 3 workouts: localDates={}, kilometers_per_week={}, stageEnum={}", Arrays.toString(localDates), kilometers_per_week, stageEnum);
         for (int x = 0; x < localDates.length; x += 3) {
 
             int warmUpAndHitchKilometers = calculatePercentage(kilometers_per_week, 20);
@@ -167,6 +173,7 @@ public class RunPlanGenerator {
         int warmUpAndHitchKilometers = calculatePercentage(kilometers_per_week, 20);
         int longRunKilometers = calculatePercentage(kilometers_per_week, 50);
         int easyRunKilometers = calculatePercentage(kilometers_per_week, 30);
+        LOGGER.info("RunTraining Fill training with 4 workouts: localDates={}, kilometers_per_week={}, stageEnum={}", Arrays.toString(localDates), kilometers_per_week, stageEnum);
         for (int x = 0; x < localDates.length; x += 4) {
 
             if (localDates.length - x == 1) {
@@ -215,10 +222,11 @@ public class RunPlanGenerator {
 
     private List<RunTraining> fillingWithFiveWorkouts(LocalDate[] localDates, int kilometers_per_week, StageEnum stageEnum) {
         List<RunTraining> runTrainings = new ArrayList<>();
+        LOGGER.info("RunTraining Fill with 5 workouts: localDates={}, kilometers_per_week={}, stageEnum={}", Arrays.toString(localDates), kilometers_per_week, stageEnum);
+        for (int x = 0; x < localDates.length; x += 5) {
         int warmUpAndHitchKilometers = calculatePercentage(kilometers_per_week, 20);
         int longRunKilometers = calculatePercentage(kilometers_per_week, 50);
         int easyRunKilometers = calculatePercentage(kilometers_per_week, 30);
-        for (int x = 0; x < localDates.length; x += 5) {
 
             if (localDates.length - x == 1) {
                 runTrainings.add(new EasyRun(easyRunKilometers, vdotWorkoutModel.getEasyKm(), localDates[x], stageEnum));
@@ -276,7 +284,6 @@ public class RunPlanGenerator {
     public static LocalDate[] getDatesBeforeEndDate(LocalDate endDate, DayOfWeek[] daysOfWeek) {
         List<LocalDate> validDates = new ArrayList<>();
         LocalDate currentDate = LocalDate.now();
-
         while (!currentDate.isAfter(endDate)) {
             if (containsDayOfWeek(currentDate.getDayOfWeek(), daysOfWeek)) {
                 LocalDate dateTime = LocalDate.from(currentDate.atStartOfDay());

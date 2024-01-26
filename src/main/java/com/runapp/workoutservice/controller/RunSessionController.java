@@ -60,7 +60,6 @@ public class RunSessionController {
             @Parameter(description = "Run session data", required = true)
             @RequestBody RunSessionRequest runSessionRequest) {
         RunSessionModel runSession = runSessionDtoMapper.toModel(runSessionRequest);
-
         RunSessionModel savedRunSession = runSessionService.add(runSession);
         return new ResponseEntity<>(runSessionDtoMapper.toResponse(savedRunSession), HttpStatus.CREATED);
     }

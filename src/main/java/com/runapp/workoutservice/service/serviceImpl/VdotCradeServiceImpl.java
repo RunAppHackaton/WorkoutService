@@ -5,6 +5,8 @@ import com.runapp.workoutservice.model.VdotGradeModel;
 import com.runapp.workoutservice.repository.VdotGradeRepository;
 import com.runapp.workoutservice.service.serviceTemplate.GenericService;
 import com.runapp.workoutservice.utill.enums.DistanceTypeEnum;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +17,7 @@ import java.util.List;
 public class VdotCradeServiceImpl implements GenericService<VdotGradeModel> {
 
     private final VdotGradeRepository vdotGradeRepository;
-
+    private final static Logger LOGGER = LoggerFactory.getLogger(VdotCradeServiceImpl.class);
     @Autowired
     public VdotCradeServiceImpl(VdotGradeRepository vdotGradeRepository) {
         this.vdotGradeRepository = vdotGradeRepository;
@@ -23,21 +25,25 @@ public class VdotCradeServiceImpl implements GenericService<VdotGradeModel> {
 
     @Override
     public VdotGradeModel add(VdotGradeModel entity) {
+        LOGGER.info("VdotGrade add: {}", entity);
         return vdotGradeRepository.save(entity);
     }
 
     @Override
     public VdotGradeModel getById(Long vtod) {
+        LOGGER.info("VdotGrade get by id: {}", vtod);
         return vdotGradeRepository.findById(vtod).orElseThrow(() -> new NoEntityFoundException("VDOT Grade with id: " + vtod + " doesn't exist"));
     }
 
     @Override
     public List<VdotGradeModel> getAll() {
+        LOGGER.info("VdotGrade get all");
         return vdotGradeRepository.findAll();
     }
 
     @Override
     public void deleteById(Long vtod) {
+        LOGGER.info("VdotGrade delete by id: {}", vtod);
         if (!vdotGradeRepository.existsById(vtod)) {
             throw new NoEntityFoundException("VDOT Grade with id: " + vtod + " doesn't exist");
         }
@@ -46,6 +52,7 @@ public class VdotCradeServiceImpl implements GenericService<VdotGradeModel> {
 
     @Override
     public VdotGradeModel update(VdotGradeModel entity) {
+        LOGGER.info("VdotGrade update: {}", entity);
         if (!vdotGradeRepository.existsById(entity.getVdot())) {
             throw new NoEntityFoundException("VDOT Grade with id: " + entity.getVdot() + " doesn't exist");
         }
@@ -53,6 +60,7 @@ public class VdotCradeServiceImpl implements GenericService<VdotGradeModel> {
     }
 
     public VdotGradeModel findClosestTimeByDistanceAndTime(DistanceTypeEnum distanceTypeEnum, String time) {
+        LOGGER.info("VdotGrade find closest time by Distance and Time: distanceTypeEnum={}, time={}", distanceTypeEnum, time);
         Duration duration = toDuration(time);
         VdotGradeModel vdotGradeModel = null;
         long timeInMintutes = toDuration(time).toMinutes();
@@ -79,6 +87,7 @@ public class VdotCradeServiceImpl implements GenericService<VdotGradeModel> {
     }
 
     private long getTimeInMinutes(DistanceTypeEnum distanceType, VdotGradeModel vdotGradeModel) {
+        LOGGER.info("Get time in minutes: distanceType={}, vdotGradeModel={}", distanceType, vdotGradeModel);
         switch (distanceType) {
             case EASY_1500M -> {
                 return toDuration(vdotGradeModel.getEasy1500m()).toMinutes();

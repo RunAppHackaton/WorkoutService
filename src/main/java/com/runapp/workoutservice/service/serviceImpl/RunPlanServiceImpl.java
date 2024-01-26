@@ -14,9 +14,12 @@ import com.runapp.workoutservice.utill.existHandler.ExistEnum;
 import com.runapp.workoutservice.utill.existHandler.ExistHandlerRegistry;
 import feign.FeignException;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -26,25 +29,30 @@ public class RunPlanServiceImpl implements RunPlanService {
     private final RunTypeRepository runTypeRepository;
     private final StageRepository stageRepository;
     private final ExistHandlerRegistry existHandlerRegistry;
+    private final static Logger LOGGER = LoggerFactory.getLogger(RunPlanServiceImpl.class);
 
     @Override
     public RunPlanModel add(RunPlanModel entity) {
         existHandlerRegistry.handleRequest(ExistEnum.USER, entity.getUserId());
+        LOGGER.info("RunPlan add: {}", entity);
         throw new NoEntityFoundException("User with id: " + entity.getUserId() + " doesn't exist"); // todo
     }
 
     @Override
     public RunPlanModel getById(Long id) {
+        LOGGER.info("RunPlan get by id: {}", id);
         return runPlanRepository.findById(id).orElseThrow(() -> new NoEntityFoundException("RunPlan with id: " + id + " doesn't exist"));
     }
 
     @Override
     public List<RunPlanModel> getAll() {
+        LOGGER.info("RunPlan get all");
         return runPlanRepository.findAll();
     }
 
     @Override
     public void deleteById(Long id) {
+        LOGGER.info("RunPlan delete by id: {}", id);
         if (!runPlanRepository.existsById(id)) {
             throw new NoEntityFoundException("RunPlan with id: " + id + " doesn't exist");
         }
@@ -54,6 +62,7 @@ public class RunPlanServiceImpl implements RunPlanService {
     @Override
     public RunPlanModel update(RunPlanModel entity) {
         existHandlerRegistry.handleRequest(ExistEnum.USER, entity.getUserId());
+        LOGGER.info("RunPlan update: {}", entity);
         if (!runPlanRepository.existsById(entity.getId())) {
             throw new NoEntityFoundException("RunPlan with id: " + entity.getId() + " doesn't exist");
         }
@@ -61,6 +70,7 @@ public class RunPlanServiceImpl implements RunPlanService {
     }
 
     public RunPlanModel createPlan(List<RunTraining> runTrainings, RunPlanRequest runPlanRequest) {
+        LOGGER.info("RunPlan createPlan: runTrainings={}, runPlanRequest={}", runTrainings, runPlanRequest);
         existHandlerRegistry.handleRequest(ExistEnum.USER, runPlanRequest.getUser_id());
         RunPlanModel runPlanModel = new RunPlanModel();
         runPlanModel.setDayOfTheWeek(runPlanRequest.getTraining_days().length);
@@ -74,8 +84,8 @@ public class RunPlanServiceImpl implements RunPlanService {
     }
 
     private List<TrainingModel> fillAndSaveTraining(List<RunTraining> runTrainings, RunPlanModel runPlanModel) {
+        LOGGER.info("Fill and save training: runTrainings={}, runPlanModel={}", runTrainings, runPlanModel);
         List<TrainingModel> trainingModels = new ArrayList<>();
-
         for (RunTraining runTraining : runTrainings) {
             TrainingModel trainingModel = new TrainingModel();
             trainingModel.setKilometers(runTraining.getTotalDistanceKilometers());
@@ -93,6 +103,7 @@ public class RunPlanServiceImpl implements RunPlanService {
     }
 
     private List<IntervalModel> fillingDatabaseIntervals(Interval[] intervals, TrainingModel trainingModel) {
+        LOGGER.info("Fill database intervals: intervals={}, trainingModel={}", Arrays.toString(intervals), trainingModel);
         List<IntervalModel> intervalModels = new ArrayList<>();
 
         for (Interval interval : intervals) {
