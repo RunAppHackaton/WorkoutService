@@ -398,7 +398,7 @@ class RunSessionDtoMapperDiffblueTest {
     @Test
     void testToModel4() {
         ArrayList<RoutePointRequest> routePointRequestList = new ArrayList<>();
-        routePointRequestList.add(new RoutePointRequest(10.0d, 10.0d));
+        routePointRequestList.add(new RoutePointRequest(1L,10.0d, 10.0d));
         RunSessionRequest request = mock(RunSessionRequest.class);
         when(request.getCaloriesBurned()).thenReturn(1);
         when(request.getShoesId()).thenReturn(1);

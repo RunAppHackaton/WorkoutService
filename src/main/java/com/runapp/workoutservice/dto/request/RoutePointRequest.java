@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RoutePointRequest {
+    private long id;
     private double latitude;
     private double longitude;
 }

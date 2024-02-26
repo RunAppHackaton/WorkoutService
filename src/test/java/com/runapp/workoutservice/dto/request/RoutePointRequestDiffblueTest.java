@@ -45,7 +45,7 @@ class RoutePointRequestDiffblueTest {
         actualRoutePointRequest.setLongitude(10.0d);
         String actualToStringResult = actualRoutePointRequest.toString();
         double actualLatitude = actualRoutePointRequest.getLatitude();
-        assertEquals("RoutePointRequest(latitude=10.0, longitude=10.0)", actualToStringResult);
+        assertEquals("RoutePointRequest(id=0, latitude=10.0, longitude=10.0)", actualToStringResult);
         assertEquals(10.0d, actualLatitude);
         assertEquals(10.0d, actualRoutePointRequest.getLongitude());
     }
@@ -56,7 +56,7 @@ class RoutePointRequestDiffblueTest {
      */
     @Test
     void testConstructor2() {
-        RoutePointRequest actualRoutePointRequest = new RoutePointRequest(10.0d, 10.0d);
+        RoutePointRequest actualRoutePointRequest = new RoutePointRequest(1L,10.0d, 10.0d);
 
         assertEquals(10.0d, actualRoutePointRequest.getLatitude());
         assertEquals(10.0d, actualRoutePointRequest.getLongitude());
@@ -67,8 +67,8 @@ class RoutePointRequestDiffblueTest {
      */
     @Test
     void testEquals() {
-        assertNotEquals(new RoutePointRequest(10.0d, 10.0d), null);
-        assertNotEquals(new RoutePointRequest(10.0d, 10.0d), "Different type to RoutePointRequest");
+        assertNotEquals(new RoutePointRequest(1L,10.0d, 10.0d), null);
+        assertNotEquals(new RoutePointRequest(1L,10.0d, 10.0d), "Different type to RoutePointRequest");
     }
 
     /**
@@ -81,7 +81,7 @@ class RoutePointRequestDiffblueTest {
      */
     @Test
     void testEquals2() {
-        RoutePointRequest routePointRequest = new RoutePointRequest(10.0d, 10.0d);
+        RoutePointRequest routePointRequest = new RoutePointRequest(1L,10.0d, 10.0d);
         assertEquals(routePointRequest, routePointRequest);
         int expectedHashCodeResult = routePointRequest.hashCode();
         assertEquals(expectedHashCodeResult, routePointRequest.hashCode());
@@ -97,8 +97,8 @@ class RoutePointRequestDiffblueTest {
      */
     @Test
     void testEquals3() {
-        RoutePointRequest routePointRequest = new RoutePointRequest(10.0d, 10.0d);
-        RoutePointRequest routePointRequest2 = new RoutePointRequest(10.0d, 10.0d);
+        RoutePointRequest routePointRequest = new RoutePointRequest(1L,10.0d, 10.0d);
+        RoutePointRequest routePointRequest2 = new RoutePointRequest(1L,10.0d, 10.0d);
 
         assertEquals(routePointRequest, routePointRequest2);
         int expectedHashCodeResult = routePointRequest.hashCode();
@@ -110,8 +110,8 @@ class RoutePointRequestDiffblueTest {
      */
     @Test
     void testEquals4() {
-        RoutePointRequest routePointRequest = new RoutePointRequest(0.5d, 10.0d);
-        assertNotEquals(routePointRequest, new RoutePointRequest(10.0d, 10.0d));
+        RoutePointRequest routePointRequest = new RoutePointRequest(1L,0.5d, 10.0d);
+        assertNotEquals(routePointRequest, new RoutePointRequest(1L,10.0d, 10.0d));
     }
 
     /**
@@ -119,7 +119,7 @@ class RoutePointRequestDiffblueTest {
      */
     @Test
     void testEquals5() {
-        RoutePointRequest routePointRequest = new RoutePointRequest(10.0d, 0.5d);
-        assertNotEquals(routePointRequest, new RoutePointRequest(10.0d, 10.0d));
+        RoutePointRequest routePointRequest = new RoutePointRequest(1L,10.0d, 0.5d);
+        assertNotEquals(routePointRequest, new RoutePointRequest(1L,10.0d, 10.0d));
     }
 }
