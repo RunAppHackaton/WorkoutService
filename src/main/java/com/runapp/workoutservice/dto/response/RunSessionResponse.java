@@ -1,5 +1,6 @@
 package com.runapp.workoutservice.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.runapp.workoutservice.model.RouteModel;
 import com.runapp.workoutservice.model.TrainingModel;
 import lombok.Builder;
@@ -16,13 +17,14 @@ public class RunSessionResponse {
     private LocalDate date;
     private int distance;
     private Duration duration_time;
-    private Duration pace;
     private int caloriesBurned;
-    private String weatherConditions;
     private String notes;
     private String photosUrl;
     private RouteModel route;
-    private TrainingModel training;
-    private int userId;
     private int shoesId;
+    private int userId;
+    private TrainingModel training;
+    private String weatherConditions;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Duration pace;
 }
