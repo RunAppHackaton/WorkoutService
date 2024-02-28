@@ -20,7 +20,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ContextConfiguration(classes = {RunPlanRequest.class})
 @ExtendWith(SpringExtension.class)
-class RunPlanRequestDiffblueTest {
+class StaticRunPlanRequestDiffblueTest {
     @Autowired
     private RunPlanRequest runPlanRequest;
 

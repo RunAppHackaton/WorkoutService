@@ -82,39 +82,7 @@ class RunSessionControllerDiffblueTest {
         runSessionModelList.add(runSessionModel);
         when(runSessionService.getAll()).thenReturn(runSessionModelList);
 
-        RouteModel route2 = new RouteModel();
-        route2.setId(1L);
-        route2.setRoutePoints(new ArrayList<>());
-        RunSessionResponse.RunSessionResponseBuilder caloriesBurnedResult = RunSessionResponse.builder().caloriesBurned(1);
-        RunSessionResponse.RunSessionResponseBuilder shoesIdResult = caloriesBurnedResult.date(LocalDate.of(1970, 1, 1))
-                .distance(1)
-                .duration_time(null)
-                .id(1L)
-                .notes("Notes")
-                .pace(null)
-                .photosUrl("https://example.org/example")
-                .route(route2)
-                .shoesId(1);
-
-        RunPlanModel runPlan2 = new RunPlanModel();
-        runPlan2.setDayOfTheWeek(1);
-        runPlan2.setFinalDate(LocalDate.of(1970, 1, 1));
-        runPlan2.setId(1L);
-        runPlan2.setStartingWeeklyVolume(1);
-        runPlan2.setTrainingModels(new ArrayList<>());
-        runPlan2.setUserId(1);
-
-        RunTypeModel runType2 = new RunTypeModel();
-        runType2.setDescription("The characteristics of someone or something");
-        runType2.setId(1L);
-        runType2.setRuntypeImageUrl("https://example.org/example");
-        runType2.setTypeName(TrainingTypeEnum.EASY_RUN);
-
-        StageModel stage2 = new StageModel();
-        stage2.setDescription("The characteristics of someone or something");
-        stage2.setId(1L);
-        stage2.setName("Name");
-        stage2.setStageEnum(StageEnum.STAGE1);
+        RunSessionResponse.RunSessionResponseBuilder shoesIdResult = StaticRunSession.runSessionResponseBuilder();
 
         TrainingModel training2 = StaticTraining.trainingModel1();
         RunSessionResponse buildResult = shoesIdResult.training(training2)
@@ -191,104 +159,15 @@ class RunSessionControllerDiffblueTest {
      */
     @Test
     void testGetAllRunSessions2() throws Exception {
-        RouteModel route = new RouteModel();
-        route.setId(1L);
-        route.setRoutePoints(new ArrayList<>());
-
-        RunPlanModel runPlan = new RunPlanModel();
-        runPlan.setDayOfTheWeek(1);
-        runPlan.setFinalDate(LocalDate.of(1970, 1, 1));
-        runPlan.setId(1L);
-        runPlan.setStartingWeeklyVolume(1);
-        runPlan.setTrainingModels(new ArrayList<>());
-        runPlan.setUserId(1);
-
-        RunTypeModel runType = new RunTypeModel();
-        runType.setDescription("The characteristics of someone or something");
-        runType.setId(1L);
-        runType.setRuntypeImageUrl("https://example.org/example");
-        runType.setTypeName(TrainingTypeEnum.EASY_RUN);
-
-        StageModel stage = new StageModel();
-        stage.setDescription("The characteristics of someone or something");
-        stage.setId(1L);
-        stage.setName("Name");
-        stage.setStageEnum(StageEnum.STAGE1);
-
-        TrainingModel training = new TrainingModel();
-        training.setHitch(10.0d);
-        training.setId(1L);
-        training.setIntervalModelList(new ArrayList<>());
-        training.setKilometers(10.0d);
-        training.setRunPlan(runPlan);
-        training.setRunType(runType);
-        training.setStage(stage);
-        training.setWarmUp(10.0d);
-
-        RunSessionModel runSessionModel = new RunSessionModel();
-        runSessionModel.setCaloriesBurned(1);
-        runSessionModel.setDate(LocalDate.of(1970, 1, 1));
-        runSessionModel.setDistance(1);
-        runSessionModel.setId(1L);
-        runSessionModel.setNotes("Notes");
-        runSessionModel.setPhotosUrl("https://example.org/example");
-        runSessionModel.setRoute(route);
-        runSessionModel.setShoesId(1);
-        runSessionModel.setTraining(training);
-        runSessionModel.setUserId(1);
-        runSessionModel.setWeatherConditions("Weather Conditions");
+        RunSessionModel runSessionModel = StaticRunSession.runSession();
 
         ArrayList<RunSessionModel> runSessionModelList = new ArrayList<>();
         runSessionModelList.add(runSessionModel);
         when(runSessionService.getAll()).thenReturn(runSessionModelList);
 
-        RouteModel route2 = new RouteModel();
-        route2.setId(1L);
-        route2.setRoutePoints(new ArrayList<>());
-        RunSessionResponse.RunSessionResponseBuilder caloriesBurnedResult = RunSessionResponse.builder().caloriesBurned(1);
-        RunSessionResponse.RunSessionResponseBuilder shoesIdResult = caloriesBurnedResult.date(LocalDate.of(1970, 1, 1))
-                .distance(1)
-                .duration_time(null)
-                .id(1L)
-                .notes("Notes")
-                .pace(null)
-                .photosUrl("https://example.org/example")
-                .route(route2)
-                .shoesId(1);
+        RunSessionResponse.RunSessionResponseBuilder shoesIdResult = StaticRunSession.runSessionResponseBuilder();
 
-        RunPlanModel runPlan2 = new RunPlanModel();
-        runPlan2.setDayOfTheWeek(1);
-        runPlan2.setFinalDate(LocalDate.of(1970, 1, 1));
-        runPlan2.setId(1L);
-        runPlan2.setStartingWeeklyVolume(1);
-        runPlan2.setTrainingModels(new ArrayList<>());
-        runPlan2.setUserId(1);
-
-        RunTypeModel runType2 = new RunTypeModel();
-        runType2.setDescription("The characteristics of someone or something");
-        runType2.setId(1L);
-        runType2.setRuntypeImageUrl("https://example.org/example");
-        runType2.setTypeName(TrainingTypeEnum.EASY_RUN);
-
-        StageModel stage2 = new StageModel();
-        stage2.setDescription("The characteristics of someone or something");
-        stage2.setId(1L);
-        stage2.setName("Name");
-        stage2.setStageEnum(StageEnum.STAGE1);
-
-        TrainingModel training2 = new TrainingModel();
-        training2.setHitch(10.0d);
-        training2.setId(1L);
-        training2.setIntervalModelList(new ArrayList<>());
-        training2.setKilometers(10.0d);
-        training2.setRunPlan(runPlan2);
-        training2.setRunType(runType2);
-        training2.setStage(stage2);
-        training2.setWarmUp(10.0d);
-        RunSessionResponse buildResult = shoesIdResult.training(training2)
-                .userId(1)
-                .weatherConditions("Weather Conditions")
-                .build();
+        RunSessionResponse buildResult = StaticRunSession.runSessionResponse1();
         when(runSessionDtoMapper.toResponse(Mockito.<RunSessionModel>any())).thenReturn(buildResult);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/run-sessions");
         MockMvcBuilders.standaloneSetup(runSessionController)
@@ -312,101 +191,9 @@ class RunSessionControllerDiffblueTest {
      */
     @Test
     void testGetRunSessionById() throws Exception {
-        RouteModel route = new RouteModel();
-        route.setId(1L);
-        route.setRoutePoints(new ArrayList<>());
-
-        RunPlanModel runPlan = new RunPlanModel();
-        runPlan.setDayOfTheWeek(1);
-        runPlan.setFinalDate(LocalDate.of(1970, 1, 1));
-        runPlan.setId(1L);
-        runPlan.setStartingWeeklyVolume(1);
-        runPlan.setTrainingModels(new ArrayList<>());
-        runPlan.setUserId(1);
-
-        RunTypeModel runType = new RunTypeModel();
-        runType.setDescription("The characteristics of someone or something");
-        runType.setId(1L);
-        runType.setRuntypeImageUrl("https://example.org/example");
-        runType.setTypeName(TrainingTypeEnum.EASY_RUN);
-
-        StageModel stage = new StageModel();
-        stage.setDescription("The characteristics of someone or something");
-        stage.setId(1L);
-        stage.setName("Name");
-        stage.setStageEnum(StageEnum.STAGE1);
-
-        TrainingModel training = new TrainingModel();
-        training.setHitch(10.0d);
-        training.setId(1L);
-        training.setIntervalModelList(new ArrayList<>());
-        training.setKilometers(10.0d);
-        training.setRunPlan(runPlan);
-        training.setRunType(runType);
-        training.setStage(stage);
-        training.setWarmUp(10.0d);
-
-        RunSessionModel runSessionModel = new RunSessionModel();
-        runSessionModel.setCaloriesBurned(1);
-        runSessionModel.setDate(LocalDate.of(1970, 1, 1));
-        runSessionModel.setDistance(1);
-        runSessionModel.setId(1L);
-        runSessionModel.setNotes("Notes");
-        runSessionModel.setPhotosUrl("https://example.org/example");
-        runSessionModel.setRoute(route);
-        runSessionModel.setShoesId(1);
-        runSessionModel.setTraining(training);
-        runSessionModel.setUserId(1);
-        runSessionModel.setWeatherConditions("Weather Conditions");
+        RunSessionModel runSessionModel = StaticRunSession.runSession();
         when(runSessionService.getById(Mockito.<Long>any())).thenReturn(runSessionModel);
-
-        RouteModel route2 = new RouteModel();
-        route2.setId(1L);
-        route2.setRoutePoints(new ArrayList<>());
-        RunSessionResponse.RunSessionResponseBuilder caloriesBurnedResult = RunSessionResponse.builder().caloriesBurned(1);
-        RunSessionResponse.RunSessionResponseBuilder shoesIdResult = caloriesBurnedResult.date(LocalDate.of(1970, 1, 1))
-                .distance(1)
-                .duration_time(null)
-                .id(1L)
-                .notes("Notes")
-                .pace(null)
-                .photosUrl("https://example.org/example")
-                .route(route2)
-                .shoesId(1);
-
-        RunPlanModel runPlan2 = new RunPlanModel();
-        runPlan2.setDayOfTheWeek(1);
-        runPlan2.setFinalDate(LocalDate.of(1970, 1, 1));
-        runPlan2.setId(1L);
-        runPlan2.setStartingWeeklyVolume(1);
-        runPlan2.setTrainingModels(new ArrayList<>());
-        runPlan2.setUserId(1);
-
-        RunTypeModel runType2 = new RunTypeModel();
-        runType2.setDescription("The characteristics of someone or something");
-        runType2.setId(1L);
-        runType2.setRuntypeImageUrl("https://example.org/example");
-        runType2.setTypeName(TrainingTypeEnum.EASY_RUN);
-
-        StageModel stage2 = new StageModel();
-        stage2.setDescription("The characteristics of someone or something");
-        stage2.setId(1L);
-        stage2.setName("Name");
-        stage2.setStageEnum(StageEnum.STAGE1);
-
-        TrainingModel training2 = new TrainingModel();
-        training2.setHitch(10.0d);
-        training2.setId(1L);
-        training2.setIntervalModelList(new ArrayList<>());
-        training2.setKilometers(10.0d);
-        training2.setRunPlan(runPlan2);
-        training2.setRunType(runType2);
-        training2.setStage(stage2);
-        training2.setWarmUp(10.0d);
-        RunSessionResponse buildResult = shoesIdResult.training(training2)
-                .userId(1)
-                .weatherConditions("Weather Conditions")
-                .build();
+        RunSessionResponse buildResult = StaticRunSession.runSessionResponse1();
         when(runSessionDtoMapper.toResponse(Mockito.<RunSessionModel>any())).thenReturn(buildResult);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/run-sessions/{id}", 1L);
         MockMvcBuilders.standaloneSetup(runSessionController)
@@ -430,209 +217,20 @@ class RunSessionControllerDiffblueTest {
      */
     @Test
     void testUpdateRunSession() throws Exception {
-        RouteModel route = new RouteModel();
-        route.setId(1L);
-        route.setRoutePoints(new ArrayList<>());
+        RunSessionModel runSessionModel = StaticRunSession.runSession();
+        RunSessionModel runSessionModel2 = StaticRunSession.runSession();
 
-        RunPlanModel runPlan = new RunPlanModel();
-        runPlan.setDayOfTheWeek(1);
-        runPlan.setFinalDate(LocalDate.of(1970, 1, 1));
-        runPlan.setId(1L);
-        runPlan.setStartingWeeklyVolume(1);
-        runPlan.setTrainingModels(new ArrayList<>());
-        runPlan.setUserId(1);
-
-        RunTypeModel runType = new RunTypeModel();
-        runType.setDescription("The characteristics of someone or something");
-        runType.setId(1L);
-        runType.setRuntypeImageUrl("https://example.org/example");
-        runType.setTypeName(TrainingTypeEnum.EASY_RUN);
-
-        StageModel stage = new StageModel();
-        stage.setDescription("The characteristics of someone or something");
-        stage.setId(1L);
-        stage.setName("Name");
-        stage.setStageEnum(StageEnum.STAGE1);
-
-        TrainingModel training = new TrainingModel();
-        training.setHitch(10.0d);
-        training.setId(1L);
-        training.setIntervalModelList(new ArrayList<>());
-        training.setKilometers(10.0d);
-        training.setRunPlan(runPlan);
-        training.setRunType(runType);
-        training.setStage(stage);
-        training.setWarmUp(10.0d);
-
-        RunSessionModel runSessionModel = new RunSessionModel();
-        runSessionModel.setCaloriesBurned(1);
-        runSessionModel.setDate(LocalDate.of(1970, 1, 1));
-        runSessionModel.setDistance(1);
-        runSessionModel.setId(1L);
-        runSessionModel.setNotes("Notes");
-        runSessionModel.setPhotosUrl("https://example.org/example");
-        runSessionModel.setRoute(route);
-        runSessionModel.setShoesId(1);
-        runSessionModel.setTraining(training);
-        runSessionModel.setUserId(1);
-        runSessionModel.setWeatherConditions("Weather Conditions");
-
-        RouteModel route2 = new RouteModel();
-        route2.setId(1L);
-        route2.setRoutePoints(new ArrayList<>());
-
-        RunPlanModel runPlan2 = new RunPlanModel();
-        runPlan2.setDayOfTheWeek(1);
-        runPlan2.setFinalDate(LocalDate.of(1970, 1, 1));
-        runPlan2.setId(1L);
-        runPlan2.setStartingWeeklyVolume(1);
-        runPlan2.setTrainingModels(new ArrayList<>());
-        runPlan2.setUserId(1);
-
-        RunTypeModel runType2 = new RunTypeModel();
-        runType2.setDescription("The characteristics of someone or something");
-        runType2.setId(1L);
-        runType2.setRuntypeImageUrl("https://example.org/example");
-        runType2.setTypeName(TrainingTypeEnum.EASY_RUN);
-
-        StageModel stage2 = new StageModel();
-        stage2.setDescription("The characteristics of someone or something");
-        stage2.setId(1L);
-        stage2.setName("Name");
-        stage2.setStageEnum(StageEnum.STAGE1);
-
-        TrainingModel training2 = new TrainingModel();
-        training2.setHitch(10.0d);
-        training2.setId(1L);
-        training2.setIntervalModelList(new ArrayList<>());
-        training2.setKilometers(10.0d);
-        training2.setRunPlan(runPlan2);
-        training2.setRunType(runType2);
-        training2.setStage(stage2);
-        training2.setWarmUp(10.0d);
-
-        RunSessionModel runSessionModel2 = new RunSessionModel();
-        runSessionModel2.setCaloriesBurned(1);
-        runSessionModel2.setDate(LocalDate.of(1970, 1, 1));
-        runSessionModel2.setDistance(1);
-        runSessionModel2.setId(1L);
-        runSessionModel2.setNotes("Notes");
-        runSessionModel2.setPhotosUrl("https://example.org/example");
-        runSessionModel2.setRoute(route2);
-        runSessionModel2.setShoesId(1);
-        runSessionModel2.setTraining(training2);
-        runSessionModel2.setUserId(1);
         runSessionModel2.setWeatherConditions("Weather Conditions");
         when(runSessionService.update(Mockito.<RunSessionModel>any())).thenReturn(runSessionModel2);
         when(runSessionService.getById(Mockito.<Long>any())).thenReturn(runSessionModel);
 
-        RouteModel route3 = new RouteModel();
-        route3.setId(1L);
-        route3.setRoutePoints(new ArrayList<>());
+        RunSessionModel runSessionModel3 = StaticRunSession.runSession();
 
-        RunPlanModel runPlan3 = new RunPlanModel();
-        runPlan3.setDayOfTheWeek(1);
-        runPlan3.setFinalDate(LocalDate.of(1970, 1, 1));
-        runPlan3.setId(1L);
-        runPlan3.setStartingWeeklyVolume(1);
-        runPlan3.setTrainingModels(new ArrayList<>());
-        runPlan3.setUserId(1);
-
-        RunTypeModel runType3 = new RunTypeModel();
-        runType3.setDescription("The characteristics of someone or something");
-        runType3.setId(1L);
-        runType3.setRuntypeImageUrl("https://example.org/example");
-        runType3.setTypeName(TrainingTypeEnum.EASY_RUN);
-
-        StageModel stage3 = new StageModel();
-        stage3.setDescription("The characteristics of someone or something");
-        stage3.setId(1L);
-        stage3.setName("Name");
-        stage3.setStageEnum(StageEnum.STAGE1);
-
-        TrainingModel training3 = new TrainingModel();
-        training3.setHitch(10.0d);
-        training3.setId(1L);
-        training3.setIntervalModelList(new ArrayList<>());
-        training3.setKilometers(10.0d);
-        training3.setRunPlan(runPlan3);
-        training3.setRunType(runType3);
-        training3.setStage(stage3);
-        training3.setWarmUp(10.0d);
-
-        RunSessionModel runSessionModel3 = new RunSessionModel();
-        runSessionModel3.setCaloriesBurned(1);
-        runSessionModel3.setDate(LocalDate.of(1970, 1, 1));
-        runSessionModel3.setDistance(1);
-        runSessionModel3.setId(1L);
-        runSessionModel3.setNotes("Notes");
-        runSessionModel3.setPhotosUrl("https://example.org/example");
-        runSessionModel3.setRoute(route3);
-        runSessionModel3.setShoesId(1);
-        runSessionModel3.setTraining(training3);
-        runSessionModel3.setUserId(1);
-        runSessionModel3.setWeatherConditions("Weather Conditions");
-
-        RouteModel route4 = new RouteModel();
-        route4.setId(1L);
-        route4.setRoutePoints(new ArrayList<>());
-        RunSessionResponse.RunSessionResponseBuilder caloriesBurnedResult = RunSessionResponse.builder().caloriesBurned(1);
-        RunSessionResponse.RunSessionResponseBuilder shoesIdResult = caloriesBurnedResult.date(LocalDate.of(1970, 1, 1))
-                .distance(1)
-                .duration_time(null)
-                .id(1L)
-                .notes("Notes")
-                .pace(null)
-                .photosUrl("https://example.org/example")
-                .route(route4)
-                .shoesId(1);
-
-        RunPlanModel runPlan4 = new RunPlanModel();
-        runPlan4.setDayOfTheWeek(1);
-        runPlan4.setFinalDate(LocalDate.of(1970, 1, 1));
-        runPlan4.setId(1L);
-        runPlan4.setStartingWeeklyVolume(1);
-        runPlan4.setTrainingModels(new ArrayList<>());
-        runPlan4.setUserId(1);
-
-        RunTypeModel runType4 = new RunTypeModel();
-        runType4.setDescription("The characteristics of someone or something");
-        runType4.setId(1L);
-        runType4.setRuntypeImageUrl("https://example.org/example");
-        runType4.setTypeName(TrainingTypeEnum.EASY_RUN);
-
-        StageModel stage4 = new StageModel();
-        stage4.setDescription("The characteristics of someone or something");
-        stage4.setId(1L);
-        stage4.setName("Name");
-        stage4.setStageEnum(StageEnum.STAGE1);
-
-        TrainingModel training4 = new TrainingModel();
-        training4.setHitch(10.0d);
-        training4.setId(1L);
-        training4.setIntervalModelList(new ArrayList<>());
-        training4.setKilometers(10.0d);
-        training4.setRunPlan(runPlan4);
-        training4.setRunType(runType4);
-        training4.setStage(stage4);
-        training4.setWarmUp(10.0d);
-        RunSessionResponse buildResult = shoesIdResult.training(training4)
-                .userId(1)
-                .weatherConditions("Weather Conditions")
-                .build();
+        RunSessionResponse buildResult = StaticRunSession.runSessionResponse1();
         when(runSessionDtoMapper.toResponse(Mockito.<RunSessionModel>any())).thenReturn(buildResult);
         when(runSessionDtoMapper.toModel(Mockito.<RunSessionRequest>any())).thenReturn(runSessionModel3);
 
-        RunSessionRequest runSessionRequest = new RunSessionRequest();
-        runSessionRequest.setCaloriesBurned(1);
-        runSessionRequest.setDistance_km(new BigDecimal("2.3"));
-        runSessionRequest.setNotes("Notes");
-        runSessionRequest.setRouteId(1);
-        runSessionRequest.setRoute_points(new ArrayList<>());
-        runSessionRequest.setShoesId(1);
-        runSessionRequest.setTraining_id_from_run_plan(1);
-        runSessionRequest.setUserId(1);
-        runSessionRequest.setWeatherConditions("Weather Conditions");
+        RunSessionRequest runSessionRequest = StaticRunSession.runSessionRequest1();
         String content = (new ObjectMapper()).writeValueAsString(runSessionRequest);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.put("/run-sessions/{id}", 1L)
                 .contentType(MediaType.APPLICATION_JSON)

@@ -8,6 +8,7 @@ import com.runapp.workoutservice.model.VdotGradeModel;
 import com.runapp.workoutservice.model.VdotWorkoutModel;
 import com.runapp.workoutservice.repository.VdotWorkoutRepository;
 import com.runapp.workoutservice.service.serviceImpl.VdotCradeServiceImpl;
+import com.runapp.workoutservice.staticObject.StaticVdot;
 import com.runapp.workoutservice.utill.enums.DistanceTypeEnum;
 
 import java.util.Optional;
@@ -44,9 +45,7 @@ class VdotGradeControllerDiffblueTest {
      */
     @Test
     void testGetPersonalityVDOT() throws Exception {
-        VdotGradeRequest vdotGradeRequest = new VdotGradeRequest();
-        vdotGradeRequest.setDistance(DistanceTypeEnum.EASY_1500M);
-        vdotGradeRequest.setTime("Time");
+        VdotGradeRequest vdotGradeRequest = StaticVdot.vdotGradeRequest1();
         String content = (new ObjectMapper()).writeValueAsString(vdotGradeRequest);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/vdot/my-personal-indicators")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -63,42 +62,15 @@ class VdotGradeControllerDiffblueTest {
      */
     @Test
     void testGetPersonalityVDOT2() throws Exception {
-        VdotGradeModel vdotGradeModel = new VdotGradeModel();
-        vdotGradeModel.setEasy10000m("Easy10000m");
-        vdotGradeModel.setEasy15000m("Easy15000m");
-        vdotGradeModel.setEasy1500m("Easy1500m");
-        vdotGradeModel.setEasy2Mile("Easy2 Mile");
-        vdotGradeModel.setEasy3000m("Easy3000m");
-        vdotGradeModel.setEasy5000m("Easy5000m");
-        vdotGradeModel.setEasyMile("Easy Mile");
-        vdotGradeModel.setHalfMarathon("Half Marathon");
-        vdotGradeModel.setMarathon("Marathon");
-        vdotGradeModel.setVdot(1L);
+        VdotGradeModel vdotGradeModel = StaticVdot.vdotGradeModel();
         when(vdotCradeServiceImpl.findClosestTimeByDistanceAndTime(Mockito.<DistanceTypeEnum>any(), Mockito.<String>any()))
                 .thenReturn(vdotGradeModel);
 
-        VdotWorkoutModel vdotWorkoutModel = new VdotWorkoutModel();
-        vdotWorkoutModel.setEasyKm("Easy Km");
-        vdotWorkoutModel.setEasyMi("Easy Mi");
-        vdotWorkoutModel.setInterval_1000m("Interval 1000m");
-        vdotWorkoutModel.setInterval_1200m("Interval 1200m");
-        vdotWorkoutModel.setInterval_400m("Interval 400m");
-        vdotWorkoutModel.setInterval_mi("Interval mi");
-        vdotWorkoutModel.setMarathonKm("Marathon Km");
-        vdotWorkoutModel.setMarathonMi("Marathon Mi");
-        vdotWorkoutModel.setRepetition_200m("Bella");
-        vdotWorkoutModel.setRepetition_400m("Bella");
-        vdotWorkoutModel.setRepetition_800m("Bella");
-        vdotWorkoutModel.setThreshold_1000m("Threshold 1000m");
-        vdotWorkoutModel.setThreshold_400m("Threshold 400m");
-        vdotWorkoutModel.setThreshold_mi("Threshold mi");
-        vdotWorkoutModel.setVdot(1L);
+        VdotWorkoutModel vdotWorkoutModel = StaticVdot.vdotWorkoutModel();
         Optional<VdotWorkoutModel> ofResult = Optional.of(vdotWorkoutModel);
         when(vdotWorkoutRepository.findById(Mockito.<Long>any())).thenReturn(ofResult);
 
-        VdotGradeRequest vdotGradeRequest = new VdotGradeRequest();
-        vdotGradeRequest.setDistance(DistanceTypeEnum.EASY_1500M);
-        vdotGradeRequest.setTime("99:09:09");
+        VdotGradeRequest vdotGradeRequest = StaticVdot.vdotGradeRequest2();
         String content = (new ObjectMapper()).writeValueAsString(vdotGradeRequest);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/vdot/my-personal-indicators")
                 .contentType(MediaType.APPLICATION_JSON)

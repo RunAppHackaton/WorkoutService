@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.runapp.workoutservice.controller.RunPlanControllerDiffblueTest
--------------------------------------------------------------------------------
-Tests run: 6, Failures: 0, Errors: 0, Skipped: 1, Time elapsed: 2.205 s - in com.runapp.workoutservice.controller.RunPlanControllerDiffblueTest

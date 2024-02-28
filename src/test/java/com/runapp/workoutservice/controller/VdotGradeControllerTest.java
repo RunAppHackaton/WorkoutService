@@ -4,6 +4,7 @@ import com.runapp.workoutservice.model.VdotGradeModel;
 import com.runapp.workoutservice.model.VdotWorkoutModel;
 import com.runapp.workoutservice.repository.VdotWorkoutRepository;
 import com.runapp.workoutservice.service.serviceImpl.VdotCradeServiceImpl;
+import com.runapp.workoutservice.staticObject.StaticVdot;
 import com.runapp.workoutservice.utill.enums.DistanceTypeEnum;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,10 +34,8 @@ public class VdotGradeControllerTest {
 
     @Test
     public void testGetPersonalityVDOTWhenValidRequestThenReturnVdotWorkout() throws Exception {
-        VdotGradeModel vdotGradeModel = new VdotGradeModel();
-        vdotGradeModel.setVdot(1L);
-        VdotWorkoutModel vdotWorkoutModel = new VdotWorkoutModel();
-        vdotWorkoutModel.setVdot(1L);
+        VdotGradeModel vdotGradeModel = StaticVdot.vdotGradeModel();
+        VdotWorkoutModel vdotWorkoutModel = StaticVdot.vdotWorkoutModel();
 
         when(vdotGradeService.findClosestTimeByDistanceAndTime(DistanceTypeEnum.EASY_1500M, "00:10:00")).thenReturn(vdotGradeModel);
         when(vdotWorkoutRepository.findById(1L)).thenReturn(Optional.of(vdotWorkoutModel));

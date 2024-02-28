@@ -35,7 +35,7 @@ public class RunPlanServiceImpl implements RunPlanService {
     public RunPlanModel add(RunPlanModel entity) {
         existHandlerRegistry.handleRequest(ExistEnum.USER, entity.getUserId());
         LOGGER.info("RunPlan add: {}", entity);
-        throw new NoEntityFoundException("User with id: " + entity.getUserId() + " doesn't exist"); // todo
+        throw new NoEntityFoundException("User with id: " + entity.getUserId() + " doesn't exist");
     }
 
     @Override

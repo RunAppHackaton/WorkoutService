@@ -11,6 +11,7 @@ import com.runapp.workoutservice.model.RunPlanModel;
 import com.runapp.workoutservice.service.serviceImpl.RunPlanServiceImpl;
 import com.runapp.workoutservice.service.serviceImpl.VdotCradeServiceImpl;
 import com.runapp.workoutservice.service.serviceImpl.VdotWorkoutServiceImpl;
+import com.runapp.workoutservice.staticObject.StaticRunPlan;
 import com.runapp.workoutservice.utill.enums.DistanceTypeEnum;
 import com.runapp.workoutservice.utill.enums.RunPlanEnum;
 
@@ -36,7 +37,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 @ContextConfiguration(classes = {RunPlanController.class})
 @ExtendWith(SpringExtension.class)
-class RunPlanControllerDiffblueTest {
+class StaticRunPlanControllerDiffblueTest {
     @Autowired
     private RunPlanController runPlanController;
 
@@ -58,33 +59,7 @@ class RunPlanControllerDiffblueTest {
     @Test
     @Disabled("TODO: Complete this test")
     void testCreatePlan() throws Exception {
-        // TODO: Complete this test.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   com.fasterxml.jackson.databind.exc.InvalidDefinitionException: Java 8 date/time type `java.time.LocalDate` not supported by default: add Module "com.fasterxml.jackson.datatype:jackson-datatype-jsr310" to enable handling (through reference chain: com.runapp.workoutservice.dto.request.RunPlanRequest["goal_date"])
-        //       at com.fasterxml.jackson.databind.exc.InvalidDefinitionException.from(InvalidDefinitionException.java:77)
-        //       at com.fasterxml.jackson.databind.SerializerProvider.reportBadDefinition(SerializerProvider.java:1308)
-        //       at com.fasterxml.jackson.databind.ser.impl.UnsupportedTypeSerializer.serialize(UnsupportedTypeSerializer.java:35)
-        //       at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:732)
-        //       at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:772)
-        //       at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:178)
-        //       at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider._serialize(DefaultSerializerProvider.java:479)
-        //       at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider.serializeValue(DefaultSerializerProvider.java:318)
-        //       at com.fasterxml.jackson.databind.ObjectMapper._writeValueAndClose(ObjectMapper.java:4719)
-        //       at com.fasterxml.jackson.databind.ObjectMapper.writeValueAsString(ObjectMapper.java:3964)
-        //   See https://diff.blue/R013 to resolve this issue.
-
-        RunPlanRequest runPlanRequest = new RunPlanRequest();
-        runPlanRequest.setGoal_date(LocalDate.of(1970, 1, 1));
-        runPlanRequest.setKilometers_per_week(1);
-        runPlanRequest.setNumber_of_workouts_per_week(10);
-        runPlanRequest.setRunPlanEnum(RunPlanEnum.PLAN_5000M);
-        runPlanRequest.setTarget_time("Target time");
-        runPlanRequest.setTime_at_which_you_ran("Time at which you ran");
-        runPlanRequest.setTraining_days(new DayOfWeek[]{DayOfWeek.MONDAY});
-        runPlanRequest.setType_were_you_running(DistanceTypeEnum.EASY_1500M);
-        runPlanRequest.setUser_id(1);
+        RunPlanRequest runPlanRequest = StaticRunPlan.runPlanRequest();
         String content = (new ObjectMapper()).writeValueAsString(runPlanRequest);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/run-plan")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -156,13 +131,7 @@ class RunPlanControllerDiffblueTest {
      */
     @Test
     void testGetRunPlanById() throws Exception {
-        RunPlanModel runPlanModel = new RunPlanModel();
-        runPlanModel.setDayOfTheWeek(1);
-        runPlanModel.setFinalDate(LocalDate.of(1970, 1, 1));
-        runPlanModel.setId(1L);
-        runPlanModel.setStartingWeeklyVolume(1);
-        runPlanModel.setTrainingModels(new ArrayList<>());
-        runPlanModel.setUserId(1);
+        RunPlanModel runPlanModel = StaticRunPlan.runPlanModel();
         when(runPlanServiceImpl.getById(Mockito.<Long>any())).thenReturn(runPlanModel);
         when(runPlanDtoMapper.toLongDto(Mockito.<RunPlanModel>any())).thenReturn(new RunPlanLongResponse());
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/run-plan/{id}", 1L);

@@ -1,22 +1,22 @@
 server:
   port: ${SERVICE_SERVER_PORT}
 
-management:
-  tracing:
-    sampling:
-      probability: 1.0
-  zipkin:
-    tracing:
-      endpoint: ${ZIPKIN_URL}
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    health:
-      show-details: always
-springdoc:
-  packagesToScan: com.runapp.workoutservice
+#management:
+#  tracing:
+#    sampling:
+#      probability: 1.0
+#  zipkin:
+#    tracing:
+#      endpoint: ${ZIPKIN_URL}
+#  endpoints:
+#    web:
+#      exposure:
+#        include: "*"
+#  endpoint:
+#    health:
+#      show-details: always
+#springdoc:
+#  packagesToScan: com.runapp.workoutservice
 
 eureka:
   client:
