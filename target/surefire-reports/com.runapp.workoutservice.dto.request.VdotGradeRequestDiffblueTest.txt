@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.runapp.workoutservice.dto.request.VdotGradeRequestDiffblueTest
 -------------------------------------------------------------------------------
-Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.033 s - in com.runapp.workoutservice.dto.request.VdotGradeRequestDiffblueTest
+Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.023 s - in com.runapp.workoutservice.dto.request.VdotGradeRequestDiffblueTest

@@ -62,7 +62,7 @@ public class RunSessionDtoMapper implements DtoMapper<RunSessionModel, RunSessio
 
     private List<RoutePointModel> convertToRoutePointModels(List<RoutePointRequest> routePointRequests, RouteModel routeModel) {
         List<RoutePointModel> routePointModels = new ArrayList<>();
-
+        if(routePointRequests==null) return routePointModels;
         for (RoutePointRequest routePointRequest : routePointRequests) {
             RoutePointModel routePointModel = new RoutePointModel();
             routePointModel.setLatitude(routePointRequest.getLatitude());

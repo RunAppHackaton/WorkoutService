@@ -4,6 +4,7 @@ import com.runapp.workoutservice.dto.dtoMapper.RunSessionDtoMapper;
 import com.runapp.workoutservice.dto.request.RunSessionRequest;
 import com.runapp.workoutservice.dto.response.RunSessionResponse;
 import com.runapp.workoutservice.model.RunSessionModel;
+import com.runapp.workoutservice.service.serviceImpl.RunSessionServiceImpl;
 import com.runapp.workoutservice.service.serviceTemplate.RunSessionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -11,6 +12,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +30,7 @@ public class RunSessionController {
     private final RunSessionDtoMapper runSessionDtoMapper;
 
     @Autowired
-    public RunSessionController(RunSessionService runSessionService, RunSessionDtoMapper runSessionDtoMapper) {
+    public RunSessionController(RunSessionService  runSessionService, RunSessionDtoMapper runSessionDtoMapper) {
         this.runSessionService = runSessionService;
         this.runSessionDtoMapper = runSessionDtoMapper;
     }
@@ -58,7 +60,7 @@ public class RunSessionController {
     @ApiResponse(responseCode = "201", description = "Run session created", content = @Content(schema = @Schema(implementation = RunSessionResponse.class)))
     public ResponseEntity<RunSessionResponse> addRunSession(
             @Parameter(description = "Run session data", required = true)
-            @RequestBody RunSessionRequest runSessionRequest) {
+            @Valid @RequestBody RunSessionRequest runSessionRequest) {
         RunSessionModel runSession = runSessionDtoMapper.toModel(runSessionRequest);
         RunSessionModel savedRunSession = runSessionService.add(runSession);
         return new ResponseEntity<>(runSessionDtoMapper.toResponse(savedRunSession), HttpStatus.CREATED);
