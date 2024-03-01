@@ -16,6 +16,10 @@ import feign.FeignException;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -32,6 +36,10 @@ public class RunPlanServiceImpl implements RunPlanService {
     private final static Logger LOGGER = LoggerFactory.getLogger(RunPlanServiceImpl.class);
 
     @Override
+    @Caching(put = {@CachePut(value = "run-plans", key = "#result.id")},
+            evict = {@CacheEvict(value = "run-plans", allEntries = true),
+                    @CacheEvict(value = "run_plan_long_response", allEntries = true),
+                    @CacheEvict(value = "run_plan_long_response", allEntries = true)})
     public RunPlanModel add(RunPlanModel entity) {
         existHandlerRegistry.handleRequest(ExistEnum.USER, entity.getUserId());
         LOGGER.info("RunPlan add: {}", entity);
@@ -39,18 +47,26 @@ public class RunPlanServiceImpl implements RunPlanService {
     }
 
     @Override
+    @Cacheable(value = "run-plans", key = "#id")
     public RunPlanModel getById(Long id) {
         LOGGER.info("RunPlan get by id: {}", id);
         return runPlanRepository.findById(id).orElseThrow(() -> new NoEntityFoundException("RunPlan with id: " + id + " doesn't exist"));
     }
 
     @Override
+    @Cacheable(value = "run-plans")
     public List<RunPlanModel> getAll() {
         LOGGER.info("RunPlan get all");
         return runPlanRepository.findAll();
     }
 
     @Override
+    @Caching(evict = {
+            @CacheEvict(value = "run-plans", allEntries = true),
+            @CacheEvict(value = "run-plans", key = "#id"),
+            @CacheEvict(value = "run_plan_long_response", allEntries = true),
+            @CacheEvict(value = "run_plan_long_response", allEntries = true)
+    })
     public void deleteById(Long id) {
         LOGGER.info("RunPlan delete by id: {}", id);
         if (!runPlanRepository.existsById(id)) {
@@ -60,6 +76,11 @@ public class RunPlanServiceImpl implements RunPlanService {
     }
 
     @Override
+    @Caching(put = {@CachePut(value = "run-plans", key = "#result.id")},
+            evict = {@CacheEvict(value = "run-plans", allEntries = true),
+                    @CacheEvict(value = "run_plan_long_response", allEntries = true),
+                    @CacheEvict(value = "run_plan_long_response", allEntries = true)
+            })
     public RunPlanModel update(RunPlanModel entity) {
         existHandlerRegistry.handleRequest(ExistEnum.USER, entity.getUserId());
         LOGGER.info("RunPlan update: {}", entity);
@@ -69,6 +90,10 @@ public class RunPlanServiceImpl implements RunPlanService {
         return runPlanRepository.save(entity);
     }
 
+    @Caching(put = {@CachePut(value = "run-plans", key = "#result.id")},
+            evict = {@CacheEvict(value = "run-plans", allEntries = true),
+                    @CacheEvict(value = "run_plan_long_response", allEntries = true),
+                    @CacheEvict(value = "run_plan_long_response", allEntries = true)})
     public RunPlanModel createPlan(List<RunTraining> runTrainings, RunPlanRequest runPlanRequest) {
         LOGGER.info("RunPlan createPlan: runTrainings={}, runPlanRequest={}", runTrainings, runPlanRequest);
         existHandlerRegistry.handleRequest(ExistEnum.USER, runPlanRequest.getUser_id());

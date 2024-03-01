@@ -5,22 +5,26 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 
 @Data
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "RoutePoint")
-public class RoutePointModel {
+public class RoutePointModel implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "route_id", referencedColumnName = "id")
-    @JsonIgnore
     private RouteModel route;
 
     @Column(name = "latitude")
@@ -29,6 +33,12 @@ public class RoutePointModel {
     @Column(name = "longitude")
     private double longitude;
 
-    public RoutePointModel() {
+    @Override
+    public String toString() {
+        return "RoutePointModel{" +
+                "id=" + id +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                '}';
     }
 }

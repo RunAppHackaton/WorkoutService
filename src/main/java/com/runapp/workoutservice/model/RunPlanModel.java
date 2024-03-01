@@ -1,10 +1,12 @@
 package com.runapp.workoutservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -13,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "RunPlan")
-public class RunPlanModel {
+public class RunPlanModel implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +34,7 @@ public class RunPlanModel {
     @Column(name = "user_id")
     private int userId;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "runPlan", cascade = CascadeType.ALL)
     private List<TrainingModel> trainingModels;
 }
