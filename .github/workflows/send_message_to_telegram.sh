@@ -41,7 +41,24 @@ Best regards,
 $DEPLOYED_BY"
 
 # Отправляем сообщение в Telegram с помощью curl
-curl --location "https://api.telegram.org/bot6736641364:AAF9i-E9FL0GiWfrdFXFsKzz7ztHcO6RDms/sendMessage" \
---form "chat_id=-4183385105" \
---form "text=$MESSAGE" \
---form "parse_mode=HTML"
+curl --location 'https://api.telegram.org/bot6736641364:AAF9i-E9FL0GiWfrdFXFsKzz7ztHcO6RDms/sendMessage' \
+--form 'chat_id="-4183385105"' \
+--form 'text="<b>✅Successful Deployment Notification✅</b>
+Hey Team ✋,
+Exciting news! Another successful deployment has just been completed on the server.
+
+<b>🤖 Project Name:</b> [Specify the version number or description of the update]
+<b>☁️ Service Name:</b> [Specify the version number or description of the update]
+<b>📗 Version:</b> [Specify the version number or description of the update]
+<b>📪 Commit:</b> [Provide the commit name or ID associated with this deployment]
+<b>👨‍💻 Deployed By:</b> [Mention the name or username of the user who pushed the changes]
+<b>📆 Deployment Date:</b> [Specify the date and time of the deployment]
+<b>📄 Documentation URI:</b> [Specify the date and time of the deployment]
+<b>🔍 Service URI:</b> [Specify the date and time of the deployment]
+<b>☘️ Github URI:</b> [Specify the date and time of the deployment]
+
+
+If you have any questions or need further information, don'\''t hesitate to contact us!
+Best regards,
+[Your Name or Team Name]"' \
+--form 'parse_mode="HTML"'
