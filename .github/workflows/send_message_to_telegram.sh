@@ -6,7 +6,7 @@ SERVICE_NAME="$GITHUB_REPOSITORY"
 COMMIT="$GITHUB_SHA"
 DEPLOYED_BY="$GITHUB_ACTOR"
 DEPLOYMENT_DATE=$(date +'%Y-%m-%d %H:%M:%S')
-DOCUMENTATION_URI="$rrrr/swagger-ui/index.html"
+DOCUMENTATION_URI="rrrr/swagger-ui/index.html"
 GITHUB_URI="https://github.com/${GITHUB_REPOSITORY}"
 
 BOT_TOKEN="$1"
