@@ -9,9 +9,6 @@ DEPLOYMENT_DATE=$(date +'%Y-%m-%d %H:%M:%S')
 DOCUMENTATION_URI="rrrr/swagger-ui/index.html"
 GITHUB_URI="https://github.com/${GITHUB_REPOSITORY}"
 
-BOT_TOKEN=$1
-CHAT_ID=$2
-
 echo "SERVICE_NAME: $SERVICE_URI"
 echo "SERVICE_NAME: $PROJECT_NAME"
 echo "SERVICE_NAME: $SERVICE_NAME"
@@ -42,7 +39,7 @@ Best regards,
 $DEPLOYED_BY"
 
 # Отправляем сообщение в Telegram с помощью curl
-curl --location "https://api.telegram.org/bot$BOT_TOKEN/sendMessage" \
---form "chat_id=$CHAT_ID" \
+curl --location "https://api.telegram.org/bot$1/sendMessage" \
+--form "chat_id=$2" \
 --form "text=$MESSAGE" \
 --form "parse_mode=HTML"
