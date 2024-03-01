@@ -72,5 +72,9 @@ spring:
             url: ${GUILD_SERVICE_URL}
           shoes-service:
             url: ${SHOES_SERVICE_URL}
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
 
 storage-directory: WorkoutService/

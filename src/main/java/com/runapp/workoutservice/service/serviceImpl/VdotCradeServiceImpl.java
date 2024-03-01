@@ -8,6 +8,10 @@ import com.runapp.workoutservice.utill.enums.DistanceTypeEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -24,24 +28,32 @@ public class VdotCradeServiceImpl implements GenericService<VdotGradeModel> {
     }
 
     @Override
+    @Caching(put = {@CachePut(value = "vdot", key = "#result.id")},
+            evict = {@CacheEvict(value = "vdot", allEntries = true)})
     public VdotGradeModel add(VdotGradeModel entity) {
         LOGGER.info("VdotGrade add: {}", entity);
         return vdotGradeRepository.save(entity);
     }
 
     @Override
+    @Cacheable(value = "vdot", key = "#vtod")
     public VdotGradeModel getById(Long vtod) {
         LOGGER.info("VdotGrade get by id: {}", vtod);
         return vdotGradeRepository.findById(vtod).orElseThrow(() -> new NoEntityFoundException("VDOT Grade with id: " + vtod + " doesn't exist"));
     }
 
     @Override
+    @Cacheable(value = "vdot")
     public List<VdotGradeModel> getAll() {
         LOGGER.info("VdotGrade get all");
         return vdotGradeRepository.findAll();
     }
 
     @Override
+    @Caching(evict = {
+            @CacheEvict(value = "vdot", allEntries = true),
+            @CacheEvict(value = "vdot", key = "#vtod")
+    })
     public void deleteById(Long vtod) {
         LOGGER.info("VdotGrade delete by id: {}", vtod);
         if (!vdotGradeRepository.existsById(vtod)) {
@@ -51,6 +63,8 @@ public class VdotCradeServiceImpl implements GenericService<VdotGradeModel> {
     }
 
     @Override
+    @Caching(put = {@CachePut(value = "vdot", key = "#result.id")},
+            evict = {@CacheEvict(value = "vdot", allEntries = true)})
     public VdotGradeModel update(VdotGradeModel entity) {
         LOGGER.info("VdotGrade update: {}", entity);
         if (!vdotGradeRepository.existsById(entity.getVdot())) {

@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
@@ -15,7 +16,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Entity
 @Table(name = "Training")
-public class TrainingModel {
+public class TrainingModel implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,9 +36,18 @@ public class TrainingModel {
     @JoinColumn(name = "Stage_id")
     private StageModel stage;
 
+    @OneToOne(fetch = FetchType.LAZY)
     @ManyToOne
     @JoinColumn(name = "RunType_id")
     private RunTypeModel runType;
+
+    public RunTypeModel getRunType() {
+        return runType;
+    }
+
+    public void setRunType(RunTypeModel runType) {
+        this.runType = runType;
+    }
 
     @ManyToOne()
     @JoinColumn(name = "RunPlan_id")

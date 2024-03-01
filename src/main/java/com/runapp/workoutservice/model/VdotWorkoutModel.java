@@ -8,12 +8,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "VDOT_Workout")
-public class VdotWorkoutModel {
+public class VdotWorkoutModel implements Serializable {
 
     @Id
     @Column(name = "VDOT")

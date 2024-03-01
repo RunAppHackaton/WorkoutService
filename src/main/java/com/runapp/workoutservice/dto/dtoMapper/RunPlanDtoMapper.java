@@ -10,6 +10,8 @@ import com.runapp.workoutservice.model.IntervalModel;
 import com.runapp.workoutservice.model.RunPlanModel;
 import com.runapp.workoutservice.model.TrainingModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

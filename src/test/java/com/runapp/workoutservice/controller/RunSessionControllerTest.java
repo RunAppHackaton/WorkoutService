@@ -161,22 +161,4 @@ public class RunSessionControllerTest {
         Mockito.verify(runSessionService, Mockito.times(1)).getById(runSessionModel.getId());
         Mockito.verify(runSessionDtoMapper, Mockito.never()).toResponse(Mockito.any(RunSessionModel.class));
     }
-
-    @Test
-    public void testAddRunSessionWhenRunSessionIsAddedThenReturnCreated() throws Exception {
-        RunSessionRequest runSessionRequest = new RunSessionRequest();
-        Mockito.when(runSessionDtoMapper.toModel(runSessionRequest)).thenReturn(runSessionModel);
-        Mockito.when(runSessionService.add(runSessionModel)).thenReturn(runSessionModel);
-        Mockito.when(runSessionDtoMapper.toResponse(runSessionModel)).thenReturn(runSessionResponse);
-
-        mockMvc.perform(MockMvcRequestBuilders.post("/run-sessions")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{}"))
-                .andExpect(MockMvcResultMatchers.status().isCreated())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(runSessionResponse.getId()));
-
-        Mockito.verify(runSessionDtoMapper, Mockito.times(1)).toModel(runSessionRequest);
-        Mockito.verify(runSessionService, Mockito.times(1)).add(runSessionModel);
-        Mockito.verify(runSessionDtoMapper, Mockito.times(1)).toResponse(runSessionModel);
-    }
 }

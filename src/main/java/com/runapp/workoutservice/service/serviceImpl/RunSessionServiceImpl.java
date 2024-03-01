@@ -12,6 +12,10 @@ import com.runapp.workoutservice.utill.existHandler.ExistHandlerRegistry;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,6 +31,8 @@ public class RunSessionServiceImpl implements RunSessionService {
     private final AchievementConverter achievementConverter;
     private final static Logger LOGGER = LoggerFactory.getLogger(RunSessionServiceImpl.class);
     @Override
+    @Caching(put = {@CachePut(value = "run-session", key = "#result.id")},
+            evict = {@CacheEvict(value = "run-session", allEntries = true)})
     public RunSessionModel add(RunSessionModel entity) {
         LOGGER.info("RunSession add: {}", entity);
         // convert and sent RunSession to Achievement Service for User Statistic
@@ -40,6 +46,7 @@ public class RunSessionServiceImpl implements RunSessionService {
     }
 
     @Override
+    @Cacheable(value = "run-session", key = "#id")
     public RunSessionModel getById(Long id) {
         LOGGER.info("RunSession get by id: {}", id);
         return runSessionRepository.findById(id)
@@ -47,12 +54,17 @@ public class RunSessionServiceImpl implements RunSessionService {
     }
 
     @Override
+    @Cacheable(value = "run-session")
     public List<RunSessionModel> getAll() {
         LOGGER.info("RunSession get all");
         return runSessionRepository.findAll();
     }
 
     @Override
+    @Caching(evict = {
+            @CacheEvict(value = "run-session", allEntries = true),
+            @CacheEvict(value = "run-session", key = "#id")
+    })
     public void deleteById(Long id) {
         LOGGER.info("RunSession delete by id: {}", id);
         if (!runSessionRepository.existsById(id)) {
@@ -62,6 +74,8 @@ public class RunSessionServiceImpl implements RunSessionService {
     }
 
     @Override
+    @Caching(put = {@CachePut(value = "run-session", key = "#result.id")},
+            evict = {@CacheEvict(value = "run-session", allEntries = true)})
     public RunSessionModel update(RunSessionModel entity) {
         LOGGER.info("RunSession update: {}", entity);
         existHandlerRegistry.handleRequest(ExistEnum.USER, entity.getUserId());
