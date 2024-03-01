@@ -23,6 +23,14 @@ echo "GITHUB_URI = $GITHUB_URI"
 echo "BOT_TOKEN = $BOT_TOKEN"
 echo "CHAT_ID = $CHAT_ID"
 
+COMMIT_MESSAGE=$(jq -r '.commits[0].message' "$GITHUB_EVENT_PATH")
+
+echo "Commit message: $COMMIT_MESSAGE"
+
+COMMIT_SUBJECT=$(git log --format=%s -n 1)
+
+echo "Commit subject: $COMMIT_SUBJECT"
+
 
 MESSAGE="<b>✅ Successful Deployment Notification ✅</b>
 Hey Team ✋,
