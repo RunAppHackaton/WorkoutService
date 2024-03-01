@@ -1,5 +1,6 @@
 package com.runapp.workoutservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,6 +34,7 @@ public class RunPlanModel implements Serializable {
     @Column(name = "user_id")
     private int userId;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "runPlan", cascade = CascadeType.ALL)
     private List<TrainingModel> trainingModels;
 }

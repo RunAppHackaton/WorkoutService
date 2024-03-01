@@ -36,18 +36,9 @@ public class TrainingModel implements Serializable {
     @JoinColumn(name = "Stage_id")
     private StageModel stage;
 
-    @OneToOne(fetch = FetchType.LAZY)
     @ManyToOne
     @JoinColumn(name = "RunType_id")
     private RunTypeModel runType;
-
-    public RunTypeModel getRunType() {
-        return runType;
-    }
-
-    public void setRunType(RunTypeModel runType) {
-        this.runType = runType;
-    }
 
     @ManyToOne()
     @JoinColumn(name = "RunPlan_id")

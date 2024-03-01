@@ -54,7 +54,6 @@ public class RunSessionServiceImpl implements RunSessionService {
     }
 
     @Override
-    @Cacheable(value = "run-session")
     public List<RunSessionModel> getAll() {
         LOGGER.info("RunSession get all");
         return runSessionRepository.findAll();
