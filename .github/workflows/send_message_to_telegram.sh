@@ -32,4 +32,4 @@ Exciting news! Another successful deployment has just been completed on the serv
 If you have any questions or need further information, don'\''t hesitate to contact us!
 Best regards,
 $DEPLOYED_BY" \
---form "parse_mode="HTML"
+--form "parse_mode=HTML"
