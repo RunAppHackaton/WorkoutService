@@ -19,7 +19,6 @@ Exciting news! Another successful deployment has just been completed on the serv
 
 <b>🤖 Project Name:</b> $PROJECT_NAME
 <b>☁️ Service Name:</b> $SERVICE_NAME
-<b>📗 Version:</b> $VERSION
 <b>📪 Commit:</b> $COMMIT
 <b>👨‍💻 Deployed By:</b> $DEPLOYED_BY
 <b>📆 Deployment Date:</b> $DEPLOYMENT_DATE
@@ -28,6 +27,7 @@ Exciting news! Another successful deployment has just been completed on the serv
 <b>☘️ Github URI:</b> $GITHUB_URI
 
 If you have any questions or need further information, don't hesitate to contact us!
+
 Best regards,
 $DEPLOYED_BY"
 
