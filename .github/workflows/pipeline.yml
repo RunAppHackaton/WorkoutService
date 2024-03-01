@@ -7,15 +7,15 @@ on:
 
 jobs:
 
-   Telegram:
-     runs-on: ubuntu-latest
+  Telegram:
+    runs-on: ubuntu-latest
 
-     steps:
-       - name: Install dependencies
-         run: ./.github/workflows/install_dependencies.sh
+    steps:
+      - name: Install dependencies
+        run: ./.github/workflows/install_dependencies.sh
 
-       - name: Build and push container to Google Artifact Registry
-         run: ./.github/workflows/send_message_to_telegram.sh
+      - name: Build and push container to Google Artifact Registry
+        run: ./.github/workflows/send_message_to_telegram.sh
 
 
 #  Build:
