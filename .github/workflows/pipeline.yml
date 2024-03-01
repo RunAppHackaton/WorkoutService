@@ -18,7 +18,7 @@ jobs:
         run: ./.github/workflows/install_dependencies.sh
 
       - name: Build and push container to Google Artifact Registry
-        run: ./.github/workflows/send_message_to_telegram.sh ${{ secrets.BOT_TOKEN }} ${{ secrets.CHAT_ID }}
+        run: ./.github/workflows/send_message_to_telegram.sh ${{ vars.BOT_TOKEN }} ${{ vars.CHAT_ID }}
 
 
 #  Build:
