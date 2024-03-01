@@ -1,12 +1,12 @@
 #!/bin/bash
 
-SERVICE_URI="uri"
+SERVICE_URI=$(gcloud run services describe shoes-service --platform=managed --region=europe-central2 --format='value(status.url)')
 PROJECT_NAME="Run_App"
 SERVICE_NAME="$GITHUB_REPOSITORY"
-COMMIT="$GITHUB_SHA"
+COMMIT=$(git log --format=%s -n 1)
 DEPLOYED_BY="$GITHUB_ACTOR"
 DEPLOYMENT_DATE=$(date +'%Y-%m-%d %H:%M:%S')
-DOCUMENTATION_URI="rrrr/swagger-ui/index.html"
+DOCUMENTATION_URI="${SERVICE_URI}/swagger-ui/index.html"
 GITHUB_URI="https://github.com/${GITHUB_REPOSITORY}"
 
 CHAT_ID="$1"
@@ -15,22 +15,13 @@ BOT_TOKEN="$2"
 echo "SERVICE_URI = $SERVICE_URI"
 echo "PROJECT_NAME = $PROJECT_NAME"
 echo "SERVICE_NAME = $SERVICE_NAME"
-echo "COMMIT = $COMMIT"
+echo "COMMIT = $(git log --format=%s -n 1)
 echo "DEPLOYED_BY = $DEPLOYED_BY"
 echo "DEPLOYMENT_DATE = $DEPLOYMENT_DATE"
 echo "DOCUMENTATION_URI = $DOCUMENTATION_URI"
 echo "GITHUB_URI = $GITHUB_URI"
 echo "BOT_TOKEN = $BOT_TOKEN"
 echo "CHAT_ID = $CHAT_ID"
-
-COMMIT_MESSAGE=$(jq -r '.commits[0].message' "$GITHUB_EVENT_PATH")
-
-echo "Commit message: $COMMIT_MESSAGE"
-
-COMMIT_SUBJECT=$(git log --format=%s -n 1)
-
-echo "Commit subject: $COMMIT_SUBJECT"
-
 
 MESSAGE="<b>✅ Successful Deployment Notification ✅</b>
 Hey Team ✋,

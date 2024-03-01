@@ -9,6 +9,9 @@ jobs:
 
   Telegram:
     runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write'
 
     steps:
       - name: Checkout Repository
@@ -17,8 +20,20 @@ jobs:
       - name: Install dependencies
         run: ./.github/workflows/install_dependencies.sh
 
+      - name: Google auth
+        id: auth
+        uses: google-github-actions/auth@v1
+        with:
+          token_format: 'access_token'
+          workload_identity_provider: ${{ secrets.GCP_PROVIDER }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+
       - name: Build and push container to Google Artifact Registry
-        run: ./.github/workflows/send_message_to_telegram.sh ${{ vars.CHAT_ID }} ${{ vars.BOT_TOKEN }}
+        env: # Указание переменных среды
+          CHAT_ID: ${{ secrets.CHAT_ID }}
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+        run: ./.github/workflows/send_message_to_telegram.sh $CHAT_ID $BOT_TOKEN
+
 
 
 #  Build:
