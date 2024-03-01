@@ -9,8 +9,8 @@ DEPLOYMENT_DATE=$(date +'%Y-%m-%d %H:%M:%S')
 DOCUMENTATION_URI="$CLOUD_RUN_SERVICE_URL/swagger-ui/index.html"
 GITHUB_URI="https://github.com/${GITHUB_REPOSITORY}"
 
-BOT_TOKEN=${{ secrets.BOT_TOKEN }}
-CHAT_ID=${{ secrets.CHAT_ID }}
+BOT_TOKEN="$1"
+CHAT_ID="$2"
 
 MESSAGE="<b>✅ Successful Deployment Notification ✅</b>
 Hey Team ✋,
