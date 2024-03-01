@@ -30,8 +30,8 @@ jobs:
 
       - name: Build and push container to Google Artifact Registry
         env: # Указание переменных среды
-          CHAT_ID: ${{ secrets.CHAT_ID }}
-          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          CHAT_ID: ${{ vars.CHAT_ID }}
+          BOT_TOKEN: ${{ vars.BOT_TOKEN }}
         run: ./.github/workflows/send_message_to_telegram.sh $CHAT_ID $BOT_TOKEN
 
 
