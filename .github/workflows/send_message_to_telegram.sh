@@ -10,17 +10,27 @@ DOCUMENTATION_URI="rrrr/swagger-ui/index.html"
 GITHUB_URI="https://github.com/${GITHUB_REPOSITORY}"
 
 CHAT_ID="$1"
-BOT_TOKEN="$2"
+CHAT_ID="$2"
+
+echo "SERVICE_URI = $SERVICE_URI"
+echo "PROJECT_NAME = $PROJECT_NAME"
+echo "SERVICE_NAME = $SERVICE_NAME"
+echo "COMMIT = $COMMIT"
+echo "DEPLOYED_BY = $DEPLOYED_BY"
+echo "DEPLOYMENT_DATE = $DEPLOYMENT_DATE"
+echo "DOCUMENTATION_URI = $DOCUMENTATION_URI"
+echo "GITHUB_URI = $GITHUB_URI"
+echo "CHAT_ID = $CHAT_ID"
+echo "CHAT_ID = $CHAT_ID"
 
 
-curl --location "https://api.telegram.org/bot$BOT_TOKEN/sendMessage" \
---form "chat_id=$CHAT_ID" \
---form "text=<b>✅Successful Deployment Notification✅</b>
+MESSAGE="<b>✅ Successful Deployment Notification ✅</b>
 Hey Team ✋,
 Exciting news! Another successful deployment has just been completed on the server.
 
 <b>🤖 Project Name:</b> $PROJECT_NAME
 <b>☁️ Service Name:</b> $SERVICE_NAME
+<b>📗 Version:</b> $VERSION
 <b>📪 Commit:</b> $COMMIT
 <b>👨‍💻 Deployed By:</b> $DEPLOYED_BY
 <b>📆 Deployment Date:</b> $DEPLOYMENT_DATE
@@ -28,8 +38,15 @@ Exciting news! Another successful deployment has just been completed on the serv
 <b>🔍 Service URI:</b> $SERVICE_URI
 <b>☘️ Github URI:</b> $GITHUB_URI
 
-
-If you have any questions or need further information, don'\''t hesitate to contact us!
+If you have any questions or need further information, don't hesitate to contact us!
 Best regards,
-$DEPLOYED_BY" \
+$DEPLOYED_BY"
+
+echo "text = $MESSAGE"
+echo "https://api.telegram.org/bot$BOT_TOKEN/sendMessage"
+
+# Отправляем сообщение в Telegram с помощью curl
+curl --location "https://api.telegram.org/bot$BOT_TOKEN/sendMessage" \
+--form "chat_id=$CHAT_ID" \
+--form "text=$MESSAGE" \
 --form "parse_mode=HTML"
