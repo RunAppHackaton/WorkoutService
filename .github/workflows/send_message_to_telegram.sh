@@ -46,7 +46,13 @@ echo "text = $MESSAGE"
 echo "https://api.telegram.org/bot$BOT_TOKEN/sendMessage"
 
 # Отправляем сообщение в Telegram с помощью curl
-curl --location 'https://api.telegram.org/bot"$BOT_TOKEN"/sendMessage' \
---form 'chat_id="$CHAT_ID"' \
---form 'text="$MESSAGE"' \
---form 'parse_mode=HTML'
+curl --location "https://api.telegram.org/bot$BOT_TOKEN/sendMessage" \
+--header 'Content-Type: application/json' \
+--data '{
+    "chat_id" : "'"$CHAT_ID"'",
+    "text" : "'"$MESSAGE"'",
+    "parse_mode" : "HTML",
+}'
+
+
+6736641364:AAF9i-E9FL0GiWfrdFXFsKzz7ztHcO6RDms
