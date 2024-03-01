@@ -8,20 +8,10 @@ DEPLOYED_BY="$GITHUB_ACTOR"
 DEPLOYMENT_DATE=$(date +'%Y-%m-%d %H:%M:%S')
 DOCUMENTATION_URI="${SERVICE_URI}/swagger-ui/index.html"
 GITHUB_URI="https://github.com/${GITHUB_REPOSITORY}"
-
 CHAT_ID="$1"
 BOT_TOKEN="$2"
+PHOTO_URI="$3"
 
-echo "SERVICE_URI = $SERVICE_URI"
-echo "PROJECT_NAME = $PROJECT_NAME"
-echo "SERVICE_NAME = $SERVICE_NAME"
-echo "COMMIT = $(git log --format=%s -n 1)"
-echo "DEPLOYED_BY = $DEPLOYED_BY"
-echo "DEPLOYMENT_DATE = $DEPLOYMENT_DATE"
-echo "DOCUMENTATION_URI = $DOCUMENTATION_URI"
-echo "GITHUB_URI = $GITHUB_URI"
-echo "BOT_TOKEN = $BOT_TOKEN"
-echo "CHAT_ID = $CHAT_ID"
 
 MESSAGE="<b>✅ Successful Deployment Notification ✅</b>
 Hey Team ✋,
@@ -41,10 +31,16 @@ If you have any questions or need further information, don't hesitate to contact
 Best regards,
 $DEPLOYED_BY"
 
-echo "text = $MESSAGE"
-echo "https://api.telegram.org/bot$BOT_TOKEN/sendMessage"
 
-# Отправляем сообщение в Telegram с помощью curl
+# send photo
+curl --location "https://api.telegram.org/bot$BOT_TOKEN/sendPhoto" \
+--header 'Content-Type: application/json' \
+--data '{
+    "chat_id" : "'"$CHAT_ID"'",
+    "photo" : "'"$PHOTO_URI"'"
+}'
+
+# send notification text
 curl --location "https://api.telegram.org/bot$BOT_TOKEN/sendMessage" \
 --header 'Content-Type: application/json' \
 --data '{
