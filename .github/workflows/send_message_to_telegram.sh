@@ -14,7 +14,7 @@ BOT_TOKEN="$2"
 
 
 curl --location "https://api.telegram.org/bot$BOT_TOKEN/sendMessage" \
---form "chat_id=$BOT_TOKEN" \
+--form "chat_id=$CHAT_ID" \
 --form "text=<b>✅Successful Deployment Notification✅</b>
 Hey Team ✋,
 Exciting news! Another successful deployment has just been completed on the server.
