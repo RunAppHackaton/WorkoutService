@@ -19,7 +19,9 @@ echo "COMMIT: $COMMIT"
 echo "DEPLOYED_BY: $DEPLOYED_BY"
 echo "DEPLOYMENT_DATE: $DEPLOYMENT_DATE"
 echo "DOCUMENTATION_URI: $DOCUMENTATION_URI"
+echo "BOT_TOKEN: $BOT_TOKEN"
 echo "GITHUB_URI: $GITHUB_URI"
+echo "CHAT_ID: $CHAT_ID"
 
 MESSAGE="<b>✅ Successful Deployment Notification ✅</b>
 Hey Team ✋,
