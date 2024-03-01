@@ -39,7 +39,7 @@ Exciting news! Another successful deployment has just been completed on the serv
 If you have any questions or need further information, don't hesitate to contact us!
 Best regards,
 $DEPLOYED_BY"
-$BOT_TOKEN='6736641364:AAF9i-E9FL0GiWfrdFXFsKzz7ztHcO6RDms'
+BOT_TOKEN="6736641364:AAF9i-E9FL0GiWfrdFXFsKzz7ztHcO6RDms"
 
 # Отправляем сообщение в Telegram с помощью curl
 curl --location "https://api.telegram.org/bot$BOT_TOKEN/sendMessage" \
