@@ -9,8 +9,8 @@ DEPLOYMENT_DATE=$(date +'%Y-%m-%d %H:%M:%S')
 DOCUMENTATION_URI="rrrr/swagger-ui/index.html"
 GITHUB_URI="https://github.com/${GITHUB_REPOSITORY}"
 
-BOT_TOKEN="$1"
-CHAT_ID="$2"
+BOT_TOKEN=$1
+CHAT_ID=$2
 
 echo "SERVICE_NAME: $SERVICE_URI"
 echo "SERVICE_NAME: $PROJECT_NAME"
