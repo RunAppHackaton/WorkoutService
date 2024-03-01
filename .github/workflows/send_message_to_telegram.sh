@@ -12,6 +12,15 @@ GITHUB_URI="https://github.com/${GITHUB_REPOSITORY}"
 BOT_TOKEN="$1"
 CHAT_ID="$2"
 
+echo "SERVICE_NAME: $SERVICE_URI"
+echo "SERVICE_NAME: $PROJECT_NAME"
+echo "SERVICE_NAME: $SERVICE_NAME"
+echo "COMMIT: $COMMIT"
+echo "DEPLOYED_BY: $DEPLOYED_BY"
+echo "DEPLOYMENT_DATE: $DEPLOYMENT_DATE"
+echo "DOCUMENTATION_URI: $DOCUMENTATION_URI"
+echo "GITHUB_URI: $GITHUB_URI"
+
 MESSAGE="<b>✅ Successful Deployment Notification ✅</b>
 Hey Team ✋,
 Exciting news! Another successful deployment has just been completed on the server.
