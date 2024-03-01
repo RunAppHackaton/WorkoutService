@@ -126,3 +126,5 @@ jobs:
           BOT_TOKEN: ${{ vars.BOT_TOKEN }}
           PHOTO_URI: ${{ vars.PHOTO_URI }}
         run: ./.github/workflows/send_message_to_telegram.sh $CHAT_ID $BOT_TOKEN $PHOTO_URI
+        if: success()
+
