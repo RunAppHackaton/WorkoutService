@@ -52,6 +52,3 @@ curl --location "https://api.telegram.org/bot$BOT_TOKEN/sendMessage" \
     "text" : "'"$MESSAGE"'",
     "parse_mode" : "HTML",
 }'
-
-
-6736641364:AAF9i-E9FL0GiWfrdFXFsKzz7ztHcO6RDms
