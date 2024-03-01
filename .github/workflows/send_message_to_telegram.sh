@@ -15,7 +15,7 @@ BOT_TOKEN="$2"
 echo "SERVICE_URI = $SERVICE_URI"
 echo "PROJECT_NAME = $PROJECT_NAME"
 echo "SERVICE_NAME = $SERVICE_NAME"
-echo "COMMIT = $(git log --format=%s -n 1)
+echo "COMMIT = $(git log --format=%s -n 1)"
 echo "DEPLOYED_BY = $DEPLOYED_BY"
 echo "DEPLOYMENT_DATE = $DEPLOYMENT_DATE"
 echo "DOCUMENTATION_URI = $DOCUMENTATION_URI"
