@@ -19,6 +19,8 @@ echo "DOCUMENTATION_URI: $DOCUMENTATION_URI"
 echo "BOT_TOKEN: $BOT_TOKEN"
 echo "GITHUB_URI: $GITHUB_URI"
 echo "CHAT_ID: $CHAT_ID"
+echo "https://api.telegram.org/bot$1/sendMessage"
+echo
 
 MESSAGE="<b>✅ Successful Deployment Notification ✅</b>
 Hey Team ✋,
@@ -39,7 +41,7 @@ Best regards,
 $DEPLOYED_BY"
 
 # Отправляем сообщение в Telegram с помощью curl
-curl --location "https://api.telegram.org/bot$1/sendMessage" \
---form "chat_id=$2" \
+curl --location "https://api.telegram.org/bot6736641364:AAF9i-E9FL0GiWfrdFXFsKzz7ztHcO6RDms/sendMessage" \
+--form "chat_id=-4183385105" \
 --form "text=$MESSAGE" \
 --form "parse_mode=HTML"
