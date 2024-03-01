@@ -27,6 +27,7 @@ import java.util.List;
 @Tag(name = "Run Plan Management", description = "Operations related to run plans")
 public class RunPlanController {
 
+
     private final VdotWorkoutServiceImpl vdotWorkoutService;
     private final VdotCradeServiceImpl vdotCradeService;
     private final RunPlanServiceImpl runPlanService;
