@@ -6,6 +6,7 @@ import com.runapp.workoutservice.feignClient.ProfileServiceClient;
 import com.runapp.workoutservice.model.IntervalModel;
 import com.runapp.workoutservice.model.RunPlanModel;
 import com.runapp.workoutservice.model.TrainingModel;
+import com.runapp.workoutservice.model.VdotWorkoutModel;
 import com.runapp.workoutservice.repository.*;
 import com.runapp.workoutservice.service.serviceTemplate.RunPlanService;
 import com.runapp.workoutservice.service.runPlanService.Interval;
@@ -56,8 +57,13 @@ public class RunPlanServiceImpl implements RunPlanService {
     @Override
     @Cacheable(value = "run-plans")
     public List<RunPlanModel> getAll() {
+        List<RunPlanModel> vdotGradeModels = runPlanRepository.findAll();
+        if (vdotGradeModels.isEmpty()) {
+            LOGGER.warn("No RunPlan records found in the database");
+            throw new NoEntityFoundException("RunPlan records doesn't exist");
+        }
         LOGGER.info("RunPlan get all");
-        return runPlanRepository.findAll();
+        return vdotGradeModels;
     }
 
     @Override

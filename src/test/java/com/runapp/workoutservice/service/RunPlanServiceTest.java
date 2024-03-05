@@ -11,11 +11,11 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
@@ -50,12 +50,18 @@ class RunPlanServiceTest {
     }
 
     @Test
-    void getAll_ReturnsListOfRunPlanModels() {
+    void testGetAllThrowsNoEntityFoundException() {
         MockitoAnnotations.initMocks(this);
-        List<RunPlanModel> expectedList = new ArrayList<>();
-        when(runPlanRepository.findAll()).thenReturn(expectedList);
-        assertEquals(expectedList, runPlanService.getAll());
+        when(runPlanRepository.findAll()).thenReturn(Collections.emptyList());
+
+        Throwable exception = assertThrows(NoEntityFoundException.class, () -> {
+            runPlanService.getAll();
+        });
+
+        // Проверка содержания сообщения об ошибке
+        assertTrue(exception.getMessage().contains("RunPlan records doesn't exist"));
     }
+
 
     @Test
     void deleteById_ThrowsNoEntityFoundException() {

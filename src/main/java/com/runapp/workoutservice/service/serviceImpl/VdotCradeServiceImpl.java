@@ -45,8 +45,13 @@ public class VdotCradeServiceImpl implements GenericService<VdotGradeModel> {
     @Override
     @Cacheable(value = "vdot")
     public List<VdotGradeModel> getAll() {
+        List<VdotGradeModel> vdotGradeModels = vdotGradeRepository.findAll();
+        if (vdotGradeModels.isEmpty()) {
+            LOGGER.warn("No VdotGrade records found in the database");
+            throw new NoEntityFoundException("VdotGrade records doesn't exist");
+        }
         LOGGER.info("VdotGrade get all");
-        return vdotGradeRepository.findAll();
+        return vdotGradeModels;
     }
 
     @Override

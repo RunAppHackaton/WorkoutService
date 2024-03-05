@@ -1,6 +1,7 @@
 package com.runapp.workoutservice.service.serviceImpl;
 
 import com.runapp.workoutservice.exception.NoEntityFoundException;
+import com.runapp.workoutservice.model.VdotGradeModel;
 import com.runapp.workoutservice.model.VdotWorkoutModel;
 import com.runapp.workoutservice.repository.VdotWorkoutRepository;
 import com.runapp.workoutservice.service.serviceTemplate.GenericService;
@@ -44,8 +45,13 @@ public class VdotWorkoutServiceImpl implements GenericService<VdotWorkoutModel> 
     @Override
     @Cacheable(value = "vdot_workout")
     public List<VdotWorkoutModel> getAll() {
+        List<VdotWorkoutModel> vdotGradeModels = vdotWorkoutRepository.findAll();
+        if (vdotGradeModels.isEmpty()) {
+            LOGGER.warn("No VdotWorkout records found in the database");
+            throw new NoEntityFoundException("VdotWorkout records doesn't exist");
+        }
         LOGGER.info("VdotWorkout get all");
-        return vdotWorkoutRepository.findAll();
+        return vdotGradeModels;
     }
 
     @Override

@@ -19,6 +19,7 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -30,6 +31,7 @@ public class RunSessionServiceImpl implements RunSessionService {
     private final AchievementServiceClient achievementServiceClient;
     private final AchievementConverter achievementConverter;
     private final static Logger LOGGER = LoggerFactory.getLogger(RunSessionServiceImpl.class);
+
     @Override
     @Caching(put = {@CachePut(value = "run-session", key = "#result.id")},
             evict = {@CacheEvict(value = "run-session", allEntries = true)})
@@ -55,8 +57,13 @@ public class RunSessionServiceImpl implements RunSessionService {
 
     @Override
     public List<RunSessionModel> getAll() {
+        List<RunSessionModel> runSessionModels = runSessionRepository.findAll();
+        if (runSessionModels.isEmpty()) {
+            LOGGER.warn("No RunSessions records found in the database");
+            throw new NoEntityFoundException("RunSessions records doesn't exist");
+        }
         LOGGER.info("RunSession get all");
-        return runSessionRepository.findAll();
+        return runSessionModels;
     }
 
     @Override
