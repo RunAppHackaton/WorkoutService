@@ -15,6 +15,7 @@ D:\My Directory\Projects\JavaProjects\Practices\WorkoutService\src\main\java\com
 D:\My Directory\Projects\JavaProjects\Practices\WorkoutService\src\main\java\com\runapp\workoutservice\utill\existHandler\ExistHandler.java
 D:\My Directory\Projects\JavaProjects\Practices\WorkoutService\src\main\java\com\runapp\workoutservice\dto\response\TeamResponse.java
 D:\My Directory\Projects\JavaProjects\Practices\WorkoutService\src\main\java\com\runapp\workoutservice\feignClient\ShoesServiceClient.java
+D:\My Directory\Projects\JavaProjects\Practices\WorkoutService\src\main\java\com\runapp\workoutservice\config\RedisConfig.java
 D:\My Directory\Projects\JavaProjects\Practices\WorkoutService\src\main\java\com\runapp\workoutservice\controller\RunSessionController.java
 D:\My Directory\Projects\JavaProjects\Practices\WorkoutService\src\main\java\com\runapp\workoutservice\service\serviceImpl\VdotWorkoutServiceImpl.java
 D:\My Directory\Projects\JavaProjects\Practices\WorkoutService\src\main\java\com\runapp\workoutservice\WorkoutServiceApplication.java

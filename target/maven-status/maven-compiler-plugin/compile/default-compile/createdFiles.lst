@@ -47,6 +47,7 @@ com\runapp\workoutservice\utill\existHandler\AchievementExistHandler.class
 com\runapp\workoutservice\model\RouteModel.class
 com\runapp\workoutservice\dto\request\TrainingAchievementRequest.class
 com\runapp\workoutservice\service\runPlanService\RunTraining.class
+com\runapp\workoutservice\config\RedisConfig.class
 com\runapp\workoutservice\service\serviceImpl\RunPlanGenerator$1.class
 com\runapp\workoutservice\repository\TrainingRepository.class
 com\runapp\workoutservice\service\serviceImpl\IntervalsServiceImpl.class
