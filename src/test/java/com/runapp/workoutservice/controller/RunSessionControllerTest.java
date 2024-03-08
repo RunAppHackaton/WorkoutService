@@ -1,6 +1,6 @@
 package com.runapp.workoutservice.controller;
 
-import com.runapp.workoutservice.dto.dtoMapper.RunSessionDtoMapper;
+import com.runapp.workoutservice.dtoMapper.RunSessionDtoMapper;
 import com.runapp.workoutservice.dto.request.RunSessionRequest;
 import com.runapp.workoutservice.dto.response.RunSessionResponse;
 import com.runapp.workoutservice.exception.NoEntityFoundException;
@@ -48,7 +48,7 @@ public class RunSessionControllerTest {
         runSessionModel.setCaloriesBurned(600);
         runSessionModel.setWeatherConditions("Sunny");
         runSessionModel.setNotes("Good run");
-        runSessionModel.setUserId(1);
+        runSessionModel.setUserId("1");
         runSessionModel.setShoesId(1);
 
         runSessionResponse = RunSessionResponse.builder()
@@ -60,7 +60,7 @@ public class RunSessionControllerTest {
                 .caloriesBurned(600)
                 .weatherConditions("Sunny")
                 .notes("Good run")
-                .userId(1)
+                .userId("1")
                 .shoesId(1)
                 .build();
     }
@@ -91,20 +91,34 @@ public class RunSessionControllerTest {
 
     @Test
     public void testUpdateRunSessionWhenValidDataThenSuccess() throws Exception {
-        RunSessionRequest runSessionRequest = new RunSessionRequest();
-        Mockito.when(runSessionDtoMapper.toModel(runSessionRequest)).thenReturn(runSessionModel);
-        Mockito.when(runSessionService.getById(runSessionModel.getId())).thenReturn(runSessionModel);
+        // Create a mock RunSessionModel with a valid ID
+        RunSessionModel runSessionModel = new RunSessionModel();
+        runSessionModel.setId(123L); // Set a valid ID
+
+        // Mock the behavior of the service and mapper
+        Mockito.when(runSessionDtoMapper.toModel(Mockito.any(RunSessionRequest.class))).thenReturn(runSessionModel);
+        Mockito.when(runSessionService.getById(123L)).thenReturn(runSessionModel); // Make sure to pass the valid ID here
         Mockito.when(runSessionService.update(runSessionModel)).thenReturn(runSessionModel);
         Mockito.when(runSessionDtoMapper.toResponse(runSessionModel)).thenReturn(runSessionResponse);
 
-        mockMvc.perform(MockMvcRequestBuilders.put("/run-sessions/" + runSessionModel.getId())
+        // Perform the request and assertions
+        mockMvc.perform(MockMvcRequestBuilders.put("/run-sessions/" + runSessionModel.getId()).header("X-UserId", "123")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{}"))
+                        .content("{\n" +
+                                "  \"distance_km\": 10.5,\n" +
+                                "  \"duration_time\": \"PT1H30M\",\n" +
+                                "  \"caloriesBurned\": 500,\n" +
+                                "  \"notes\": \"Ran in the park.\",\n" +
+                                "  \"routeId\": 123,\n" +
+                                "  \"shoesId\": 456,\n" +
+                                "  \"userId\": \"123456789\"\n" +
+                                "}"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(runSessionResponse.getId()));
 
-        Mockito.verify(runSessionDtoMapper, Mockito.times(1)).toModel(runSessionRequest);
-        Mockito.verify(runSessionService, Mockito.times(1)).getById(runSessionModel.getId());
+        // Verify that the methods were called with the expected arguments
+        Mockito.verify(runSessionDtoMapper, Mockito.times(1)).toModel(Mockito.any(RunSessionRequest.class));
+        Mockito.verify(runSessionService, Mockito.times(1)).getById(123L);
         Mockito.verify(runSessionService, Mockito.times(1)).update(runSessionModel);
         Mockito.verify(runSessionDtoMapper, Mockito.times(1)).toResponse(runSessionModel);
     }

@@ -59,7 +59,7 @@ public class RunSessionModel implements Serializable {
     private TrainingModel training;
 
     @Column(name = "user_id")
-    private int userId;
+    private String userId;
 
     @Column(name = "shoes_id")
     private int shoesId;

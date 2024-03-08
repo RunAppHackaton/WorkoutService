@@ -1,10 +1,9 @@
 package com.runapp.workoutservice.controller;
 
-import com.runapp.workoutservice.dto.dtoMapper.RunSessionDtoMapper;
+import com.runapp.workoutservice.dtoMapper.RunSessionDtoMapper;
 import com.runapp.workoutservice.dto.request.RunSessionRequest;
 import com.runapp.workoutservice.dto.response.RunSessionResponse;
 import com.runapp.workoutservice.model.RunSessionModel;
-import com.runapp.workoutservice.service.serviceImpl.RunSessionServiceImpl;
 import com.runapp.workoutservice.service.serviceTemplate.RunSessionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -14,10 +13,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.Caching;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -64,7 +59,9 @@ public class RunSessionController {
     @ApiResponse(responseCode = "201", description = "Run session created", content = @Content(schema = @Schema(implementation = RunSessionResponse.class)))
     public ResponseEntity<RunSessionResponse> addRunSession(
             @Parameter(description = "Run session data", required = true)
-            @Valid @RequestBody RunSessionRequest runSessionRequest) {
+            @Valid @RequestBody RunSessionRequest runSessionRequest,
+            @RequestHeader("X-UserId") String userId) {
+        runSessionRequest.setUserId(userId);
         RunSessionModel runSession = runSessionDtoMapper.toModel(runSessionRequest);
         RunSessionModel savedRunSession = runSessionService.add(runSession);
         return new ResponseEntity<>(runSessionDtoMapper.toResponse(savedRunSession), HttpStatus.CREATED);
@@ -78,7 +75,9 @@ public class RunSessionController {
             @Parameter(description = "Run session ID", required = true)
             @PathVariable Long id,
             @Parameter(description = "Updated run session data", required = true)
-            @RequestBody RunSessionRequest runSessionRequest) {
+            @RequestBody RunSessionRequest runSessionRequest,
+            @RequestHeader("X-UserId") String userId) {
+        runSessionRequest.setUserId(userId);
         RunSessionModel existingRunSession = runSessionService.getById(id);
         RunSessionModel updatedRunSession = runSessionDtoMapper.toModel(runSessionRequest);
         updatedRunSession.setId(existingRunSession.getId());

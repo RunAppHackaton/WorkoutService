@@ -22,7 +22,7 @@ public class RunSessionResponse {
     private String photosUrl;
     private RouteModel route;
     private int shoesId;
-    private int userId;
+    private String userId;
     private TrainingModel training;
     private String weatherConditions;
     @JsonInclude(JsonInclude.Include.NON_NULL)

@@ -14,13 +14,11 @@ public class ExistHandlerRegistry {
     @Autowired
     public ExistHandlerRegistry(
             GuildExistHandler guildExistHandler,
-            UserExistHandler userExistHandler,
             ShoesExistHandler shoesExistHandler,
             AchievementExistHandler achievementExistHandler
     ) {
         existHandlers = new HashMap<>();
         existHandlers.put(ExistEnum.GUILD, guildExistHandler);
-        existHandlers.put(ExistEnum.USER, userExistHandler);
         existHandlers.put(ExistEnum.SHOES, shoesExistHandler);
         existHandlers.put(ExistEnum.ACHIEVEMENT, achievementExistHandler);
     }

@@ -59,7 +59,7 @@ class RunPlanServiceTest {
         });
 
         // Проверка содержания сообщения об ошибке
-        assertTrue(exception.getMessage().contains("RunPlan records doesn't exist"));
+        assertTrue(exception.getMessage().contains("RunPlan records don't exist"));
     }
 
 

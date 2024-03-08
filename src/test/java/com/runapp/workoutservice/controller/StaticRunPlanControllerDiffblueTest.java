@@ -4,7 +4,7 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.runapp.workoutservice.dto.dtoMapper.RunPlanDtoMapper;
+import com.runapp.workoutservice.dtoMapper.RunPlanDtoMapper;
 import com.runapp.workoutservice.dto.request.RunPlanRequest;
 import com.runapp.workoutservice.dto.response.RunPlanLongResponse;
 import com.runapp.workoutservice.model.RunPlanModel;
@@ -12,11 +12,7 @@ import com.runapp.workoutservice.service.serviceImpl.RunPlanServiceImpl;
 import com.runapp.workoutservice.service.serviceImpl.VdotCradeServiceImpl;
 import com.runapp.workoutservice.service.serviceImpl.VdotWorkoutServiceImpl;
 import com.runapp.workoutservice.staticObject.StaticRunPlan;
-import com.runapp.workoutservice.utill.enums.DistanceTypeEnum;
-import com.runapp.workoutservice.utill.enums.RunPlanEnum;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -117,7 +113,7 @@ class StaticRunPlanControllerDiffblueTest {
     void testGetAllShortRunPlans() throws Exception {
         when(runPlanServiceImpl.getAll()).thenReturn(new ArrayList<>());
         when(runPlanDtoMapper.toShortDto(Mockito.<List<RunPlanModel>>any())).thenReturn(new ArrayList<>());
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/run-plan/short");
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/run-plan/short").header("X-UserId", "123");
         MockMvcBuilders.standaloneSetup(runPlanController)
                 .build()
                 .perform(requestBuilder)
@@ -142,6 +138,6 @@ class StaticRunPlanControllerDiffblueTest {
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
                 .andExpect(MockMvcResultMatchers.content()
                         .string(
-                                "{\"id\":0,\"dayOfTheWeek\":0,\"startingWeeklyVolume\":0,\"finalDate\":null,\"userId\":0,\"trainings\":null}"));
+                                "{\"id\":0,\"dayOfTheWeek\":0,\"startingWeeklyVolume\":0,\"finalDate\":null,\"userId\":null,\"trainings\":null}"));
     }
 }

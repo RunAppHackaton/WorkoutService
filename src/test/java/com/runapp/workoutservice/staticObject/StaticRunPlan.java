@@ -17,7 +17,7 @@ public class StaticRunPlan {
         runPlan2.setId(1L);
         runPlan2.setStartingWeeklyVolume(1);
         runPlan2.setTrainingModels(new ArrayList<>());
-        runPlan2.setUserId(1);
+        runPlan2.setUserId("1");
         return runPlan2;
     }
 
@@ -31,7 +31,7 @@ public class StaticRunPlan {
         runPlanRequest.setTime_at_which_you_ran("Time at which you ran");
         runPlanRequest.setTraining_days(new DayOfWeek[]{DayOfWeek.MONDAY});
         runPlanRequest.setType_were_you_running(DistanceTypeEnum.EASY_1500M);
-        runPlanRequest.setUser_id(1);
+        runPlanRequest.setUser_id("1");
         return runPlanRequest;
     }
 
@@ -42,7 +42,7 @@ public class StaticRunPlan {
         runPlanModel2.setId(2L);
         runPlanModel2.setStartingWeeklyVolume(0);
         runPlanModel2.setTrainingModels(new ArrayList<>());
-        runPlanModel2.setUserId(2);
+        runPlanModel2.setUserId("2");
         return runPlanModel2;
     }
 }

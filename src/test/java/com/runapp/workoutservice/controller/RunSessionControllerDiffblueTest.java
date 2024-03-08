@@ -4,23 +4,15 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.runapp.workoutservice.dto.dtoMapper.RunSessionDtoMapper;
+import com.runapp.workoutservice.dtoMapper.RunSessionDtoMapper;
 import com.runapp.workoutservice.dto.request.RunSessionRequest;
 import com.runapp.workoutservice.dto.response.RunSessionResponse;
-import com.runapp.workoutservice.model.RouteModel;
-import com.runapp.workoutservice.model.RunPlanModel;
 import com.runapp.workoutservice.model.RunSessionModel;
-import com.runapp.workoutservice.model.RunTypeModel;
-import com.runapp.workoutservice.model.StageModel;
 import com.runapp.workoutservice.model.TrainingModel;
 import com.runapp.workoutservice.service.serviceTemplate.RunSessionService;
 import com.runapp.workoutservice.staticObject.StaticRunSession;
 import com.runapp.workoutservice.staticObject.StaticTraining;
-import com.runapp.workoutservice.utill.enums.StageEnum;
-import com.runapp.workoutservice.utill.enums.TrainingTypeEnum;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
@@ -86,7 +78,7 @@ class RunSessionControllerDiffblueTest {
 
         TrainingModel training2 = StaticTraining.trainingModel1();
         RunSessionResponse buildResult = shoesIdResult.training(training2)
-                .userId(1)
+                .userId("1")
                 .weatherConditions("Weather Conditions")
                 .build();
         when(runSessionDtoMapper.toResponse(Mockito.<RunSessionModel>any())).thenReturn(buildResult);
@@ -232,7 +224,7 @@ class RunSessionControllerDiffblueTest {
 
         RunSessionRequest runSessionRequest = StaticRunSession.runSessionRequest1();
         String content = (new ObjectMapper()).writeValueAsString(runSessionRequest);
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.put("/run-sessions/{id}", 1L)
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.put("/run-sessions/{id}", 1L).header("X-UserId", "123")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content);
         MockMvcBuilders.standaloneSetup(runSessionController)

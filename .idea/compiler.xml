@@ -8,11 +8,13 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="WorkoutService" />
+        <module name="Api-Gateway" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Api-Gateway" options="-parameters" />
       <module name="WorkoutService" options="-parameters" />
     </option>
   </component>

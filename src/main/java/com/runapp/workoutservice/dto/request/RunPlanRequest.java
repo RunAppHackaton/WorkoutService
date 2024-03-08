@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RunPlanRequest {
-    private int user_id;
+    private String user_id;
     private RunPlanEnum runPlanEnum;
     private LocalDate goal_date;
     private String target_time;

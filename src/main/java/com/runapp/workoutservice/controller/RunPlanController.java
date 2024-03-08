@@ -8,7 +8,7 @@ import com.runapp.workoutservice.service.serviceImpl.RunPlanGenerator;
 import com.runapp.workoutservice.service.serviceImpl.RunPlanServiceImpl;
 import com.runapp.workoutservice.service.serviceImpl.VdotCradeServiceImpl;
 import com.runapp.workoutservice.service.serviceImpl.VdotWorkoutServiceImpl;
-import com.runapp.workoutservice.dto.dtoMapper.RunPlanDtoMapper;
+import com.runapp.workoutservice.dtoMapper.RunPlanDtoMapper;
 import com.runapp.workoutservice.service.runPlanService.RunTraining;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -16,10 +16,8 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.Caching;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +26,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/run-plan")
 @Tag(name = "Run Plan Management", description = "Operations related to run plans")
+@Slf4j
 public class RunPlanController {
 
 
@@ -47,7 +46,8 @@ public class RunPlanController {
     @PostMapping
     @Operation(summary = "Create a new run plan", description = "Create a new run plan with the provided data")
     @ApiResponse(responseCode = "200", description = "Run plan created", content = @Content(schema = @Schema(implementation = RunPlanLongResponse.class)))
-    public ResponseEntity<Object> createPlan(@RequestBody RunPlanRequest runPlanRequest) {
+    public ResponseEntity<Object> createPlan(@RequestBody RunPlanRequest runPlanRequest, @RequestHeader("X-UserId") String userId) {
+        runPlanRequest.setUser_id(userId);
         RunPlanGenerator runPlanGenerator = new RunPlanGenerator(vdotWorkoutService, vdotCradeService, runPlanRequest);
         List<RunTraining> plan = runPlanGenerator.generatePlan(runPlanRequest);
         return ResponseEntity.ok().body(runPlanDtoMapper.toLongDto(runPlanService.createPlan(plan, runPlanRequest)));

@@ -39,8 +39,6 @@ public class RunSessionServiceImpl implements RunSessionService {
         LOGGER.info("RunSession add: {}", entity);
         // convert and sent RunSession to Achievement Service for User Statistic
         achievementServiceClient.saveTraining(achievementConverter.convertToAchievementRequest(entity));
-
-        existHandlerRegistry.handleRequest(ExistEnum.USER, entity.getUserId());
         existHandlerRegistry.handleRequest(ExistEnum.SHOES, entity.getShoesId());
         shoesServiceClient.updateMileage((long) entity.getShoesId(), entity.getDistance());
 
@@ -84,7 +82,6 @@ public class RunSessionServiceImpl implements RunSessionService {
             evict = {@CacheEvict(value = "run-session", allEntries = true)})
     public RunSessionModel update(RunSessionModel entity) {
         LOGGER.info("RunSession update: {}", entity);
-        existHandlerRegistry.handleRequest(ExistEnum.USER, entity.getUserId());
         existHandlerRegistry.handleRequest(ExistEnum.SHOES, entity.getShoesId());
 
         if (!runSessionRepository.existsById(entity.getId())) {

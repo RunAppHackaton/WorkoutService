@@ -42,9 +42,8 @@ public class RunPlanServiceImpl implements RunPlanService {
                     @CacheEvict(value = "run_plan_long_response", allEntries = true),
                     @CacheEvict(value = "run_plan_long_response", allEntries = true)})
     public RunPlanModel add(RunPlanModel entity) {
-        existHandlerRegistry.handleRequest(ExistEnum.USER, entity.getUserId());
         LOGGER.info("RunPlan add: {}", entity);
-        throw new NoEntityFoundException("User with id: " + entity.getUserId() + " doesn't exist");
+        return runPlanRepository.save(entity);
     }
 
     @Override
@@ -60,7 +59,7 @@ public class RunPlanServiceImpl implements RunPlanService {
         List<RunPlanModel> vdotGradeModels = runPlanRepository.findAll();
         if (vdotGradeModels.isEmpty()) {
             LOGGER.warn("No RunPlan records found in the database");
-            throw new NoEntityFoundException("RunPlan records doesn't exist");
+            throw new NoEntityFoundException("RunPlan records don't exist");
         }
         LOGGER.info("RunPlan get all");
         return vdotGradeModels;
@@ -88,7 +87,6 @@ public class RunPlanServiceImpl implements RunPlanService {
                     @CacheEvict(value = "run_plan_long_response", allEntries = true)
             })
     public RunPlanModel update(RunPlanModel entity) {
-        existHandlerRegistry.handleRequest(ExistEnum.USER, entity.getUserId());
         LOGGER.info("RunPlan update: {}", entity);
         if (!runPlanRepository.existsById(entity.getId())) {
             throw new NoEntityFoundException("RunPlan with id: " + entity.getId() + " doesn't exist");
@@ -102,7 +100,6 @@ public class RunPlanServiceImpl implements RunPlanService {
                     @CacheEvict(value = "run_plan_long_response", allEntries = true)})
     public RunPlanModel createPlan(List<RunTraining> runTrainings, RunPlanRequest runPlanRequest) {
         LOGGER.info("RunPlan createPlan: runTrainings={}, runPlanRequest={}", runTrainings, runPlanRequest);
-        existHandlerRegistry.handleRequest(ExistEnum.USER, runPlanRequest.getUser_id());
         RunPlanModel runPlanModel = new RunPlanModel();
         runPlanModel.setDayOfTheWeek(runPlanRequest.getTraining_days().length);
         runPlanModel.setStartingWeeklyVolume(runPlanRequest.getKilometers_per_week());

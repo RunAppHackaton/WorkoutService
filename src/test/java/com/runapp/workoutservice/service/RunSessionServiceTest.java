@@ -6,6 +6,7 @@ import com.runapp.workoutservice.feignClient.ShoesServiceClient;
 import com.runapp.workoutservice.model.RunSessionModel;
 import com.runapp.workoutservice.repository.RunSessionRepository;
 import com.runapp.workoutservice.service.serviceImpl.RunSessionServiceImpl;
+import com.runapp.workoutservice.staticObject.StaticRunSession;
 import com.runapp.workoutservice.utill.existHandler.ExistEnum;
 import com.runapp.workoutservice.utill.existHandler.ExistHandlerRegistry;
 import com.runapp.workoutservice.utill.supportClasses.AchievementConverter;
@@ -50,11 +51,7 @@ class RunSessionServiceTest {
 
     @Test
     void add_ValidRunSessionModel_ReturnsSavedModel() {
-        RunSessionModel sessionModel = new RunSessionModel();
-        sessionModel.setId(1L);
-        sessionModel.setUserId(1);
-        sessionModel.setShoesId(1);
-        sessionModel.setDistance(5);
+        RunSessionModel sessionModel = StaticRunSession.runSession();
 
         when(runSessionRepository.save(any(RunSessionModel.class))).thenReturn(sessionModel);
 
@@ -68,7 +65,6 @@ class RunSessionServiceTest {
 
         verify(runSessionRepository, times(1)).save(any(RunSessionModel.class));
         verify(achievementServiceClient, times(1)).saveTraining(any());
-        verify(existHandlerRegistry, times(1)).handleRequest(ExistEnum.USER, sessionModel.getUserId());
         verify(existHandlerRegistry, times(1)).handleRequest(ExistEnum.SHOES, sessionModel.getShoesId());
         verify(shoesServiceClient, times(1)).updateMileage((long) sessionModel.getShoesId(), sessionModel.getDistance());
     }

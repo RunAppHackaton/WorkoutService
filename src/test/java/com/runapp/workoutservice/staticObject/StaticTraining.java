@@ -18,7 +18,7 @@ public class StaticTraining {
         runPlan.setId(1L);
         runPlan.setStartingWeeklyVolume(1);
         runPlan.setTrainingModels(new ArrayList<>());
-        runPlan.setUserId(1);
+        runPlan.setUserId("1");
 
         RunTypeModel runType = new RunTypeModel();
         runType.setDescription("The characteristics of someone or something");
@@ -51,7 +51,7 @@ public class StaticTraining {
         runPlan2.setId(2L);
         runPlan2.setStartingWeeklyVolume(0);
         runPlan2.setTrainingModels(new ArrayList<>());
-        runPlan2.setUserId(2);
+        runPlan2.setUserId("2");
 
         RunTypeModel runType2 = new RunTypeModel();
         runType2.setDescription("Description");

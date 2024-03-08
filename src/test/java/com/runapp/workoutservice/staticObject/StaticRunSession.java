@@ -21,7 +21,7 @@ public class StaticRunSession {
         runSessionRequest.setRoute_points(new ArrayList<>());
         runSessionRequest.setShoesId(1);
         runSessionRequest.setTraining_id_from_run_plan(1);
-        runSessionRequest.setUserId(1);
+        runSessionRequest.setUserId("1");
         runSessionRequest.setWeatherConditions("Weather Conditions");
         return runSessionRequest;
     }
@@ -37,7 +37,7 @@ public class StaticRunSession {
         runPlan.setId(1L);
         runPlan.setStartingWeeklyVolume(1);
         runPlan.setTrainingModels(new ArrayList<>());
-        runPlan.setUserId(1);
+        runPlan.setUserId("1");
 
         RunTypeModel runType = new RunTypeModel();
         runType.setDescription("The characteristics of someone or something");
@@ -71,7 +71,7 @@ public class StaticRunSession {
         runSessionModel.setRoute(route);
         runSessionModel.setShoesId(1);
         runSessionModel.setTraining(training);
-        runSessionModel.setUserId(1);
+        runSessionModel.setUserId("1");
         runSessionModel.setWeatherConditions("Weather Conditions");
         return runSessionModel;
     }
@@ -97,7 +97,7 @@ public class StaticRunSession {
         TrainingModel training2 = StaticTraining.trainingModel1();
         RunSessionResponse.RunSessionResponseBuilder shoesIdResult = StaticRunSession.runSessionResponseBuilder();
         RunSessionResponse buildResult = shoesIdResult.training(training2)
-                .userId(1)
+                .userId("1")
                 .weatherConditions("Weather Conditions")
                 .build();
         return buildResult;

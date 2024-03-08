@@ -16,6 +16,6 @@ public class RunPlanLongResponse {
     private int dayOfTheWeek;
     private int startingWeeklyVolume;
     private LocalDate finalDate;
-    private int userId;
+    private String userId;
     private List<TrainingResponse> trainings;
 }

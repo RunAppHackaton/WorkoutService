@@ -3,6 +3,7 @@ com\runapp\workoutservice\utill\enums\TrainingTypeEnum.class
 com\runapp\workoutservice\dto\request\RunTypeRequest.class
 com\runapp\workoutservice\model\RunPlanModel.class
 com\runapp\workoutservice\dto\response\RunSessionResponse$RunSessionResponseBuilder.class
+com\runapp\workoutservice\dtoMapper\RunSessionDtoMapper.class
 com\runapp\workoutservice\repository\TerrainTypeRepository.class
 com\runapp\workoutservice\service\serviceTemplate\RunSessionService.class
 com\runapp\workoutservice\repository\RunSessionRepository.class
@@ -17,11 +18,9 @@ com\runapp\workoutservice\dto\response\StorageServiceResponse.class
 com\runapp\workoutservice\dto\response\UserResponse.class
 com\runapp\workoutservice\model\RunTypeModel.class
 com\runapp\workoutservice\model\StageModel.class
-com\runapp\workoutservice\dto\dtoMapper\RunSessionDtoMapper.class
 com\runapp\workoutservice\service\serviceImpl\RouteServiceImpl.class
 com\runapp\workoutservice\service\serviceImpl\RunSessionServiceImpl.class
 com\runapp\workoutservice\repository\RouteRepository.class
-com\runapp\workoutservice\utill\existHandler\UserExistHandler.class
 com\runapp\workoutservice\exception\GlobalExceptionHandler.class
 com\runapp\workoutservice\repository\RunPlanRepository.class
 com\runapp\workoutservice\dto\response\RarityResponse.class
@@ -29,6 +28,7 @@ com\runapp\workoutservice\model\TerrainTypeModel.class
 com\runapp\workoutservice\dto\response\ShoesResponse.class
 com\runapp\workoutservice\utill\existHandler\ExistHandlerRegistry.class
 com\runapp\workoutservice\utill\supportClasses\AchievementConverter.class
+com\runapp\workoutservice\dtoMapper\RunPlanDtoMapper.class
 com\runapp\workoutservice\dto\response\TrainingAchievementResponse.class
 com\runapp\workoutservice\utill\existHandler\GuildExistHandler.class
 com\runapp\workoutservice\utill\enums\RunPlanEnum.class
@@ -39,7 +39,6 @@ com\runapp\workoutservice\utill\existHandler\ExistHandler.class
 com\runapp\workoutservice\service\runPlanService\LongRun.class
 com\runapp\workoutservice\feignClient\AchievementServiceClient.class
 com\runapp\workoutservice\repository\VdotWorkoutRepository.class
-com\runapp\workoutservice\dto\dtoMapper\RunPlanDtoMapper.class
 com\runapp\workoutservice\model\VdotWorkoutModel.class
 com\runapp\workoutservice\service\serviceImpl\RunPlanServiceImpl.class
 com\runapp\workoutservice\dto\response\RunSessionResponse.class
@@ -75,8 +74,8 @@ com\runapp\workoutservice\dto\response\UserTeamResponse.class
 com\runapp\workoutservice\controller\RunSessionController.class
 com\runapp\workoutservice\service\runPlanService\SpeedSurgeRun.class
 com\runapp\workoutservice\feignClient\ProfileServiceClient.class
+com\runapp\workoutservice\dtoMapper\DtoMapper.class
 com\runapp\workoutservice\dto\response\TeamResponse.class
-com\runapp\workoutservice\dto\dtoMapper\DtoMapper.class
 com\runapp\workoutservice\service\runPlanService\EasyRun.class
 com\runapp\workoutservice\service\serviceImpl\VdotWorkoutServiceImpl.class
 com\runapp\workoutservice\dto\response\TrainingResponse$TrainingResponseBuilder.class

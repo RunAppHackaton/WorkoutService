@@ -15,7 +15,7 @@ public class AchievementConverter {
         achievementRequest.setDistance_km(runSessionModel.getDistance());
         achievementRequest.setTraining_duration(runSessionModel.getTime());
         achievementRequest.setPace(runSessionModel.getPace());
-        achievementRequest.setUserId((long) runSessionModel.getUserId());
+        achievementRequest.setUserId(runSessionModel.getUserId());
         return achievementRequest;
     }
 }

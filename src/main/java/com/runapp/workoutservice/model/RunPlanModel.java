@@ -32,7 +32,7 @@ public class RunPlanModel implements Serializable {
     private LocalDate finalDate;
 
     @Column(name = "user_id")
-    private int userId;
+    private String userId;
 
     @JsonIgnore
     @OneToMany(mappedBy = "runPlan", cascade = CascadeType.ALL)
