@@ -34,7 +34,6 @@ public class RunSessionRequest {
     @Positive(message = "The 'shoesId' should be a positive number.")
     private int shoesId;
 
-    @Positive(message = "The 'userId' should be a positive number.")
     private String userId;
 
     private List<RoutePointRequest> route_points;

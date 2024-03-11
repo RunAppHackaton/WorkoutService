@@ -2,18 +2,14 @@ package com.runapp.workoutservice.service.serviceImpl;
 
 import com.runapp.workoutservice.dto.request.RunPlanRequest;
 import com.runapp.workoutservice.exception.NoEntityFoundException;
-import com.runapp.workoutservice.feignClient.ProfileServiceClient;
 import com.runapp.workoutservice.model.IntervalModel;
 import com.runapp.workoutservice.model.RunPlanModel;
 import com.runapp.workoutservice.model.TrainingModel;
-import com.runapp.workoutservice.model.VdotWorkoutModel;
 import com.runapp.workoutservice.repository.*;
 import com.runapp.workoutservice.service.serviceTemplate.RunPlanService;
 import com.runapp.workoutservice.service.runPlanService.Interval;
 import com.runapp.workoutservice.service.runPlanService.RunTraining;
-import com.runapp.workoutservice.utill.existHandler.ExistEnum;
 import com.runapp.workoutservice.utill.existHandler.ExistHandlerRegistry;
-import feign.FeignException;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

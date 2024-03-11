@@ -1,22 +1,9 @@
 server:
   port: ${SERVICE_SERVER_PORT}
 
-#management:
-#  tracing:
-#    sampling:
-#      probability: 1.0
-#  zipkin:
-#    tracing:
-#      endpoint: ${ZIPKIN_URL}
-#  endpoints:
-#    web:
-#      exposure:
-#        include: "*"
-#  endpoint:
-#    health:
-#      show-details: always
-#springdoc:
-#  packagesToScan: com.runapp.workoutservice
+
+springdoc:
+  packagesToScan: com.runapp.workoutservice
 
 eureka:
   client:
@@ -66,8 +53,6 @@ spring:
             url: ${STORAGE_SERVICE_URL}
           achievement-service:
             url: ${ACHIEVEMENT_SERVICE_URL}
-          profile-service:
-            url: ${PROFILE_SERVICE_URL}
           guild-service:
             url: ${GUILD_SERVICE_URL}
           shoes-service:
@@ -86,3 +71,9 @@ management:
   endpoint:
     health:
       show-details: ${HEALTH_SHOW_DETAILS:always}
+  tracing:
+    sampling:
+      probability: 1.0
+  zipkin:
+    tracing:
+      endpoint: ${ZIPKIN_URL}
