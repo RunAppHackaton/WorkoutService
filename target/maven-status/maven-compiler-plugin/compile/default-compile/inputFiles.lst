@@ -23,7 +23,6 @@ D:\My Directory\Projects\JavaProjects\Practices\WorkoutService\src\main\java\com
 D:\My Directory\Projects\JavaProjects\Practices\WorkoutService\src\main\java\com\runapp\workoutservice\service\serviceImpl\RunPlanServiceImpl.java
 D:\My Directory\Projects\JavaProjects\Practices\WorkoutService\src\main\java\com\runapp\workoutservice\controller\VdotGradeController.java
 D:\My Directory\Projects\JavaProjects\Practices\WorkoutService\src\main\java\com\runapp\workoutservice\dto\request\DeleteStorageRequest.java
-D:\My Directory\Projects\JavaProjects\Practices\WorkoutService\src\main\java\com\runapp\workoutservice\feignClient\ProfileServiceClient.java
 D:\My Directory\Projects\JavaProjects\Practices\WorkoutService\src\main\java\com\runapp\workoutservice\dto\request\RoutePointRequest.java
 D:\My Directory\Projects\JavaProjects\Practices\WorkoutService\src\main\java\com\runapp\workoutservice\utill\supportClasses\AchievementConverter.java
 D:\My Directory\Projects\JavaProjects\Practices\WorkoutService\src\main\java\com\runapp\workoutservice\utill\existHandler\AchievementExistHandler.java
@@ -71,7 +70,6 @@ D:\My Directory\Projects\JavaProjects\Practices\WorkoutService\src\main\java\com
 D:\My Directory\Projects\JavaProjects\Practices\WorkoutService\src\main\java\com\runapp\workoutservice\utill\enums\StageEnum.java
 D:\My Directory\Projects\JavaProjects\Practices\WorkoutService\src\main\java\com\runapp\workoutservice\dto\response\IntervalResponse.java
 D:\My Directory\Projects\JavaProjects\Practices\WorkoutService\src\main\java\com\runapp\workoutservice\dto\response\RunSessionResponse.java
-D:\My Directory\Projects\JavaProjects\Practices\WorkoutService\src\main\java\com\runapp\workoutservice\dto\response\UserResponse.java
 D:\My Directory\Projects\JavaProjects\Practices\WorkoutService\src\main\java\com\runapp\workoutservice\service\serviceImpl\VdotCradeServiceImpl.java
 D:\My Directory\Projects\JavaProjects\Practices\WorkoutService\src\main\java\com\runapp\workoutservice\utill\existHandler\GuildExistHandler.java
 D:\My Directory\Projects\JavaProjects\Practices\WorkoutService\src\main\java\com\runapp\workoutservice\service\runPlanService\LongRun.java
